@@ -1,0 +1,57 @@
+// Button class
+
+// type: contained, outlined
+// color: primary, secondary
+// size: large, medium, small
+// style: slide, normal
+// disabled
+.btn {
+  @apply relative rounded-full overflow-hidden;
+
+  .btn-txt {
+    @apply flex flex-1 items-center justify-center relative gap-2;
+  }
+}
+
+// Button Types and Colors
+.contained-primary {
+  @apply bg-primary text-white hover:bg-primary-hover transition-all ease-in-out duration-200;
+}
+.outlined-primary {
+  @apply text-primary border-2 border-primary hover:text-white;
+  @apply before:content-[""] before:absolute before:w-0 before:h-full before:bg-primary before:top-0 before:left-0 before:transition-all before:duration-500 before:hover:w-full;
+}
+.contained-secondary {
+  @apply bg-secondary text-white hover:bg-secondary-hover transition-all ease-in-out duration-200;
+}
+.outlined-secondary {
+  @apply text-secondary border-2 border-secondary hover:text-white;
+  @apply before:content-[""] before:absolute before:w-0 before:h-full before:bg-secondary before:top-0 before:left-0 before:transition-all before:duration-500 before:hover:w-full;
+}
+
+// Button Sizes
+
+.large {
+  @apply text-xs px-5 py-3 lg:px-7 lg:py-4 lg:text-lg;
+
+  .btn-txt {
+    @apply font-semibold;
+  }
+}
+// .medium{
+//     @apply px-7 py-4 text-lg;
+
+//     .btn-txt{
+//         @apply font-semibold
+//     }
+// }
+.small {
+  @apply text-xs px-3 py-1 lg:text-sm lg:px-5 lg:py-2;
+
+  .btn-txt {
+    @apply font-normal;
+  }
+}
+.mobile-login {
+  @apply text-base px-14 py-3;
+}
