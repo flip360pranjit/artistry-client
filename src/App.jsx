@@ -7,8 +7,6 @@ import About from "./pages/About";
 import Careers from "./pages/Careers";
 import ContactUs from "./pages/ContactUs";
 import Error from "./pages/Error";
-import Login from "./components/Login/Login";
-import Register from "./components/Register/Register";
 import { AnimatePresence } from "framer-motion";
 
 function App() {
@@ -20,7 +18,7 @@ function App() {
   return (
     <>
       {!isLoginOrRegisterPage && <Navbar />}
-      <AnimatePresence initial={false} mode="wait">
+      <AnimatePresence mode="wait">
         <Routes>
           {/* <Route element={<PrivateRoutes />}>
           </Route> */}
@@ -29,8 +27,6 @@ function App() {
           <Route path="/careers" element={<Careers />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="*" element={<Error />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
         </Routes>
       </AnimatePresence>
       {!isLoginOrRegisterPage && <Footer />}

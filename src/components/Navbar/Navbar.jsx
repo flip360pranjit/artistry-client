@@ -36,7 +36,7 @@ function Navbar() {
         {/* Dropdown Links */}
         <NavLinks isClicked={isClicked} />
 
-        <a href="/login" className="hidden md:inline-block">
+        <a href="/auth" className="hidden md:inline-block">
           <Button type="outlined" color="primary" size="small">
             Log in
             <FaArrowRight />

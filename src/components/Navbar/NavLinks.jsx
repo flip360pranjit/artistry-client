@@ -54,12 +54,12 @@ function NavLinks({ isClicked }) {
             toggleSubDropdown={toggleSubDropdown}
           />
         ))}
-        <div className="flex justify-center mb-10">
+        <a href="/auth" className="flex justify-center mb-10">
           <Button type="contained" color="primary" size="mobile-login">
             Log in
             <FaArrowRight />
           </Button>
-        </div>
+        </a>
       </ul>
     </>
   );
