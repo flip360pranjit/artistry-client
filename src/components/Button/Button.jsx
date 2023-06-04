@@ -1,10 +1,16 @@
 import React from "react";
 import "./Button.scss";
 
-function Button({ children, type, color, size }) {
+function Button({ children, type, color, size, layered }) {
   return (
-    <button className={`btn ${type + "-" + color + " " + size}`}>
-      <span className="btn-txt">{children}</span>
+    <button
+      className={`btn ${type + "-" + color + " " + size} ${
+        layered ? "z-[100]" : ""
+      }`}
+    >
+      <span className="btn-txt flex items-center justify-center">
+        {children}
+      </span>
     </button>
   );
 }

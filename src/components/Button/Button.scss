@@ -16,6 +16,7 @@
 // Button Types and Colors
 .contained-primary {
   @apply bg-primary text-white hover:bg-primary-hover transition-all ease-in-out duration-200;
+  @apply group-hover:bg-white group-hover:text-primary group-hover:hover:bg-[#f0f0f0];
 }
 .outlined-primary {
   @apply text-primary border-2 border-primary hover:text-white;
@@ -32,21 +33,21 @@
 // Button Sizes
 
 .large {
-  @apply text-xs px-5 py-3 lg:px-7 lg:py-4 lg:text-lg;
+  @apply text-xs px-5 py-3 lg:text-base;
 
   .btn-txt {
     @apply font-semibold;
   }
 }
-// .medium{
-//     @apply px-7 py-4 text-lg;
+.medium {
+  @apply text-xs px-5 py-2 lg:px-10 lg:py-3 lg:text-base;
 
-//     .btn-txt{
-//         @apply font-semibold
-//     }
-// }
+  .btn-txt {
+    @apply font-semibold;
+  }
+}
 .small {
-  @apply text-xs px-3 py-1 lg:text-sm lg:px-5 lg:py-2;
+  @apply text-[9px] md:text-xs px-3 py-1;
 
   .btn-txt {
     @apply font-normal;

@@ -115,13 +115,13 @@ export const links = [
   },
   {
     name: "About Us",
-    link: "/about-us",
+    link: "/about",
     isDropdown: false,
     submenu: false,
   },
   {
     name: "Blog/News",
-    link: "/blog-news",
+    link: "/blog",
     isDropdown: false,
     submenu: false,
   },

@@ -6,12 +6,17 @@ function DesktopView({ link, headLink, toggleHeadDropdown }) {
   return (
     <div className="relative">
       <h1
-        className="text-[10px] lg:text-sm text-[#333333] cursor-pointer hover:text-secondary flex items-center justify-center"
+        className="text-[10px] lg:text-xs text-[#333333] cursor-pointer hover:text-secondary flex items-center justify-center"
         onMouseEnter={(Event) => {
           toggleHeadDropdown(Event, link);
         }}
       >
-        {link.name}
+        {link.isDropdown ? (
+          <>{link.name}</>
+        ) : (
+          <a href={link.link}>{link.name}</a>
+        )}
+
         {link.isDropdown &&
           (headLink === link.name ? <FaCaretUp /> : <FaCaretDown />)}
       </h1>
@@ -55,15 +60,17 @@ function DesktopView({ link, headLink, toggleHeadDropdown }) {
                 {sublink.sublinkCount > 0 && (
                   <div>
                     {sublink.sublinks.map((slink) => (
-                      <h2
-                        key={slink.name}
-                        className="flex flex-row items-center mt-2 cursor-pointer text-md text-[#666666] hover:text-[#cca300]"
-                      >
-                        <FaAngleRight />
-                        <span className="transition duration-300 ease-in-out hover:translate-x-2">
-                          {slink.name}
-                        </span>
-                      </h2>
+                      <Link to={slink.link}>
+                        <h2
+                          key={slink.name}
+                          className="flex flex-row items-center mt-2 cursor-pointer text-md text-[#666666] hover:text-[#cca300]"
+                        >
+                          <FaAngleRight />
+                          <span className="transition duration-300 ease-in-out hover:translate-x-2">
+                            {slink.name}
+                          </span>
+                        </h2>
+                      </Link>
                     ))}
                   </div>
                 )}

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { links } from "./Links";
-import "./Navbar.scss";
 import DesktopView from "./DesktopView";
 import MobileView from "./MobileView";
 import Button from "../Button/Button";
