@@ -4,6 +4,7 @@ import NavLinks from "./NavLinks";
 import { IconContext } from "react-icons";
 import Button from "../Button/Button";
 import Logo from "../../assets/images/logo.png";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [isClicked, setIsClicked] = useState(false);
@@ -35,12 +36,12 @@ function Navbar() {
         {/* Dropdown Links */}
         <NavLinks isClicked={isClicked} />
 
-        <div className="hidden md:inline-block">
+        <a href="/login" className="hidden md:inline-block">
           <Button type="outlined" color="primary" size="small">
             Log in
             <FaArrowRight />
           </Button>
-        </div>
+        </a>
       </nav>
     </header>
   );

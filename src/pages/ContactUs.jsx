@@ -8,7 +8,7 @@ function ContactUs() {
   const [agreed, setAgreed] = useState(false);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mx-10 md:mx-20">
       <div className="bg-[#f4e7d3] pt-24 px-10 md:rounded-bl-3xl">
         <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           Get in touch

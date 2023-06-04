@@ -29,6 +29,14 @@
   @apply text-secondary border-2 border-secondary hover:text-white;
   @apply before:content-[""] before:absolute before:w-0 before:h-full before:bg-secondary before:top-0 before:left-0 before:transition-all before:duration-500 before:hover:w-full;
 }
+.contained-white {
+  @apply bg-white text-primary hover:bg-gray-100 transition-all ease-in-out duration-200;
+  @apply group-hover:bg-white group-hover:text-primary group-hover:hover:bg-[#f0f0f0];
+}
+.outlined-white {
+  @apply text-white border-2 border-white hover:text-primary;
+  @apply before:content-[""] before:absolute before:w-0 before:h-full before:bg-white before:top-0 before:left-0 before:transition-all before:duration-500 before:hover:w-full;
+}
 
 // Button Sizes
 

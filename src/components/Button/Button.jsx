@@ -8,7 +8,7 @@ function Button({ children, type, color, size, layered }) {
         layered ? "z-[100]" : ""
       }`}
     >
-      <span className="btn-txt flex items-center justify-center">
+      <span className="btn-txt flex items-center justify-center font-open-sans">
         {children}
       </span>
     </button>
