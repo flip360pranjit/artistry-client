@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config/firebase.config";
-import { addUser } from "../../../store/slices/AuthSlice";
+import { addUser } from "../../store/slices/AuthSlice";
 
 function Login({ handleClick }) {
   const [user, setUser] = useState({

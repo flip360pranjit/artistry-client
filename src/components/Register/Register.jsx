@@ -8,7 +8,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, storage } from "../../config/firebase.config";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import axios from "axios";
-import { addUser } from "../../../store/slices/AuthSlice";
+import { addUser } from "../../store/slices/AuthSlice";
 
 function Register({ handleClick }) {
   const [user, setUser] = useState({
