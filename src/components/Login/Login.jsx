@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config/firebase.config";
 import { addUser } from "../../store/slices/AuthSlice";
+import axios from "axios";
 
 function Login({ handleClick }) {
   const [user, setUser] = useState({
@@ -38,20 +39,35 @@ function Login({ handleClick }) {
         user.email,
         user.password
       );
-      const currentUser = {
-        uid: userCredential.user.uid,
-        displayName: userCredential.user.displayName,
-        email: userCredential.user.email,
-        photoUrl: userCredential.user.photoURL,
-      };
-      dispatch(addUser(currentUser));
+      // const currentUser = {
+      //   uid: userCredential.user.uid,
+      //   displayName: userCredential.user.displayName,
+      //   email: userCredential.user.email,
+      //   photoUrl: userCredential.user.photoURL,
+      // };
+      await axios
+        .post(`${import.meta.env.VITE_REACT_APP_API_URL}/users/login`, {
+          uid: userCredential.user.uid,
+        })
+        .then((res) => {
+          dispatch(addUser(res.data.user));
+
+          setUser({
+            email: "",
+            password: "",
+          });
+          toast.success("You have successfully logged in!");
+          navigate("/profile");
+        })
+        .catch((err) => {
+          if (err.response.status === 404) {
+            toast.error(err.response.data.message);
+          } else {
+            toast.error("Oops, something went wrong!");
+          }
+        });
+
       setLoading(false);
-      setUser({
-        email: "",
-        password: "",
-      });
-      toast.success("You have successfully logged in!");
-      navigate("/profile");
     } catch (err) {
       // User Invalid in Firebase Authentication
 
