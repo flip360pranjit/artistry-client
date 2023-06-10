@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Routers from "./routers/Routers";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const location = useLocation();
@@ -11,6 +12,9 @@ function App() {
 
   return (
     <>
+      <div className="absolute right-0">
+        <ToastContainer />
+      </div>
       {!isLoginOrRegisterPage && <Navbar />}
       <Routers />
       {!isLoginOrRegisterPage && <Footer />}

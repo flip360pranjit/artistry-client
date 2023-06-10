@@ -5,7 +5,7 @@ import MobileView from "./MobileView";
 import Button from "../Button/Button";
 import { FaArrowRight } from "react-icons/fa";
 
-function NavLinks({ isClicked }) {
+function NavLinks({ isClicked, isLoggedIn }) {
   const [headLink, setHeadLink] = useState("");
   const [subLink, setSubLink] = useState("");
 
@@ -54,12 +54,14 @@ function NavLinks({ isClicked }) {
             toggleSubDropdown={toggleSubDropdown}
           />
         ))}
-        <a href="/auth" className="flex justify-center mb-10">
-          <Button type="contained" color="primary" size="mobile-login">
-            Log in
-            <FaArrowRight />
-          </Button>
-        </a>
+        {!isLoggedIn && (
+          <a href="/auth" className="flex justify-center mb-10">
+            <Button type="contained" color="primary" size="mobile-login">
+              Log in
+              <FaArrowRight />
+            </Button>
+          </a>
+        )}
       </ul>
     </>
   );

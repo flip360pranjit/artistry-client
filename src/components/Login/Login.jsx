@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import Button from "../Button/Button";
 import LoginSvg from "../../assets/svgs/login.svg";
 import Logo from "../../assets/images/logo.png";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config/firebase.config";
@@ -20,6 +20,7 @@ function Login({ handleClick }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Handle Form input changes
   function handleChange(event) {
     event.preventDefault();
     setUser({
@@ -28,6 +29,7 @@ function Login({ handleClick }) {
     });
   }
 
+  // Login User
   async function handleSubmit(event) {
     event.preventDefault();
     setLoading(true);
@@ -39,12 +41,8 @@ function Login({ handleClick }) {
         user.email,
         user.password
       );
-      // const currentUser = {
-      //   uid: userCredential.user.uid,
-      //   displayName: userCredential.user.displayName,
-      //   email: userCredential.user.email,
-      //   photoUrl: userCredential.user.photoURL,
-      // };
+
+      // Find user in MongoDB database
       await axios
         .post(`${import.meta.env.VITE_REACT_APP_API_URL}/users/login`, {
           uid: userCredential.user.uid,
@@ -84,9 +82,6 @@ function Login({ handleClick }) {
 
   return (
     <div className="grid grid-cols-1 gap-16 sm:grid-cols-2 sm:gap-0 min-h-screen">
-      <div className="absolute top-0 right-0 z-[999]">
-        <ToastContainer />
-      </div>
       <div className="flex flex-col justify-around items-center sm:h-screen">
         <div className="mb-10 md:mb-0 flex flex-col justify-center items-center">
           <h2 className="text-2xl text-white text-center mt-5 sm:mt-0">
@@ -109,7 +104,9 @@ function Login({ handleClick }) {
 
       <div className="lg:h-screen flex flex-col justify-center px-10">
         <div className="flex justify-center">
-          <img src={Logo} alt="Logo" className="w-20" />
+          <a href="/" className="inline-block">
+            <img src={Logo} alt="Logo" className="w-20" />
+          </a>
         </div>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>

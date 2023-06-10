@@ -3,7 +3,7 @@ import Button from "../Button/Button";
 import RegisterSvg from "../../assets/svgs/register.svg";
 import Logo from "../../assets/images/logo.png";
 import { useDispatch } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, storage } from "../../config/firebase.config";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
@@ -22,6 +22,7 @@ function Register({ handleClick }) {
 
   const dispatch = useDispatch();
 
+  // Handle Form input changes
   function handleChange(event) {
     event.preventDefault();
     setUser({
@@ -30,6 +31,7 @@ function Register({ handleClick }) {
     });
   }
 
+  // Register User
   async function handleSubmit(event) {
     event.preventDefault();
     setLoading(true);
@@ -105,12 +107,11 @@ function Register({ handleClick }) {
 
   return (
     <div className="relative flex flex-col justify-between gap-16 min-h-screen sm:grid sm:grid-cols-2 sm:gap-0">
-      <div className="absolute top-0 right-0 z-[999]">
-        <ToastContainer />
-      </div>
       <div className="flex flex-col justify-center px-10">
         <div className="flex justify-center">
-          <img src={Logo} alt="Logo" className="w-20" />
+          <a href="/" className="inline-block">
+            <img src={Logo} alt="Logo" className="w-20" />
+          </a>
         </div>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-5">
