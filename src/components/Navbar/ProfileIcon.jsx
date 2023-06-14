@@ -48,7 +48,7 @@ function ProfileIcon() {
   }
 
   return (
-    <div className={`relative $`}>
+    <div className="relative">
       <img
         ref={imgRef}
         onClick={handleClick}
@@ -67,20 +67,20 @@ function ProfileIcon() {
           >
             Hi! {user.displayName}
           </li>
+          {user?.isSeller && (
+            <li
+              key="Seller"
+              className="p-2 text-sm rounded cursor-pointer hover:bg-violet-100"
+            >
+              <a href="/dashboard"> Seller Dashboard </a>
+            </li>
+          )}
           <li
-            key="Profile"
+            key="Buyer"
             className="p-2 text-sm rounded cursor-pointer hover:bg-violet-100"
           >
             <a href="/profile"> View Profile</a>
           </li>
-          {user?.isSeller && (
-            <li
-              key="Listings"
-              className="p-2 text-sm rounded cursor-pointer hover:bg-violet-100"
-            >
-              <a href="/listings"> My Listings </a>
-            </li>
-          )}
           <li
             key="Wishlist"
             className="p-2 text-sm rounded cursor-pointer hover:bg-violet-100"

@@ -1,0 +1,182 @@
+[
+  {
+    "_id": "60ca4d3b8b6c8a001fda6ed1",
+    "title": "Sunset Serenity",
+    "description": "A captivating painting depicting a serene sunset",
+    "image": "https://dummyimage.com/200x300",
+    "category": "Landscape",
+    "price": 800,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6ed2",
+    "title": "Whispering Woods",
+    "description": "A mesmerizing artwork showcasing the beauty of nature",
+    "image": "https://dummyimage.com/300x200",
+    "category": "Nature",
+    "price": 1000,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6ed3",
+    "title": "Mystic Mountains",
+    "description": "An enchanting painting capturing the mystic allure of mountains",
+    "image": "https://dummyimage.com/200x300",
+    "category": "Landscape",
+    "price": 1200,
+    "status": "sold"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6ed4",
+    "title": "Ocean Dreams",
+    "description": "A dreamy artwork depicting the tranquility of the ocean",
+    "image": "https://dummyimage.com/200x300",
+    "category": "Seascape",
+    "price": 1500,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6ed5",
+    "title": "Abstract Symphony",
+    "description": "A vibrant and expressive abstract painting",
+    "image": "https://dummyimage.com/300x200",
+    "category": "Abstract",
+    "price": 900,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6ed6",
+    "title": "Floral Delight",
+    "description": "A delightful artwork showcasing the beauty of flowers",
+    "image": "https://dummyimage.com/200x300",
+    "category": "Floral",
+    "price": 1100,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6ed7",
+    "title": "Cityscape Reflections",
+    "description": "A stunning painting capturing the reflections in a cityscape",
+    "image": "https://dummyimage.com/300x200",
+    "category": "Cityscape",
+    "price": 1300,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6ed8",
+    "title": "Wilderness Adventure",
+    "description": "An adventurous artwork showcasing the wilderness",
+    "image": "https://dummyimage.com/200x300",
+    "category": "Nature",
+    "price": 950,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6ed9",
+    "title": "Abstract Harmony",
+    "description": "A harmonious abstract painting with vibrant colors",
+    "image": "https://dummyimage.com/200x300",
+    "category": "Abstract",
+    "price": 800,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6eda",
+    "title": "Dreamy Waters",
+    "description": "A mesmerizing artwork capturing the tranquility of water",
+    "image": "https://dummyimage.com/300x200",
+    "category": "Seascape",
+    "price": 1200,
+    "status": "sold"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6edb",
+    "title": "Colorful Blossoms",
+    "description": "A vibrant painting showcasing the beauty of blooming flowers",
+    "image": "https://dummyimage.com/200x300",
+    "category": "Floral",
+    "price": 1100,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6edc",
+    "title": "City Lights",
+    "description": "An intriguing artwork depicting the mesmerizing lights of the city",
+    "image": "https://dummyimage.com/300x200",
+    "category": "Cityscape",
+    "price": 1400,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6edd",
+    "title": "Enchanting Forest",
+    "description": "An enchanting painting capturing the beauty of a mystical forest",
+    "image": "https://dummyimage.com/200x300",
+    "category": "Nature",
+    "price": 1000,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6ede",
+    "title": "Abstract Expressions",
+    "description": "A captivating abstract artwork with bold expressions",
+    "image": "https://dummyimage.com/300x200",
+    "category": "Abstract",
+    "price": 900,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6edf",
+    "title": "Vintage Charm",
+    "description": "A nostalgic painting capturing the charm of vintage objects",
+    "image": "https://dummyimage.com/200x300",
+    "category": "Still Life",
+    "price": 1300,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6ee0",
+    "title": "Serenity at Sea",
+    "description": "A serene artwork depicting the tranquility of the sea",
+    "image": "https://dummyimage.com/300x200",
+    "category": "Seascape",
+    "price": 950,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6ee1",
+    "title": "Mystic Moonlight",
+    "description": "A mesmerizing painting capturing the beauty of moonlit scenery",
+    "image": "https://dummyimage.com/200x300",
+    "category": "Landscape",
+    "price": 1200,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6ee2",
+    "title": "Abstract Energy",
+    "description": "An energetic abstract artwork with vibrant colors",
+    "image": "https://dummyimage.com/300x200",
+    "category": "Abstract",
+    "price": 1100,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6ee3",
+    "title": "Autumn Splendor",
+    "description": "A beautiful painting capturing the colors of autumn",
+    "image": "https://dummyimage.com/200x300",
+    "category": "Landscape",
+    "price": 1500,
+    "status": "active"
+  },
+  {
+    "_id": "60ca4d3b8b6c8a001fda6ee4",
+    "title": "Dreamy Escape",
+    "description": "An artwork depicting a dreamy escape to a peaceful place",
+    "image": "https://dummyimage.com/300x200",
+    "category": "Nature",
+    "price": 1000,
+    "status": "sold"
+  }
+]

@@ -8,6 +8,9 @@ import Error from "../pages/Error";
 import Authenticate from "../pages/Authenticate";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Profile from "../pages/Profile";
+import ForgotPassword from "../pages/ForgotPassword";
+import Dashboard from "../pages/Dashboard";
+import { Analytics, Listings, Orders, Overview } from "../components/Dashboard";
 
 function Routers() {
   return (
@@ -21,11 +24,18 @@ function Routers() {
       <Route
         path="/profile"
         element={
-          <ProtectedRoutes>
-            <Profile />
-          </ProtectedRoutes>
+          // <ProtectedRoutes>
+          <Profile />
+          // </ProtectedRoutes>
         }
       />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/dashboard" element={<Dashboard />}>
+        <Route index element={<Overview />} />
+        <Route path="listings" element={<Listings />} />
+        <Route path="orders" element={<Orders />} />
+        <Route path="analytics" element={<Analytics />} />
+      </Route>
     </Routes>
   );
 }

@@ -8,7 +8,10 @@ import { ToastContainer } from "react-toastify";
 function App() {
   const location = useLocation();
   // Check if the current location is either "/login" or "/register"
-  const isLoginOrRegisterPage = location.pathname === "/auth";
+  const isLoginOrRegisterPage =
+    location.pathname === "/auth" ||
+    location.pathname.includes("/dashboard") ||
+    location.pathname === "/profile";
 
   return (
     <>

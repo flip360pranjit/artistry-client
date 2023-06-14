@@ -140,7 +140,7 @@ function Login({ handleClick }) {
               </label>
               <div className="text-sm">
                 <a
-                  href="#"
+                  href="/forgot-password"
                   className="font-semibold text-primary hover:text-primary-hover"
                 >
                   Forgot password?
