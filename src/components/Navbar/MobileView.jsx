@@ -1,6 +1,6 @@
 import React from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function MobileView({
   link,
@@ -8,17 +8,29 @@ function MobileView({
   subLink,
   toggleHeadDropdown,
   toggleSubDropdown,
+  handleClick,
 }) {
+  const navigate = useNavigate();
+
+  function render(event, link) {
+    event.preventDefault();
+
+    handleClick(event);
+
+    navigate(link);
+  }
+
   return (
     <div className="mx-4 mb-10">
       {!link.isDropdown && (
-        <Link to={link.link}>
-          <h1 className="text-lg flex items-center justify-between cursor-pointer text-[#333333] hover:text-[#cca300]">
-            {link.name}
-            {link.isDropdown &&
-              (headLink === link.name ? <FaAngleUp /> : <FaAngleDown />)}
-          </h1>
-        </Link>
+        <h1
+          onClick={(e) => render(e, link.link)}
+          className="text-lg flex items-center justify-between cursor-pointer text-[#333333] hover:text-[#cca300]"
+        >
+          {link.name}
+          {link.isDropdown &&
+            (headLink === link.name ? <FaAngleUp /> : <FaAngleDown />)}
+        </h1>
       )}
       {link.isDropdown && (
         <h1
@@ -37,11 +49,13 @@ function MobileView({
           {/* If the dropdown is not nested */}
           {!link.submenu &&
             link.sublinks.map((sublink) => (
-              <Link to={sublink.link} key={sublink.name}>
-                <h2 className="text-base mt-5 text-[#333333] hover:text-[#cca300] cursor-pointer">
-                  {sublink.name}
-                </h2>
-              </Link>
+              <h2
+                key={sublink.name}
+                onClick={(e) => render(e, sublink.link)}
+                className="text-base mt-5 text-[#333333] hover:text-[#cca300] cursor-pointer"
+              >
+                {sublink.name}
+              </h2>
             ))}
 
           {/* If the dropdown is nested */}
@@ -60,11 +74,13 @@ function MobileView({
                 <div className="px-5">
                   {subLink === sublink.name &&
                     sublink.sublinks.map((slink) => (
-                      <Link to={slink.link} key={slink.name}>
-                        <h3 className="flex items-center justify-between text-base mt-5 text-[#333333] hover:text-[#cca300] cursor-pointer">
-                          {slink.name}
-                        </h3>
-                      </Link>
+                      <h3
+                        key={slink.name}
+                        onClick={(e) => render(e, slink.link)}
+                        className="flex items-center justify-between text-base mt-5 text-[#333333] hover:text-[#cca300] cursor-pointer"
+                      >
+                        {slink.name}
+                      </h3>
                     ))}
                 </div>
               </div>

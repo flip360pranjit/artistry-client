@@ -26,6 +26,11 @@ function Navbar() {
     };
   }, []);
 
+  function handleClick(event) {
+    event.preventDefault();
+    setIsClicked(false);
+  }
+
   return (
     <header className="font-poppins text-sm bg-[white] px-8 md:px-20 fixed z-[1000] w-full">
       <nav className="relative flex flex-col items-start md:flex-row md:items-center md:justify-between">
@@ -56,7 +61,11 @@ function Navbar() {
         </div>
 
         {/* Dropdown Links */}
-        <NavLinks isClicked={isClicked} isLoggedIn={user} />
+        <NavLinks
+          isClicked={isClicked}
+          isLoggedIn={user}
+          handleClick={handleClick}
+        />
 
         {/* Authenticate */}
         {!user && (

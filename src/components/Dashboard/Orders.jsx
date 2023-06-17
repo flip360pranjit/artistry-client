@@ -6,11 +6,13 @@ import { setOrder } from "../../store/slices/OrderSlice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import viewOrder from "./ViewOrder";
 
 function Orders() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [search, setSearch] = useState("");
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Handle window resize
   useEffect(() => {
@@ -58,6 +60,19 @@ function Orders() {
   }
   function handlePageClick(n) {
     setCurrentPage(n);
+  }
+
+  function viewOrder(event, orderID) {
+    event.preventDefault();
+    axios
+      .post(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/get-order`, {
+        orderID,
+      })
+      .then((res) => {
+        dispatch(setOrder(res));
+        navigate("/view-order");
+      })
+      .catch((err) => toast.error("Oops, something went wrong!"));
   }
 
   return (

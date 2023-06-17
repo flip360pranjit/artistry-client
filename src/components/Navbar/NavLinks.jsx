@@ -5,7 +5,7 @@ import MobileView from "./MobileView";
 import Button from "../Button/Button";
 import { FaArrowRight } from "react-icons/fa";
 
-function NavLinks({ isClicked, isLoggedIn }) {
+function NavLinks({ isClicked, isLoggedIn, handleClick }) {
   const [headLink, setHeadLink] = useState("");
   const [subLink, setSubLink] = useState("");
 
@@ -52,6 +52,7 @@ function NavLinks({ isClicked, isLoggedIn }) {
             subLink={subLink}
             toggleHeadDropdown={toggleHeadDropdown}
             toggleSubDropdown={toggleSubDropdown}
+            handleClick={handleClick}
           />
         ))}
         {!isLoggedIn && (

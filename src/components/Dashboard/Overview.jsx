@@ -6,11 +6,16 @@ import { ResponsiveBar } from "@nivo/bar";
 import { ResponsivePie } from "@nivo/pie";
 import sellerListings from "../../api/sellerListings.json";
 import sellerOrders from "../../api/sellerOrders.json";
-import viewOrder from "./ViewOrder";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function Overview() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Handle resize
   useEffect(() => {
@@ -48,11 +53,24 @@ function Overview() {
     return result;
   }
 
+  function viewOrder(event, orderID) {
+    event.preventDefault();
+    axios
+      .post(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/get-order`, {
+        orderID,
+      })
+      .then((res) => {
+        dispatch(setOrder(res));
+        navigate("/view-order");
+      })
+      .catch((err) => toast.error("Oops, something went wrong!"));
+  }
+
   return (
     <div>
       <div className="ml-2 mb-5">
         <h1 className="text-3xl font-poppins font-bold text-center md:text-left">
-          Dashboard
+          Overview
         </h1>
       </div>
       <IconContext.Provider value={{ size: "1.2rem" }}>
