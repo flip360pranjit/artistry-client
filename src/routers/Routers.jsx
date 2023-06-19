@@ -25,6 +25,7 @@ import {
 } from "../components/Profile";
 import Artwork from "../components/Artwork/Artwork";
 import HowToSell from "../pages/HowToSell";
+import BecomeASeller from "../pages/BecomeASeller";
 
 function Routers() {
   return (
@@ -38,15 +39,37 @@ function Routers() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/view-artwork" element={<Artwork />} />
       <Route path="/sell-art/how-to-sell" element={<HowToSell />} />
+      <Route
+        path="/sell-art/become-a-seller"
+        element={
+          <ProtectedRoutes>
+            <BecomeASeller />
+          </ProtectedRoutes>
+        }
+      />
 
-      <Route path="/profile" element={<Profile />}>
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoutes>
+            <Profile />
+          </ProtectedRoutes>
+        }
+      >
         <Route index element={<ProfileOverview />} />
         <Route path="orders" element={<ProfileOrders />} />
         <Route path="wishlist" element={<Wishlist />} />
         <Route path="account" element={<Account />} />
       </Route>
 
-      <Route path="/dashboard" element={<Dashboard />}>
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoutes>
+            <Dashboard />
+          </ProtectedRoutes>
+        }
+      >
         <Route index element={<Overview />} />
         <Route path="listings" element={<Listings />} />
         <Route path="orders" element={<Orders />} />

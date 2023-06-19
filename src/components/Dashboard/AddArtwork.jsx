@@ -32,7 +32,7 @@ function AddArtwork() {
 
   const navigate = useNavigate();
 
-  // Handle Form input changes
+  // Handle Form input
   function handleChange(event) {
     event.preventDefault();
     setArt({
@@ -40,7 +40,7 @@ function AddArtwork() {
       [event.target.name]: event.target.value,
     });
   }
-  //   Handle File input changes
+  //   Handle File input
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file && file.size <= 10 * 1024 * 1024) {
@@ -146,6 +146,7 @@ function AddArtwork() {
               </label>
               <div className="mt-2">
                 <input
+                  required
                   type="text"
                   name="title"
                   id="title"
@@ -196,6 +197,7 @@ function AddArtwork() {
                 </label>
                 <div className="mt-2">
                   <input
+                    required
                     type="text"
                     name="custom-medium"
                     id="custom-medium"
@@ -245,6 +247,7 @@ function AddArtwork() {
                 </label>
                 <div className="mt-2">
                   <input
+                    required
                     type="text"
                     name="custom-category"
                     id="custom-category"
@@ -293,6 +296,7 @@ function AddArtwork() {
                 <div className="mt-2 flex items-center gap-5">
                   <div className="flex gap-1">
                     <input
+                      required
                       type="number"
                       name="custom-width"
                       id="custom-width"
@@ -318,6 +322,7 @@ function AddArtwork() {
                   </IconContext.Provider>
                   <div className="flex gap-1">
                     <input
+                      required
                       type="number"
                       name="custom-height"
                       id="custom-height"
@@ -374,6 +379,7 @@ function AddArtwork() {
               </label>
               <div className="mt-2">
                 <input
+                  required
                   type="number"
                   name="price"
                   id="price"
@@ -424,6 +430,7 @@ function AddArtwork() {
                       >
                         <span>Upload a file</span>
                         <input
+                          required
                           id="file-upload"
                           name="file-upload"
                           type="file"

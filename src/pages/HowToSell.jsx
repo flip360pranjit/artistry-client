@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Button from "../components/Button/Button";
 import { motion } from "framer-motion";
 import Image from "../assets/images/mission.jpg";
+import { Link, useNavigate } from "react-router-dom";
+import { FaAngleUp } from "react-icons/fa";
 
 const heroVariants = {
   hidden: {
@@ -72,10 +74,12 @@ const steps = [
 ];
 
 function HowToSell() {
-  useEffect(() => {
-    // Scroll to the top when the component mounts
-    window.scrollTo(0, 0);
-  }, []);
+  const navigate = useNavigate();
+
+  function becomeSeller(event) {
+    event.preventDefault();
+    navigate("/sell-art/become-a-seller");
+  }
 
   return (
     <div className="flex flex-col items-center bg-white lg:px-8 mx-10">
@@ -114,6 +118,7 @@ function HowToSell() {
           transition={{ delay: 0.6, duration: 0.6 }}
           exit="exit"
           className="mt-7 flex justify-center"
+          onClick={becomeSeller}
         >
           <Button type="contained" color="primary" size="large">
             Become a Seller
@@ -121,12 +126,28 @@ function HowToSell() {
         </motion.div>
       </div>
       <div className="">
-        <h3 className="text-center text-4xl font-semibold font-poppins my-5">
+        <h3 className="text-center text-3xl sm:text-5xl font-semibold font-poppins my-5">
           Let's get started!
         </h3>
-        <div className="">
+        <div className="flex flex-col items-center">
+          <iframe
+            className="w-[50vw] h-[28.2vw]"
+            src="https://www.youtube.com/embed/OcLPtlzj7cU"
+            title="OG HORROR IS BACK - NO PROMOTION"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
+          <p className="mt-3 text-[#555555] flex flex-col items-center">
+            <FaAngleUp /> <span>Click to see the tutorial</span>
+          </p>
+        </div>
+        <div className="mt-7">
           {steps.map((step) => (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+            <div
+              key={step.id}
+              className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center mt-6"
+            >
               <img src={Image} alt={step.image} className="" />
               <div
                 className={`col-span-2 ${
@@ -152,11 +173,11 @@ function HowToSell() {
           ))}
         </div>
       </div>
-      <div className="bg-gray-100 py-10 rounded-2xl">
+      <div className="bg-gray-100 py-10 rounded-2xl mt-10">
         <h2 className="font-poppins font-semibold text-4xl text-center mb-5">
           Art Selling Tip:
         </h2>
-        <p className="font-open-sans text-sm leading-relaxed text-center text-[#333333] bg-white p-5 mx-16 rounded-lg shadow-lg">
+        <p className="font-open-sans text-sm leading-relaxed text-center text-[#333333] bg-white p-5 mx-3 sm:mx-16 rounded-lg shadow-lg">
           Remember, selling art is a journey that requires dedication,
           persistence, and continuous improvement. Regularly update your
           portfolio with new artwork, refine your marketing strategies, and stay
@@ -168,14 +189,16 @@ function HowToSell() {
       </div>
 
       <div className="pt-20 pb-12">
-        <h2 className="font-poppins font-semibold text-6xl text-center">
-          Get Started
+        <h2 className="font-poppins font-semibold text-4xl sm:text-6xl text-center">
+          Get Started!
         </h2>
-        <div className="mt-7 flex justify-center">
-          <Button type="contained" color="primary" size="large">
-            Become a Seller
-          </Button>
-        </div>
+        <Link to="/sell-art/become-a-seller">
+          <div className="mt-7 flex justify-center">
+            <Button type="contained" color="primary" size="large">
+              Become a Seller
+            </Button>
+          </div>
+        </Link>
       </div>
     </div>
   );

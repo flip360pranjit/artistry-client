@@ -6,6 +6,7 @@ import Button from "../Button/Button";
 import Logo from "../../assets/images/logo.png";
 import ProfileIcon from "./ProfileIcon";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -48,13 +49,13 @@ function Navbar() {
               </IconContext.Provider>
             </button>
             {/* Brand */}
-            <a href="/" className="flex items-center justify-center lg:gap-2">
+            <Link to="/" className="flex items-center justify-center lg:gap-2">
               <img src={Logo} alt="Logo" className="w-14 lg:w-14 xl:w-18" />
               <h3 className="font-lobster mb-1 lg:mb-2 text-[#cca300] text-2xl lg:text-3xl xl:text-4xl">
                 Art
                 <span className="text-[#3c166d]">istry</span>
               </h3>
-            </a>
+            </Link>
           </div>
           {/* Profile Icon */}
           {user && windowWidth < 768 && <ProfileIcon />}
