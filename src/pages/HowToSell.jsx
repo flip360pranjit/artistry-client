@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "../assets/images/mission.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { FaAngleUp } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const heroVariants = {
   hidden: {
@@ -75,10 +76,13 @@ const steps = [
 
 function HowToSell() {
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
 
   function becomeSeller(event) {
     event.preventDefault();
-    navigate("/sell-art/become-a-seller");
+    user.isSeller
+      ? navigate("/dashboard")
+      : navigate("/sell-art/become-a-seller");
   }
 
   return (

@@ -26,6 +26,8 @@ import {
 import Artwork from "../components/Artwork/Artwork";
 import HowToSell from "../pages/HowToSell";
 import BecomeASeller from "../pages/BecomeASeller";
+import Browse from "../components/Browse/Browse";
+import Reviews from "../components/Artwork/Reviews";
 
 function Routers() {
   return (
@@ -47,6 +49,8 @@ function Routers() {
           </ProtectedRoutes>
         }
       />
+      <Route path="/browse" element={<Browse />} />
+      <Route path="/artwork/reviews" element={<Reviews />} />
 
       <Route
         path="/profile"

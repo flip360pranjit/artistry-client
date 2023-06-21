@@ -2,32 +2,8 @@ export const links = [
   {
     name: "Browse",
     link: "/browse",
-    isDropdown: true,
-    submenu: true,
-    sublinks: [
-      {
-        name: "Artworks",
-        link: "/browse/artworks",
-        sublinks: [
-          { name: "Abstract", link: "/browse/artworks/abstract" },
-          { name: "Landscape", link: "/browse/artworks/landscape" },
-          { name: "Portrait", link: "/browse/artworks/portrait" },
-          { name: "Still Life", link: "/browse/artworks/still-life" },
-          { name: "Anime", link: "/browse/artworks/anime" },
-        ],
-        sublinkCount: 5,
-      },
-      {
-        name: "Artists",
-        link: "/browse/artists",
-        sublinks: [
-          { name: "Featured Artists", link: "/browse/artists/featured" },
-          { name: "New Artists", link: "/browse/artists/new" },
-          { name: "All Artists", link: "/browse/artists/all" },
-        ],
-        sublinkCount: 3,
-      },
-    ],
+    isDropdown: false,
+    submenu: false,
   },
   {
     name: "Sell Art",

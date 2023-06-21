@@ -3,7 +3,7 @@ import { FiLogOut } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuth, signOut } from "firebase/auth";
 import { removeUser } from "../../store/slices/AuthSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function ProfileIcon() {
@@ -72,26 +72,26 @@ function ProfileIcon() {
               key="Seller"
               className="p-2 text-sm rounded cursor-pointer hover:bg-violet-100"
             >
-              <a href="/dashboard"> Seller Dashboard </a>
+              <Link to="/dashboard"> Seller Dashboard </Link>
             </li>
           )}
           <li
             key="Buyer"
             className="p-2 text-sm rounded cursor-pointer hover:bg-violet-100"
           >
-            <a href="/profile"> View Profile</a>
+            <Link to="/profile"> View Profile</Link>
           </li>
           <li
             key="Wishlist"
             className="p-2 text-sm rounded cursor-pointer hover:bg-violet-100"
           >
-            <a href="/wishlist"> My Wishlist</a>
+            <Link to="/wishlist"> My Wishlist</Link>
           </li>
           <li
             key="cart"
             className="p-2 text-sm rounded cursor-pointer hover:bg-violet-100"
           >
-            <a href="/cart"> View Cart</a>
+            <Link to="/cart"> View Cart</Link>
           </li>
           <li
             key="Logout"
