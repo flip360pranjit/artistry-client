@@ -165,7 +165,7 @@ function BecomeASeller() {
     }
   };
   return (
-    <div className="flex flex-col items-center bg-white lg:px-8 mx-10 md:mx-20 pt-24 pb-10">
+    <div className="flex flex-col items-center bg-white lg:px-8 mx-4 md:mx-20 pt-24 pb-10">
       <div id="recaptcha-container"></div>
       <form onSubmit={handleSubmit}>
         <div className="">

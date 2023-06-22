@@ -22,7 +22,7 @@ function ForgotPassword() {
   }
 
   return (
-    <div className="bg-[#f4e7d3] h-screen pt-20 mx-10 md:mx-20">
+    <div className="bg-[#f4e7d3] h-screen pt-20 mx-4 md:mx-20">
       <motion.div
         variants={divVariants}
         initial="hidden"

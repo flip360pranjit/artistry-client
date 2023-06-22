@@ -3,7 +3,7 @@ import ErrorImg from "../assets/images/error.png";
 
 function Error() {
   return (
-    <div className="flex flex-col justify-center items min-h-full bg-white px-6 py-24 sm:py-20 lg:px-8 mx-10 md:mx-20">
+    <div className="flex flex-col justify-center items min-h-full bg-white px-6 py-24 sm:py-20 lg:px-8 mx-4 md:mx-20">
       <div className="flex justify-center">
         <img src={ErrorImg} alt="Error" className="h-[40vh]" />
       </div>

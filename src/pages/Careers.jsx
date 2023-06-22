@@ -19,7 +19,7 @@ const heroVariants = {
 
 const Careers = () => {
   return (
-    <div className="bg-[#f4e7d3] pt-32 pb-16 px-4 sm:px-6 lg:px-8 rounded-b-3xl mx-10 md:mx-20">
+    <div className="bg-[#f4e7d3] pt-32 pb-16 px-4 sm:px-6 lg:px-8 rounded-b-3xl mx-4 md:mx-20">
       <div className="max-w-4xl mx-auto">
         <motion.h2
           variants={heroVariants}
