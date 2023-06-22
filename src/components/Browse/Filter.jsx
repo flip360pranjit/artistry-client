@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-function Filter({ name, options, onChange }) {
+function Filter({ name, options, onChange, isCleared }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
 
@@ -13,6 +13,20 @@ function Filter({ name, options, onChange }) {
     setSelectedOptions(updatedOptions);
     onChange(updatedOptions);
   };
+  function clear() {
+    const checkboxes = document.querySelectorAll(`input[type="checkbox"]`);
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+  }
+
+  useEffect(() => {
+    if (isCleared) {
+      clear();
+      setSelectedOptions([]);
+      setIsOpen(false);
+    }
+  }, [isCleared]);
 
   return (
     <div className="font-poppins mt-5">

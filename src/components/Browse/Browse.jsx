@@ -3,7 +3,9 @@ import BrowseSidebar from "./BrowseSidebar";
 import { Menu, Transition } from "@headlessui/react";
 import axios from "axios";
 import ProductCard from "../Card/ProductCard";
-import { FaChevronDown } from "react-icons/fa";
+import { FaChevronDown, FaTimes } from "react-icons/fa";
+import { ImEqualizer2 } from "react-icons/im";
+import { motion, AnimatePresence } from "framer-motion";
 
 function Browse() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -18,6 +20,7 @@ function Browse() {
   const [selectedMediums, setSelectedMediums] = useState([]);
   const [isCleared, setIsCleared] = useState(false);
   const [clickedReview, setClickedReview] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Handle window resize
   useEffect(() => {
@@ -175,15 +178,23 @@ function Browse() {
 
   return (
     <div className="pt-20 md:pt-[55px] min-h-screen">
-      <div className="flex bg-primary px-5 py-2 justify-between items-center">
-        <p className="text-white text-xs sm:text-sm font-poppins">
-          1-48 for over 10000 results
+      <div className="flex bg-primary px-5 py-2 justify-between items-center fixed top-[74px] sm:sticky sm:top-[52px] w-full z-50">
+        <div
+          onClick={() => setIsSidebarOpen(true)}
+          className="flex items-center font-poppins gap-2 text-sm text-white sm:hidden cursor-pointer"
+        >
+          <ImEqualizer2 /> Filter
+        </div>
+        <p className="text-white text-xs sm:text-sm font-poppins hidden mobile-sm:block">
+          {firstIndex + 1}-{pageArtworks.length + firstIndex} for over{" "}
+          {artworks.length} results
         </p>
-        <div className="hidden sm:block">
+        <div className="block">
           <Menu as="div" className="relative inline-block text-left">
             <div>
               <Menu.Button className="inline-flex w-full items-center justify-center gap-x-1.5 rounded-md bg-white px-2 py-1 text-xs text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                Sort by: <span className="font-semibold">{sortBy}</span>
+                Sort by:{" "}
+                <span className="font-semibold hidden sm:block">{sortBy}</span>
                 <FaChevronDown />
               </Menu.Button>
             </div>
@@ -265,20 +276,51 @@ function Browse() {
           </Menu>
         </div>
       </div>
-      <div className="flex">
-        <div className="hidden sm:block sm:w-1/5 sm:min-h-screen">
-          <BrowseSidebar
-            clearFilters={clearFilters}
-            searchQuery={searchQuery}
-            priceFilter={priceFilter}
-            handleSearchQuery={handleSearchQuery}
-            handlePriceQuery={handlePriceQuery}
-            handleCategoryChange={handleCategoryChange}
-            handleMediumChange={handleMediumChange}
-            isCleared={isCleared}
-          />
-        </div>
-        <div className="w-full sm:w-4/5 px-2 sm:px-7 pt-3 pb-20 md:pb-[55px]">
+      <div className="flex relative">
+        {windowWidth < 640 ? (
+          <AnimatePresence>
+            {isSidebarOpen && (
+              <motion.div
+                initial={{ x: "-100vw", opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: "-100vw", opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="bg-gray-200 block h-screen fixed z-[60]"
+              >
+                <div
+                  onClick={() => setIsSidebarOpen(false)}
+                  className="absolute -right-6 cursor-pointer"
+                >
+                  <FaTimes className="h-7 text-gray-100" />
+                </div>
+                <BrowseSidebar
+                  clearFilters={clearFilters}
+                  searchQuery={searchQuery}
+                  priceFilter={priceFilter}
+                  handleSearchQuery={handleSearchQuery}
+                  handlePriceQuery={handlePriceQuery}
+                  handleCategoryChange={handleCategoryChange}
+                  handleMediumChange={handleMediumChange}
+                  isCleared={isCleared}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        ) : (
+          <div className="bg-gray-200 block w-1/5 min-h-screen relative">
+            <BrowseSidebar
+              clearFilters={clearFilters}
+              searchQuery={searchQuery}
+              priceFilter={priceFilter}
+              handleSearchQuery={handleSearchQuery}
+              handlePriceQuery={handlePriceQuery}
+              handleCategoryChange={handleCategoryChange}
+              handleMediumChange={handleMediumChange}
+              isCleared={isCleared}
+            />
+          </div>
+        )}
+        <div className="w-full sm:w-4/5 px-2 sm:px-7 pt-3 pb-20 md:pb-[55px] mt-8 sm:mt-0">
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
             {pageArtworks.map((artwork) => (
               <ProductCard

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MultiRangeSlider from "./MultiRangeSlider";
 import Filter from "./Filter";
+import "./Browse.scss";
 
 const categoryOptions = [
   "Abstract",
@@ -33,21 +34,8 @@ function BrowseSidebar({
   handleMediumChange,
   isCleared,
 }) {
-  function clear() {
-    const checkboxes = document.querySelectorAll(`input[type="checkbox"]`);
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
-  }
-
-  useEffect(() => {
-    if (isCleared) {
-      clear();
-    }
-  }, [isCleared]);
-
   return (
-    <div className="bg-gray-200 h-full p-4">
+    <div className="sidebar p-4 sm:sticky h-[85vh] sm:top-24 left-0 overflow-y-scroll">
       <div className="flex justify-end">
         <p
           onClick={clearFilters}
@@ -112,11 +100,13 @@ function BrowseSidebar({
             name="Category"
             options={categoryOptions}
             onChange={handleCategoryChange}
+            isCleared={isCleared}
           />
           <Filter
             name="Medium"
             options={mediumOptions}
             onChange={handleMediumChange}
+            isCleared={isCleared}
           />
         </div>
       </div>

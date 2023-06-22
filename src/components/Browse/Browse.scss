@@ -10,6 +10,9 @@
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
 }
+.sidebar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
 
 .thumb:focus {
   @apply outline-none;
