@@ -7,14 +7,14 @@ function DesktopView({ link, headLink, toggleHeadDropdown }) {
     <div className="relative">
       <h1
         className="text-[10px] lg:text-xs text-[#333333] cursor-pointer hover:text-secondary flex items-center justify-center"
-        onMouseEnter={(Event) => {
+        onClick={(Event) => {
           toggleHeadDropdown(Event, link);
         }}
       >
         {link.isDropdown ? (
           <>{link.name}</>
         ) : (
-          <a href={link.link}>{link.name}</a>
+          <Link to={link.link}>{link.name}</Link>
         )}
 
         {link.isDropdown &&
@@ -33,9 +33,6 @@ function DesktopView({ link, headLink, toggleHeadDropdown }) {
             className={`bg-[white] rounded-b-md border border-gray-300 border-t-0 shadow-md transition ease-in-out duration-300 px-8 py-5  ${
               link.submenu ? "grid grid-cols-2 gap-x-10 gap-y-7" : "pl-3 pb-2"
             }`}
-            onMouseLeave={(Event) => {
-              toggleHeadDropdown(Event, link);
-            }}
           >
             {link.sublinks.map((sublink) => (
               <div key={sublink.name}>
@@ -60,11 +57,8 @@ function DesktopView({ link, headLink, toggleHeadDropdown }) {
                 {sublink.sublinkCount > 0 && (
                   <div>
                     {sublink.sublinks.map((slink) => (
-                      <Link to={slink.link}>
-                        <h2
-                          key={slink.name}
-                          className="flex flex-row items-center mt-2 cursor-pointer text-md text-[#666666] hover:text-[#cca300]"
-                        >
+                      <Link key={slink.name} to={slink.link}>
+                        <h2 className="flex flex-row items-center mt-2 cursor-pointer text-md text-[#666666] hover:text-[#cca300]">
                           <FaAngleRight />
                           <span className="transition duration-300 ease-in-out hover:translate-x-2">
                             {slink.name}
