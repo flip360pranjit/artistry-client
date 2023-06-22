@@ -6,6 +6,9 @@ import ProductCard from "../Card/ProductCard";
 import { FaChevronDown, FaTimes } from "react-icons/fa";
 import { ImEqualizer2 } from "react-icons/im";
 import { motion, AnimatePresence } from "framer-motion";
+import FilterError from "../../assets/images/filtererror.png";
+import Lottie from "react-lottie";
+import animationData from "../../assets/lotties/loading.json";
 
 function Browse() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -320,18 +323,50 @@ function Browse() {
             />
           </div>
         )}
-        <div className="w-full sm:w-4/5 px-2 sm:px-7 pt-3 pb-20 md:pb-[55px] mt-8 sm:mt-0">
-          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-            {pageArtworks.map((artwork) => (
-              <ProductCard
-                key={artwork._id}
-                artwork={artwork}
-                clickedReview={clickedReview}
-                setClickedReview={setClickedReview}
-                sortBy={sortBy}
+        <div className="w-full sm:w-4/5 px-2 sm:px-7 pt-3 pb-20 md:pb-[55px] mt-8 sm:mt-0 min-h-screen">
+          {artworks.length === 0 ? (
+            <div className="h-[90%] flex items-center justify-center">
+              <Lottie
+                options={{
+                  loop: true,
+                  autoplay: true,
+                  animationData: animationData,
+                  rendererSettings: {
+                    preserveAspectRatio: "xMidYMid slice",
+                  },
+                }}
+                height={400}
+                width={400}
               />
-            ))}
-          </div>
+            </div>
+          ) : pageArtworks.length === 0 ? (
+            <div className="h-[90%] flex items-center justify-center">
+              <div className="flex flex-col items-center font-poppins max-w-xl">
+                <img
+                  src={FilterError}
+                  alt="Filter Error"
+                  className="h-[40vh] w-auto"
+                />
+                <h2 className="font-bold text-5xl text-center mt-2">Oops!</h2>
+                <p className="text-lg text-[#555555] text-center mt-2">
+                  No artworks found with the selected filters. Please try
+                  different filter options to explore more artworks.
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+              {pageArtworks.map((artwork) => (
+                <ProductCard
+                  key={artwork._id}
+                  artwork={artwork}
+                  clickedReview={clickedReview}
+                  setClickedReview={setClickedReview}
+                  sortBy={sortBy}
+                />
+              ))}
+            </div>
+          )}
 
           <ul className="flex items-center justify-center gap-2 text-sm mt-7">
             <li>
