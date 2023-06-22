@@ -58,13 +58,13 @@ function Footer() {
               </h3>
               <ul className="flex flex-col mb-6 gap-3">
                 {category.links.map((link) => (
-                  <a
+                  <Link
                     key={link.title}
-                    href={link.url}
+                    to={link.url}
                     className="text-gray-700 transition hover:text-gray-700/75"
                   >
                     {link.title}
-                  </a>
+                  </Link>
                 ))}
               </ul>
             </div>
