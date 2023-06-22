@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
+import { IconContext } from "react-icons";
 import { FaAngleRight, FaCaretDown, FaCaretUp } from "react-icons/fa";
+import { IoTriangleSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 function DesktopView({ link, headLink, toggleHeadDropdown }) {
@@ -21,16 +23,14 @@ function DesktopView({ link, headLink, toggleHeadDropdown }) {
           (headLink === link.name ? <FaCaretUp /> : <FaCaretDown />)}
       </h1>
       {link.isDropdown && headLink === link.name && (
-        <div className="absolute w-max mt-5 lg:mt-9 z-10">
+        <div className="absolute w-max mt-5 z-10">
           {/* Triangle for dropdown */}
-          <img
-            src="./images/caret-up.png"
-            alt="Caret Up"
-            className="h-4 ml-2"
-          />
+          <IconContext.Provider value={{ color: "#ffffff", size: "2rem" }}>
+            <IoTriangleSharp />
+          </IconContext.Provider>
 
           <div
-            className={`bg-[white] rounded-b-md border border-gray-300 border-t-0 shadow-md transition ease-in-out duration-300 px-8 py-5  ${
+            className={`relative -top-1 bg-[white] rounded-b-md border border-gray-300 border-t-0 shadow-md transition ease-in-out duration-300 px-8 py-5  ${
               link.submenu ? "grid grid-cols-2 gap-x-10 gap-y-7" : "pl-3 pb-2"
             }`}
           >
