@@ -33,9 +33,9 @@ function Navbar() {
   }
 
   return (
-    <header className="font-poppins text-sm bg-[white] px-8 md:px-20 fixed z-[1000] w-full">
+    <header className="font-poppins text-sm bg-[white] md:px-20 fixed z-[1000] w-full">
       <nav className="relative flex flex-col items-start md:flex-row md:items-center md:justify-between">
-        <div className="flex bg-[white] pt-5 md:pt-0 w-full md:w-auto justify-between items-center z-[999]">
+        <div className="flex bg-[white] px-2 mobile-sm:px-8 md:px-0 pt-5 md:pt-0 w-full md:w-auto justify-between items-center z-[999]">
           <div className="flex flex-row items-center gap-4">
             {/* Hamburger Menu */}
             <button

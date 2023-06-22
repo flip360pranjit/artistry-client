@@ -40,7 +40,7 @@ function NavLinks({ isClicked, isLoggedIn, handleClick }) {
 
       {/* Mobile View */}
       <ul
-        className={`absolute mt-10 md:hidden w-full min-h-screen flex flex-col bg-[white] transition-all duration-500 ease-in-out z-[990] pt-20 ${
+        className={`absolute px-2 mobile-sm:px-8 md:px-0 mt-10 md:hidden w-full min-h-screen flex flex-col bg-[white] transition-all duration-500 ease-in-out z-[990] pt-20 ${
           isClicked && ""
         } ${!isClicked && "translate-y-[-200%]"}`}
       >

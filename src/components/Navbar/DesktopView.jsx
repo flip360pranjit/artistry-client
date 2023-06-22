@@ -6,7 +6,7 @@ function DesktopView({ link, headLink, toggleHeadDropdown }) {
   return (
     <div className="relative">
       <h1
-        className="text-[10px] lg:text-xs text-[#333333] cursor-pointer hover:text-secondary flex items-center justify-center"
+        className="text-xs lg:text-sm text-[#333333] cursor-pointer hover:text-secondary flex items-center justify-center"
         onClick={(Event) => {
           toggleHeadDropdown(Event, link);
         }}
