@@ -52,8 +52,22 @@ function Routers() {
       />
       <Route path="/browse" element={<Browse />} />
       <Route path="/artwork/reviews" element={<Reviews />} />
-      <Route path="/wishlist" element={<Wishlist />} />
-      <Route path="/cart" element={<Cart />} />
+      <Route
+        path="/wishlist"
+        element={
+          <ProtectedRoutes>
+            <Wishlist />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
+        path="/cart"
+        element={
+          <ProtectedRoutes>
+            <Cart />
+          </ProtectedRoutes>
+        }
+      />
 
       <Route
         path="/profile"

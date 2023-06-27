@@ -161,32 +161,44 @@ function Artwork() {
   function handleWishlisting(event) {
     event.preventDefault();
 
-    dispatch(addToWishlist({ user: user._id, productId: artwork._id }))
-      .unwrap()
-      .then(() => {
-        toast.success("Artwork added to wishlist!", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
+    if (!user) {
+      navigate("/auth");
+    } else {
+      dispatch(addToWishlist({ user: user._id, productId: artwork._id }))
+        .unwrap()
+        .then(() => {
+          toast.success("Artwork added to wishlist!", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          navigate("/wishlist");
         });
-        navigate("/wishlist");
-      });
+    }
   }
   function handleAddToCart(event) {
     event.preventDefault();
 
-    dispatch(
-      addToCart({ user: user._id, productId: artwork._id, quantity: quantity })
-    )
-      .unwrap()
-      .then(() => {
-        navigate("/cart");
-      });
+    if (!user) {
+      navigate("/auth");
+    } else {
+      dispatch(
+        addToCart({
+          user: user._id,
+          productId: artwork._id,
+          quantity: quantity,
+        })
+      )
+        .unwrap()
+        .then(() => {
+          navigate("/cart");
+        });
+    }
   }
 
   return (

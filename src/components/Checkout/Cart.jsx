@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { MdOutlineCurrencyRupee } from "react-icons/md";
+import { MdOutlineCurrencyRupee, MdVerified } from "react-icons/md";
 import { toast } from "react-toastify";
 import WishlistError from "../../assets/images/wishlistError.png";
 import {
@@ -10,11 +10,12 @@ import {
   removeFromCart,
   setQuantity,
 } from "../../store/thunks/CartThunks";
-import { applyCoupon } from "../../store/slices/CartSlice";
+import { applyCoupon, removeCoupon } from "../../store/slices/CartSlice";
 import QuantityInput from "./QuantityInput";
 import QuantityMenu from "./QuantityMenu";
 import Button from "../Button/Button";
 import axios from "axios";
+import { FaTimes } from "react-icons/fa";
 
 function Cart() {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ function Cart() {
   );
   const [cLoading, setCLoading] = useState(false);
   const [couponLoading, setCouponLoading] = useState(false);
+  const [couponError, setCouponError] = useState("");
   const [currentArtwork, setCurrentArtwork] = useState("");
   const [openInput, setOpenInput] = useState(false);
   const [focusedInput, setFocusedInput] = useState(false);
@@ -94,6 +96,8 @@ function Cart() {
             } else {
               setOpenInput(true);
             }
+            dispatch(removeCoupon());
+            setCouponError("");
           });
       }
     }
@@ -136,7 +140,10 @@ function Cart() {
           const discountAmount = (discountPercent / 100) * totalAmount;
 
           dispatch(
-            applyCoupon({ discount: discountPercent, amount: discountAmount })
+            applyCoupon({
+              amount: discountAmount,
+              coupon: response.data.coupon,
+            })
           );
           toast.success("Coupon Applied!", {
             position: "top-right",
@@ -148,11 +155,12 @@ function Cart() {
             progress: undefined,
             theme: "light",
           });
-          // handle errors above coupon input
+          setCouponCode("");
+          setCouponError("");
         });
     } catch (error) {
       setCouponLoading(false);
-      toast.error(error.response.data.message);
+      setCouponError(`${error.response.data.message}!`);
     }
   }
   //   Continue Shopping
@@ -330,23 +338,44 @@ function Cart() {
             </div>
           ))}
           <div className="grid grid-cols-1 sm:grid-cols-3 bg-gray-100 p-5 mt-7">
-            <div className="sm:col-span-2 flex items-center justify-center order-last sm:order-first">
-              <input
-                type="text"
-                name="coupon"
-                id="coupon"
-                placeholder="Please enter coupon code"
-                value={couponCode}
-                onChange={(e) => setCouponCode(e.target.value)}
-                className="block w-1/2 rounded-y-md rounded-l-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-primary placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
-              />
-              <button
-                disabled={couponLoading}
-                onClick={applyCouponCode}
-                className="px-3 py-2 flex items-center justify-center rounded-r-md text-white text-sm bg-primary hover:bg-primary-hover"
-              >
-                {couponLoading ? "Loading" : "Apply Discount"}
-              </button>
+            <div className="sm:col-span-2 flex flex-col items-center justify-center gap-3 order-last sm:order-first">
+              {discount.applied ? (
+                <div className="relative bg-white w-2/3 p-3 pr-5 shadow-2xl rounded-md">
+                  <div
+                    onClick={() => dispatch(removeCoupon())}
+                    className="absolute right-1 cursor-pointer"
+                  >
+                    <FaTimes />
+                  </div>
+                  <h2 className="flex gap-1 items-center text-lg font-semibold text-[#3ec70b]">
+                    {`Code (${discount.coupon.code}) applied!`}
+                    <MdVerified />
+                  </h2>
+                  <h4 className="font-open-sans">{`${discount.coupon.discount}% off!`}</h4>
+                </div>
+              ) : (
+                <>
+                  <h5 className="font-semibold text-red-600">{couponError}</h5>
+                  <div className="flex items-center justify-center w-full">
+                    <input
+                      type="text"
+                      name="coupon"
+                      id="coupon"
+                      placeholder="Please enter coupon code"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value)}
+                      className="block w-1/2 rounded-y-md rounded-l-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-primary placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                    />
+                    <button
+                      disabled={couponLoading}
+                      onClick={applyCouponCode}
+                      className="px-3 py-2 flex items-center justify-center rounded-r-md text-white text-sm bg-primary hover:bg-primary-hover"
+                    >
+                      {couponLoading ? "Loading" : "Apply Discount"}
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
             <div className="flex items-center">
               <div className="w-full p-5 bg-white rounded-lg shadow-xl">
@@ -369,7 +398,7 @@ function Cart() {
                   <p className="">Discount</p>
                   <p className="flex items-center gap-2">
                     {"("}
-                    {discount.discount}
+                    {discount.coupon.discount}
                     {"%)"}
                     <span className="flex items-center">
                       {"-"}

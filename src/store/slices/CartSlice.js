@@ -28,15 +28,40 @@ const cartSlice = createSlice({
     totalQuantity: 0,
     totalAmount: 0,
     discount: {
-      discount: 0,
+      applied: false,
       amount: 0,
+      coupon: {
+        code: "",
+        discount: 0,
+        expirationDate: 0,
+        offerHeading: "",
+        offerDescription: "",
+        image: "",
+        theme: "",
+      },
     },
   },
   reducers: {
     applyCoupon: (state, action) => {
       state.discount = {
-        discount: action.payload.discount,
+        applied: true,
         amount: action.payload.amount,
+        coupon: action.payload.coupon,
+      };
+    },
+    removeCoupon: (state, action) => {
+      state.discount = {
+        applied: false,
+        amount: 0,
+        coupon: {
+          code: "",
+          discount: 0,
+          expirationDate: 0,
+          offerHeading: "",
+          offerDescription: "",
+          image: "",
+          theme: "",
+        },
       };
     },
   },
@@ -51,6 +76,19 @@ const cartSlice = createSlice({
         state.items = action.payload.products;
         state.totalQuantity = getTotalQuantity(state);
         state.totalAmount = getTotalAmount(state);
+        state.discount = {
+          applied: false,
+          amount: 0,
+          coupon: {
+            code: "",
+            discount: 0,
+            expirationDate: 0,
+            offerHeading: "",
+            offerDescription: "",
+            image: "",
+            theme: "",
+          },
+        };
       })
       .addCase(getCart.rejected, (state, action) => {
         state.loading = false;
@@ -60,10 +98,18 @@ const cartSlice = createSlice({
         state.loading = false;
         state.totalQuantity = 0;
         state.totalAmount = 0;
-        state.discount = null;
         state.discount = {
-          discount: 0,
+          applied: false,
           amount: 0,
+          coupon: {
+            code: "",
+            discount: 0,
+            expirationDate: 0,
+            offerHeading: "",
+            offerDescription: "",
+            image: "",
+            theme: "",
+          },
         };
       })
       .addCase(addToCart.pending, (state) => {
@@ -191,5 +237,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const { applyCoupon } = cartSlice.actions;
+export const { applyCoupon, removeCoupon } = cartSlice.actions;
 export default cartSlice.reducer;
