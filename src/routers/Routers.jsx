@@ -28,6 +28,7 @@ import HowToSell from "../pages/HowToSell";
 import BecomeASeller from "../pages/BecomeASeller";
 import Browse from "../components/Browse/Browse";
 import Reviews from "../components/Artwork/Reviews";
+import Cart from "../components/Checkout/Cart";
 
 function Routers() {
   return (
@@ -51,6 +52,8 @@ function Routers() {
       />
       <Route path="/browse" element={<Browse />} />
       <Route path="/artwork/reviews" element={<Reviews />} />
+      <Route path="/wishlist" element={<Wishlist />} />
+      <Route path="/cart" element={<Cart />} />
 
       <Route
         path="/profile"
@@ -62,7 +65,6 @@ function Routers() {
       >
         <Route index element={<ProfileOverview />} />
         <Route path="orders" element={<ProfileOrders />} />
-        <Route path="wishlist" element={<Wishlist />} />
         <Route path="account" element={<Account />} />
       </Route>
 

@@ -3,6 +3,7 @@ import {
   RiFileList3Fill,
   RiShoppingBasketLine,
   RiBarChart2Line,
+  RiShoppingBagFill,
 } from "react-icons/ri";
 const ProfileSidebarLinks = [
   {
@@ -16,9 +17,14 @@ const ProfileSidebarLinks = [
     link: "/profile/orders",
   },
   {
+    icon: <RiShoppingBagFill />,
+    title: "Cart",
+    link: "/cart",
+  },
+  {
     icon: <RiShoppingBasketLine />,
     title: "Wishlist",
-    link: "/profile/wishlist",
+    link: "/wishlist",
   },
   {
     icon: <RiBarChart2Line />,

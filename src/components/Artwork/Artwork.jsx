@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { FaCalendar, FaRegHeart } from "react-icons/fa";
 import { FiMinus, FiPlus } from "react-icons/fi";
@@ -6,6 +6,10 @@ import { MdOutlineCurrencyRupee } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
 import Rating from "../Browse/Rating";
 import "./Artwork.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { addToWishlist } from "../../store/thunks/WishlistThunks";
+import { addToCart } from "../../store/thunks/CartThunks";
 
 const reviews = [
   {
@@ -123,7 +127,14 @@ const reviews = [
 function Artwork() {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // States
   const [quantity, setQuantity] = useState(1);
+
+  const { user } = useSelector((state) => state.auth);
+  const wLoading = useSelector((state) => state.wishlist.loading);
+  const cLoading = useSelector((state) => state.cart.loading);
 
   const artwork = location.state.artwork;
   const sortedReviews = reviews.sort((a, b) => b.createdAt - a.createdAt);
@@ -145,6 +156,37 @@ function Artwork() {
     event.preventDefault();
 
     navigate("/artwork/reviews", { state: { reviews: sortedReviews } });
+  }
+
+  function handleWishlisting(event) {
+    event.preventDefault();
+
+    dispatch(addToWishlist({ user: user._id, productId: artwork._id }))
+      .unwrap()
+      .then(() => {
+        toast.success("Artwork added to wishlist!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        navigate("/wishlist");
+      });
+  }
+  function handleAddToCart(event) {
+    event.preventDefault();
+
+    dispatch(
+      addToCart({ user: user._id, productId: artwork._id, quantity: quantity })
+    )
+      .unwrap()
+      .then(() => {
+        navigate("/cart");
+      });
   }
 
   return (
@@ -189,8 +231,18 @@ function Artwork() {
                 7 global ratings
               </h5>
             </div>
-            <button className="flex w-[80%] gap-2 items-center justify-center font-poppins text-[#333333] outline outline-1 py-1 mt-10 rounded-sm bg-white hover:bg-gray-100">
-              <FaRegHeart /> Wishlist
+            <button
+              onClick={handleWishlisting}
+              disabled={wLoading}
+              className="flex w-[80%] gap-2 items-center justify-center font-poppins text-[#333333] outline outline-1 py-1 mt-10 rounded-sm bg-white hover:bg-gray-100"
+            >
+              {wLoading ? (
+                "Loading.."
+              ) : (
+                <>
+                  <FaRegHeart /> Wishlist
+                </>
+              )}
             </button>
             <div className="flex items-center h-7 mt-4 bg-white">
               <button
@@ -213,8 +265,12 @@ function Artwork() {
               </button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-3">
-              <button className="py-1 rounded-sm text-white bg-[#77037b] hover:bg-[#9a208c]">
-                Add to Cart
+              <button
+                disabled={cLoading}
+                onClick={handleAddToCart}
+                className="py-1 rounded-sm text-white bg-[#77037b] hover:bg-[#9a208c]"
+              >
+                {cLoading ? "Loading.." : "Add to Cart"}
               </button>
               <button className="py-1 rounded-sm text-white bg-primary hover:bg-primary-hover">
                 Buy Now

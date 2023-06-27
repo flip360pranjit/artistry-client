@@ -1,7 +1,6 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@crello/react-lottie': ^0.0.11
   '@headlessui/react': ^1.7.15
   '@nivo/bar': ^0.83.0
   '@nivo/core': ^0.83.0
@@ -43,7 +42,6 @@ specifiers:
   vite: ^4.3.2
 
 dependencies:
-  '@crello/react-lottie': 0.0.11_biqbaboplfbrettd7655fr4n2y
   '@headlessui/react': 1.7.15_biqbaboplfbrettd7655fr4n2y
   '@nivo/bar': 0.83.0_v2m5e27vhdewzwhryxwfaorcca
   '@nivo/core': 0.83.0_v2m5e27vhdewzwhryxwfaorcca
@@ -326,17 +324,6 @@ packages:
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
     dev: true
-
-  /@crello/react-lottie/0.0.11_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-V+U50f2k1pRBpfVyHEUc3A+L9bwQnQxuxRZqP5w/mKcTlc9h8mmuYOI5gh3S6VAUrUhzyIE1NgN/pHHU0EhBNA==}
-    peerDependencies:
-      react: ~16.9.0
-      react-dom: ~16.9.0
-    dependencies:
-      lottie-web: 5.12.2
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-    dev: false
 
   /@emotion/is-prop-valid/0.8.8:
     resolution: {integrity: sha512-u5WtneEAr5IDG2Wv65yhunPSMLIpuKsbuOktRojfrEiEvRyC85LgPMZI63cr7NUqT8ZIGdSVg8ZKGxIug4lXcA==}
