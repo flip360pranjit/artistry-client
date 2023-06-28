@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addToWishlist } from "../../store/thunks/WishlistThunks";
 import { addToCart } from "../../store/thunks/CartThunks";
+import generateCode from "../../utils/generateCode";
+import { setOrderItems } from "../../store/slices/CheckoutSlice";
 
 const reviews = [
   {
@@ -200,6 +202,34 @@ function Artwork() {
         });
     }
   }
+  function handleBuyNow(event) {
+    event.preventDefault();
+
+    const generatedCode = generateCode();
+
+    dispatch(
+      setOrderItems({
+        items: [{ _id: generatedCode, product: artwork, quantity }],
+        totalAmount: quantity * artwork.price,
+        totalQuantity: quantity,
+        discount: {
+          applied: false,
+          amount: 0,
+          coupon: {
+            code: "",
+            discount: 0,
+            expirationDate: 0,
+            offerHeading: "",
+            offerDescription: "",
+            image: "",
+            theme: "",
+          },
+        },
+      })
+    );
+
+    navigate("/checkout/review");
+  }
 
   return (
     <div className="pt-20 md:pt-12 mx-10 md:mx-20">
@@ -284,7 +314,10 @@ function Artwork() {
               >
                 {cLoading ? "Loading.." : "Add to Cart"}
               </button>
-              <button className="py-1 rounded-sm text-white bg-primary hover:bg-primary-hover">
+              <button
+                onClick={handleBuyNow}
+                className="py-1 rounded-sm text-white bg-primary hover:bg-primary-hover"
+              >
                 Buy Now
               </button>
             </div>

@@ -9,8 +9,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import FilterError from "../../assets/images/filtererror.png";
 import Lottie from "react-lottie";
 import animationData from "../../assets/lotties/loading.json";
+import { useDispatch } from "react-redux";
+import { resetCheckout } from "../../store/slices/CheckoutSlice";
 
 function Browse() {
+  const dispatch = useDispatch();
+
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [artworks, setArtworks] = useState([]);
   const [sortBy, setSortBy] = useState("Featured");
@@ -54,7 +58,8 @@ function Browse() {
 
     // Fetch seller artworks on component mount
     fetchArtworks();
-  }, []);
+    dispatch(resetCheckout());
+  }, [dispatch]);
 
   const featured = [artworks[6], artworks[0], artworks[2]];
 

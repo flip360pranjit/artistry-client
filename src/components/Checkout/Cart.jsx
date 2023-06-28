@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { MdOutlineCurrencyRupee, MdVerified } from "react-icons/md";
+import { MdOutlineCurrencyRupee } from "react-icons/md";
 import { toast } from "react-toastify";
 import WishlistError from "../../assets/images/wishlistError.png";
 import {
@@ -10,12 +10,11 @@ import {
   removeFromCart,
   setQuantity,
 } from "../../store/thunks/CartThunks";
-import { applyCoupon, removeCoupon } from "../../store/slices/CartSlice";
 import QuantityInput from "./QuantityInput";
 import QuantityMenu from "./QuantityMenu";
 import Button from "../Button/Button";
-import axios from "axios";
-import { FaTimes } from "react-icons/fa";
+import CouponCode from "./CouponCode";
+import { resetCheckout, setOrderItems } from "../../store/slices/CheckoutSlice";
 
 function Cart() {
   const navigate = useNavigate();
@@ -26,13 +25,10 @@ function Cart() {
     (state) => state.cart
   );
   const [cLoading, setCLoading] = useState(false);
-  const [couponLoading, setCouponLoading] = useState(false);
-  const [couponError, setCouponError] = useState("");
   const [currentArtwork, setCurrentArtwork] = useState("");
   const [openInput, setOpenInput] = useState(false);
   const [focusedInput, setFocusedInput] = useState(false);
   const [customQuantity, setCustomQuantity] = useState(11);
-  const [couponCode, setCouponCode] = useState("");
 
   const deliveryCharges = totalQuantity * 100;
   const taxCharges = 0.18 * (totalAmount - discount.amount + deliveryCharges);
@@ -41,6 +37,7 @@ function Cart() {
 
   useEffect(() => {
     dispatch(getCart({ user: user._id }));
+    dispatch(resetCheckout());
   }, [dispatch]);
 
   // handle order quantity
@@ -96,8 +93,6 @@ function Cart() {
             } else {
               setOpenInput(true);
             }
-            dispatch(removeCoupon());
-            setCouponError("");
           });
       }
     }
@@ -121,47 +116,13 @@ function Cart() {
       });
   }
 
-  //   Apply Coupon Code
-  async function applyCouponCode(event) {
+  // Go to checkout
+  function handleCheckout(event) {
     event.preventDefault();
-    setCouponLoading(true);
 
-    try {
-      await axios
-        .post(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/coupons/apply-coupon`,
-          {
-            code: couponCode,
-          }
-        )
-        .then((response) => {
-          setCouponLoading(false);
-          const discountPercent = response.data.coupon.discount;
-          const discountAmount = (discountPercent / 100) * totalAmount;
+    dispatch(setOrderItems({ items, totalAmount, totalQuantity, discount }));
 
-          dispatch(
-            applyCoupon({
-              amount: discountAmount,
-              coupon: response.data.coupon,
-            })
-          );
-          toast.success("Coupon Applied!", {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          setCouponCode("");
-          setCouponError("");
-        });
-    } catch (error) {
-      setCouponLoading(false);
-      setCouponError(`${error.response.data.message}!`);
-    }
+    navigate("/checkout/review");
   }
   //   Continue Shopping
   function handleBrowse(event) {
@@ -337,45 +298,9 @@ function Cart() {
               </div>
             </div>
           ))}
-          <div className="grid grid-cols-1 sm:grid-cols-3 bg-gray-100 p-5 mt-7">
-            <div className="sm:col-span-2 flex flex-col items-center justify-center gap-3 order-last sm:order-first">
-              {discount.applied ? (
-                <div className="relative bg-white w-2/3 p-3 pr-5 shadow-2xl rounded-md">
-                  <div
-                    onClick={() => dispatch(removeCoupon())}
-                    className="absolute right-1 cursor-pointer"
-                  >
-                    <FaTimes />
-                  </div>
-                  <h2 className="flex gap-1 items-center text-lg font-semibold text-[#3ec70b]">
-                    {`Code (${discount.coupon.code}) applied!`}
-                    <MdVerified />
-                  </h2>
-                  <h4 className="font-open-sans">{`${discount.coupon.discount}% off!`}</h4>
-                </div>
-              ) : (
-                <>
-                  <h5 className="font-semibold text-red-600">{couponError}</h5>
-                  <div className="flex items-center justify-center w-full">
-                    <input
-                      type="text"
-                      name="coupon"
-                      id="coupon"
-                      placeholder="Please enter coupon code"
-                      value={couponCode}
-                      onChange={(e) => setCouponCode(e.target.value)}
-                      className="block w-1/2 rounded-y-md rounded-l-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-primary placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
-                    />
-                    <button
-                      disabled={couponLoading}
-                      onClick={applyCouponCode}
-                      className="px-3 py-2 flex items-center justify-center rounded-r-md text-white text-sm bg-primary hover:bg-primary-hover"
-                    >
-                      {couponLoading ? "Loading" : "Apply Discount"}
-                    </button>
-                  </div>
-                </>
-              )}
+          <div className="grid grid-cols-1 lg:grid-cols-3 bg-gray-100 p-5 mt-7">
+            <div className="my-10 lg:my-0 lg:col-span-2 flex flex-col items-center justify-center gap-3 order-last lg:order-first">
+              <CouponCode page="cart" />
             </div>
             <div className="flex items-center">
               <div className="w-full p-5 bg-white rounded-lg shadow-xl">
@@ -452,7 +377,10 @@ function Cart() {
                   </p>
                 </div>
 
-                <button className="flex w-full gap-2 items-center justify-center font-poppins text-white outline outline-1 py-2 mt-7 rounded-sm bg-primary hover:bg-primary-hover">
+                <button
+                  onClick={handleCheckout}
+                  className="flex w-full gap-2 items-center justify-center font-poppins text-white outline outline-1 py-2 mt-7 rounded-sm bg-primary hover:bg-primary-hover"
+                >
                   Proceed to Checkout
                 </button>
                 <button

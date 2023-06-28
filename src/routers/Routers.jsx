@@ -29,6 +29,13 @@ import BecomeASeller from "../pages/BecomeASeller";
 import Browse from "../components/Browse/Browse";
 import Reviews from "../components/Artwork/Reviews";
 import Cart from "../components/Checkout/Cart";
+import Checkout from "../pages/Checkout";
+import {
+  Confirmation,
+  Payment,
+  ReviewOrder,
+  Shipping,
+} from "../components/Checkout";
 
 function Routers() {
   return (
@@ -68,6 +75,19 @@ function Routers() {
           </ProtectedRoutes>
         }
       />
+      <Route
+        path="/checkout"
+        element={
+          <ProtectedRoutes>
+            <Checkout />
+          </ProtectedRoutes>
+        }
+      >
+        <Route path="review" element={<ReviewOrder />} />
+        <Route path="shipping" element={<Shipping />} />
+        <Route path="payment" element={<Payment />} />
+        <Route path="confirmation" element={<Confirmation />} />
+      </Route>
 
       <Route
         path="/profile"

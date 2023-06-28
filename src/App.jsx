@@ -11,7 +11,8 @@ function App() {
   const isLoginOrRegisterPage =
     location.pathname === "/auth" ||
     location.pathname.includes("/dashboard") ||
-    location.pathname.includes("/profile");
+    location.pathname.includes("/profile") ||
+    location.pathname.includes("/checkout");
 
   return (
     <>
