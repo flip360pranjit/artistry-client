@@ -4,12 +4,15 @@ import { FaShareSquare } from "react-icons/fa";
 import axios from "axios";
 import { setOrder } from "../../store/slices/OrderSlice";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 function Orders() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [search, setSearch] = useState("");
+  const [sellerOrders, setSellerOrders] = useState([]);
+
+  const { user } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,6 +28,27 @@ function Orders() {
     return () => {
       window.removeEventListener("resize", handleWindowResize);
     };
+  }, []);
+
+  useEffect(() => {
+    // Function to fetch seller artworks
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/seller-orders/${user._id}`
+        );
+        const fetchedOrders = response.data;
+        const latestOrders = [...fetchedOrders].reverse();
+
+        setSellerOrders(latestOrders);
+      } catch (error) {
+        // toast.error("Error! Try checking your connection.");
+        console.log(error);
+      }
+    };
+
+    // Fetch seller artworks on component mount
+    fetchOrders();
   }, []);
 
   const filteredOrders = sellerOrders.filter((order) => {
@@ -65,14 +89,15 @@ function Orders() {
   function viewOrder(event, orderID) {
     event.preventDefault();
     axios
-      .post(`${import.meta.env.VITE_REACT_APP_API_URL}/orders/get-order`, {
-        orderID,
-      })
+      .get(
+        `${
+          import.meta.env.VITE_REACT_APP_API_URL
+        }/seller-orders/view-order/${orderID}`
+      )
       .then((res) => {
-        dispatch(setOrder(res));
-        navigate("/view-order");
+        navigate("/view-seller-order", { state: { order: res.data } });
       })
-      .catch((err) => toast.error("Oops, something went wrong!"));
+      .catch((err) => console.log(error));
   }
 
   return (
@@ -132,7 +157,7 @@ function Orders() {
                         : "bg-[#ff9800]"
                     }`}
                   >
-                    {order.status}
+                    {order.deliveryStatus}
                   </span>
                 </td>
                 {windowWidth >= 768 && (

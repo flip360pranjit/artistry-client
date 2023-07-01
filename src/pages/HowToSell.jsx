@@ -80,9 +80,13 @@ function HowToSell() {
 
   function becomeSeller(event) {
     event.preventDefault();
-    user.isSeller
-      ? navigate("/dashboard")
-      : navigate("/sell-art/become-a-seller");
+
+    if (!user) navigate("/auth");
+    else {
+      user.isSeller
+        ? navigate("/dashboard")
+        : navigate("/sell-art/become-a-seller");
+    }
   }
 
   return (

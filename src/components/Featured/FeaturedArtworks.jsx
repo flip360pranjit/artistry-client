@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import featuredArtworksData from "../../api/featuredArtworksData";
 import Button from "../Button/Button";
 // import Swiper core and required modules
 import { Autoplay, Navigation, Pagination } from "swiper";
@@ -24,17 +23,16 @@ const breakpoints = {
   },
 };
 
-function FeaturedArtworks() {
+function FeaturedArtworks({ featuredArtworksData, heading, description }) {
   const swiperRef = useRef();
 
   return (
-    <section className="rounded-3xl px-6 pt-5 py-14 mt-10 shadow-lg bg-gray-100">
+    <section className="rounded-3xl px-6 pt-5 py-14 mt-10 shadow-lg bg-gray-100 max-w-[100vw]">
       <h2 className="text-[#333333] text-2xl md:text-3xl lg:text-4xl text-center font-bold mb-6 font-montserrat">
-        Featured Artworks
+        {heading}
       </h2>
       <h4 className="text-[#555555] text-sm md:text-base lg:text-lg text-center font-normal mb-6 font-poppins">
-        Explore a Curated Collection of Captivating Artworks, Showcasing the
-        Beauty and Diversity of Artistic Expression.
+        {description}
       </h4>
       <div className="relative">
         {/* Previous Button */}
@@ -103,20 +101,20 @@ function FeaturedArtworks() {
             modules={[Autoplay, Navigation, Pagination]}
           >
             {featuredArtworksData.map((artwork) => (
-              <SwiperSlide key={artwork.id} className="relative">
+              <SwiperSlide key={artwork._id} className="relative">
                 <div className="w-full h-full sm:w-44 sm:h-64 md:w-48 md:h-72 lg:w-52 lg:h-[300px] mb-10 flex flex-col justify-center items-center rounded-md shadow-xl bg-white relative group cursor-pointer">
                   <img
                     src={artwork.image}
-                    alt={artwork.artworkTitle}
+                    alt={artwork.title}
                     className="rounded-sm"
                   />
                   <h3 className="text-base md:text-[16px] lg:text-xl font-semibold font-playfair-display absolute bottom-0 bg-white w-full text-center pb-7 sm:pb-0">
-                    {artwork.artworkTitle}
+                    {artwork.title}
                   </h3>
                   <div className="hidden absolute top-0 left-0 w-full h-full p-5 group-hover:flex flex-col justify-center bg-opacity-90 bg-primary text-white transition-all duration-300 ease-in-out">
                     <p className="font-poppins text-base mobile-md1:text-lg sm:text-sm md:text-base text-center mobile:text-start">
                       <span className="font-semibold">Artist:</span>{" "}
-                      {artwork.artist}
+                      {artwork.artist.artistName}
                     </p>
                     <p className="font-poppins text-base mobile-md1:text-lg sm:text-sm md:text-base text-center mobile:text-start">
                       <span className="font-semibold">Medium:</span>{" "}

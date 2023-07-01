@@ -1,9 +1,11 @@
+import { FaPaintBrush } from "react-icons/fa";
 import {
   RiDashboard2Line,
   RiFileList3Fill,
   RiShoppingBasketLine,
   RiBarChart2Line,
 } from "react-icons/ri";
+
 const SidebarLinks = [
   {
     icon: <RiDashboard2Line />,
@@ -19,6 +21,11 @@ const SidebarLinks = [
     icon: <RiShoppingBasketLine />,
     title: "Orders",
     link: "/dashboard/orders",
+  },
+  {
+    icon: <FaPaintBrush />,
+    title: "Commissioned Requests",
+    link: "/dashboard/commissioned-orders",
   },
   {
     icon: <RiBarChart2Line />,

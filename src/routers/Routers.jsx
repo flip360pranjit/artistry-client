@@ -13,6 +13,8 @@ import Dashboard from "../pages/Dashboard";
 import {
   AddArtwork,
   Analytics,
+  CommissionedOrder,
+  CommissionedOrders,
   Listings,
   Orders,
   Overview,
@@ -36,6 +38,11 @@ import {
   ReviewOrder,
   Shipping,
 } from "../components/Checkout";
+import CommissionedProcess from "../pages/CommissionedProcess";
+import SubmitCommissionedRequest from "../pages/SubmitCommissionedRequest";
+import ViewSellerOrder from "../components/Dashboard/ViewSellerOrder";
+import CommissionedArtworkSuccess from "../pages/CommissionedArtworkSuccess";
+import ProtectedOrder from "./ProtectedOrder";
 
 function Routers() {
   return (
@@ -112,10 +119,36 @@ function Routers() {
       >
         <Route index element={<Overview />} />
         <Route path="listings" element={<Listings />} />
+        <Route path="commissioned-orders" element={<CommissionedOrders />} />
         <Route path="orders" element={<Orders />} />
         <Route path="analytics" element={<Analytics />} />
         <Route path="add-artwork" element={<AddArtwork />} />
+        <Route path="view-seller-order" element={<ViewSellerOrder />} />
+        <Route path="view-commissioned-order" element={<CommissionedOrder />} />
       </Route>
+
+      <Route
+        path="/commissioned-orders/custom-artwork-process"
+        element={<CommissionedProcess />}
+      />
+
+      <Route
+        path="/commissioned-orders/submit-commission-request"
+        element={
+          <ProtectedRoutes>
+            <SubmitCommissionedRequest />
+          </ProtectedRoutes>
+        }
+      />
+
+      <Route
+        path="/commissioned-orders/submit-commission-request/success"
+        element={
+          <ProtectedOrder>
+            <CommissionedArtworkSuccess />
+          </ProtectedOrder>
+        }
+      />
     </Routes>
   );
 }

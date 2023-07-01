@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import { IconContext } from "react-icons";
-import {
-  TbSquareRoundedChevronLeftFilled,
-  TbSquareRoundedChevronRightFilled,
-} from "react-icons/tb";
 import Logo from "../../assets/images/logo.png";
 import { Link } from "react-router-dom";
 import ProfileButton from "../Dashboard/ProfileButton";
+import "./Sidebar.scss";
 
 function DesktopSidebar({ links }) {
   const [isOpen, setIsOpen] = useState(true);
   return (
     <div className="flex text-white fixed">
-      <div className="bg-primary min-h-screen relative p-5 duration-300 w-52">
+      <div className="sidebar bg-primary h-screen p-5 duration-300 w-52 sticky overflow-y-scroll">
         <Link to="/">
           <div className="flex items-center justify-start gap-1 cursor-pointer">
             <img src={Logo} alt="Logo" className="w-16 mt-2" />

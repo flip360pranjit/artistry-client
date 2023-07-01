@@ -7,10 +7,9 @@ import { FaChevronDown, FaTimes } from "react-icons/fa";
 import { ImEqualizer2 } from "react-icons/im";
 import { motion, AnimatePresence } from "framer-motion";
 import FilterError from "../../assets/images/filtererror.png";
-import Lottie from "react-lottie";
-import animationData from "../../assets/lotties/loading.json";
 import { useDispatch } from "react-redux";
 import { resetCheckout } from "../../store/slices/CheckoutSlice";
+import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 
 function Browse() {
   const dispatch = useDispatch();
@@ -331,18 +330,7 @@ function Browse() {
         <div className="w-full sm:w-4/5 px-2 sm:px-7 pt-3 pb-20 md:pb-[55px] mt-8 sm:mt-0 min-h-screen">
           {artworks.length === 0 ? (
             <div className="h-[90%] flex items-center justify-center">
-              <Lottie
-                options={{
-                  loop: true,
-                  autoplay: true,
-                  animationData: animationData,
-                  rendererSettings: {
-                    preserveAspectRatio: "xMidYMid slice",
-                  },
-                }}
-                height={400}
-                width={400}
-              />
+              <LoadingAnimation />
             </div>
           ) : pageArtworks.length === 0 ? (
             <div className="h-[90%] flex items-center justify-center">
