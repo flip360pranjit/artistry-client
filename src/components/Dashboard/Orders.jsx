@@ -97,7 +97,7 @@ function Orders() {
       .then((res) => {
         navigate("/view-seller-order", { state: { order: res.data } });
       })
-      .catch((err) => console.log(error));
+      .catch((err) => console.log(err));
   }
 
   return (

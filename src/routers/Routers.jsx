@@ -42,7 +42,9 @@ import CommissionedProcess from "../pages/CommissionedProcess";
 import SubmitCommissionedRequest from "../pages/SubmitCommissionedRequest";
 import ViewSellerOrder from "../components/Dashboard/ViewSellerOrder";
 import CommissionedArtworkSuccess from "../pages/CommissionedArtworkSuccess";
+import ProtectedCommissionedOrder from "./ProtectedCommissionedOrder";
 import ProtectedOrder from "./ProtectedOrder";
+import OrderSuccess from "../pages/OrderSuccess";
 
 function Routers() {
   return (
@@ -93,7 +95,6 @@ function Routers() {
         <Route path="review" element={<ReviewOrder />} />
         <Route path="shipping" element={<Shipping />} />
         <Route path="payment" element={<Payment />} />
-        <Route path="confirmation" element={<Confirmation />} />
       </Route>
 
       <Route
@@ -144,8 +145,17 @@ function Routers() {
       <Route
         path="/commissioned-orders/submit-commission-request/success"
         element={
-          <ProtectedOrder>
+          <ProtectedCommissionedOrder>
             <CommissionedArtworkSuccess />
+          </ProtectedCommissionedOrder>
+        }
+      />
+
+      <Route
+        path="/checkout/confirmation"
+        element={
+          <ProtectedOrder>
+            <OrderSuccess />
           </ProtectedOrder>
         }
       />

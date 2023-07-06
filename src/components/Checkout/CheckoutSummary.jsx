@@ -15,10 +15,12 @@ function CheckoutSummary({
   deliveryCharges,
   taxCharges,
   cartTotal,
+  handlePlaceOrder,
 }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { review, shipping, payment, confirmation, allDetails } = useSelector(
+
+  const { review, shipping, payment, confirmation } = useSelector(
     (state) => state.checkout
   );
 
@@ -36,7 +38,7 @@ function CheckoutSummary({
           totalQuantity,
         },
       });
-    } else if (currentPage === "Shipping & Billing") {
+    } else if (currentPage === "Shipping & Billing" && shipping) {
       setCurrentPage("Payment");
       navigate("/checkout/payment", {
         state: {
@@ -45,17 +47,6 @@ function CheckoutSummary({
           totalQuantity,
         },
       });
-    } else if (currentPage === "Payment") {
-      if (review === true && shipping === true && payment === true) {
-        setCurrentPage("Confirmation");
-        navigate("/checkout/confirmation", {
-          state: {
-            items,
-            totalAmount,
-            totalQuantity,
-          },
-        });
-      }
     }
     scrollTo(0, 0);
   }
@@ -137,10 +128,19 @@ function CheckoutSummary({
         </div>
 
         <button
-          onClick={handlePage}
-          className="flex w-full gap-2 items-center justify-center font-poppins text-white outline outline-1 py-2 mt-7 rounded-sm bg-primary hover:bg-primary-hover"
+          onClick={currentPage === "Payment" ? handlePlaceOrder : handlePage}
+          disabled={
+            (currentPage === "Payment" && !payment) ||
+            (currentPage === "Shipping & Billing" && !shipping)
+          }
+          className={`flex w-full gap-2 items-center justify-center font-poppins text-white outline outline-1 py-2 mt-7 rounded-sm ${
+            (currentPage === "Payment" && !payment) ||
+            (currentPage === "Shipping & Billing" && !shipping)
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-primary hover:bg-primary-hover"
+          }`}
         >
-          {currentPage === "Confirmation" ? "Place Order" : "Next"}
+          {currentPage === "Payment" ? "Place Order" : "Next"}
         </button>
       </div>
       <div className="mt-5 bg-gray-200 p-5">

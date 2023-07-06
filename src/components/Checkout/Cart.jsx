@@ -31,7 +31,7 @@ function Cart() {
   const [customQuantity, setCustomQuantity] = useState(11);
 
   const deliveryCharges = totalQuantity * 100;
-  const taxCharges = 0.18 * (totalAmount - discount.amount + deliveryCharges);
+  const taxCharges = 0;
   const cartTotal =
     totalAmount - discount.amount + deliveryCharges + taxCharges;
 
@@ -120,7 +120,17 @@ function Cart() {
   function handleCheckout(event) {
     event.preventDefault();
 
-    dispatch(setOrderItems({ items, totalAmount, totalQuantity, discount }));
+    dispatch(
+      setOrderItems({
+        items,
+        totalAmount: cartTotal,
+        subtotal: totalAmount,
+        delivery: deliveryCharges,
+        tax: taxCharges,
+        totalQuantity,
+        discount,
+      })
+    );
 
     navigate("/checkout/review");
   }

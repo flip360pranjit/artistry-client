@@ -9,34 +9,39 @@ import { setShippingInfo } from "../../store/slices/CheckoutSlice";
 
 function Shipping() {
   const dispatch = useDispatch();
-  const { shipping } = useSelector((state) => state.checkout);
+  const { shippingInfo } = useSelector((state) => state.checkout);
 
   const [isBillingSame, setIsBillingSame] = useState(false);
   const [shippingAddress, setShippingAddress] = useState({
-    fullName: "",
-    email: "",
-    country: "",
-    streetAddress: "",
-    pincode: "",
-    city: "",
-    state: "",
+    fullName: shippingInfo.shipping.fullName,
+    email: shippingInfo.shipping.email,
+    country: shippingInfo.shipping.country,
+    streetAddress: shippingInfo.shipping.streetAddress,
+    pincode: shippingInfo.shipping.pincode,
+    city: shippingInfo.shipping.city,
+    state: shippingInfo.shipping.state,
   });
   const [billingAddress, setBillingAddress] = useState({
-    fullName: "",
-    email: "",
-    country: "",
-    streetAddress: "",
-    pincode: "",
-    city: "",
-    state: "",
+    fullName: shippingInfo.billing.fullName,
+    email: shippingInfo.billing.email,
+    country: shippingInfo.billing.country,
+    streetAddress: shippingInfo.billing.streetAddress,
+    pincode: shippingInfo.billing.pincode,
+    city: shippingInfo.billing.city,
+    state: shippingInfo.billing.state,
   });
-  const [shippingPhone, setShippingPhone] = useState("");
-  const [billingPhone, setBillingPhone] = useState("");
+  const [shippingPhone, setShippingPhone] = useState(
+    shippingInfo.shipping.phoneNumber
+  );
+  const [billingPhone, setBillingPhone] = useState(
+    shippingInfo.billing.phoneNumber
+  );
   const [pLoading, setPLoading] = useState(false);
 
   useEffect(() => {
     if (isBillingSame) {
       setBillingAddress(shippingAddress);
+      setBillingPhone(shippingPhone);
     }
   }, [isBillingSame]);
 
@@ -135,15 +140,11 @@ function Shipping() {
       setBillingAddress(shippingAddress);
       setBillingPhone(shippingPhone);
     }
-    if (isBillingSame) {
-      setBillingAddress(shippingAddress);
-      setBillingPhone(shippingPhone);
-    }
 
-    const shippingInfo = {
+    const info = {
       shipping: {
         fullName: shippingAddress.fullName,
-        phoneNumber: shippingPhone,
+        phoneNumber: "+" + shippingPhone,
         email: shippingAddress.email,
         country: shippingAddress.country,
         streetAddress: shippingAddress.streetAddress,
@@ -153,7 +154,7 @@ function Shipping() {
       },
       billing: {
         fullName: billingAddress.fullName,
-        phoneNumber: billingPhone,
+        phoneNumber: "+" + billingPhone,
         email: billingAddress.email,
         country: billingAddress.country,
         streetAddress: billingAddress.streetAddress,
@@ -162,7 +163,8 @@ function Shipping() {
         state: billingAddress.state,
       },
     };
-    dispatch(setShippingInfo(shippingInfo));
+    dispatch(setShippingInfo(info));
+    scrollTo(0, 0);
   }
 
   return (

@@ -74,7 +74,7 @@ function Footer() {
 
       <div className="flex flex-col gap-7 sm:flex-row justify-between items-center mt-10 border-t-2 pt-8">
         <p className="text-base/relaxed text-gray-500">
-          © Artistry 2023. All rights reserved.
+          © Pranjit Kakoti/TheArtistry 2023.
         </p>
         <div className="flex flex-row items-center justify-center gap-10">
           <IconContext.Provider

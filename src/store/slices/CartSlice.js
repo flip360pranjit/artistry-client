@@ -214,10 +214,18 @@ const cartSlice = createSlice({
         state.error = null;
         state.totalQuantity = 0;
         state.totalAmount = 0;
-        state.discount = 0;
         state.discount = {
           discount: 0,
           amount: 0,
+          coupon: {
+            code: "",
+            discount: 0,
+            expirationDate: 0,
+            offerHeading: "",
+            offerDescription: "",
+            image: "",
+            theme: "",
+          },
         };
       })
       .addCase(clearCart.rejected, (state, action) => {

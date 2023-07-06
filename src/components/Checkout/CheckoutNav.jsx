@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const checkoutLinks = [
@@ -17,11 +18,6 @@ const checkoutLinks = [
     name: "Payment",
     link: "/checkout/payment",
   },
-  {
-    id: 4,
-    name: "Confirmation",
-    link: "/checkout/confirmation",
-  },
 ];
 
 function CheckoutNav({
@@ -32,11 +28,22 @@ function CheckoutNav({
   setCurrentPage,
 }) {
   const navigate = useNavigate();
+  const { shipping } = useSelector((state) => state.checkout);
 
   function handleClick(event, linkName, link) {
     event.preventDefault();
 
-    if (linkName !== "Confirmation") {
+    if (linkName !== "Payment" && linkName !== "Confirmation") {
+      setCurrentPage(linkName);
+      navigate(link, {
+        state: {
+          items,
+          totalAmount,
+          totalQuantity,
+        },
+      });
+    }
+    if (linkName === "Payment" && shipping) {
       setCurrentPage(linkName);
       navigate(link, {
         state: {

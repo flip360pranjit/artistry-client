@@ -18,9 +18,7 @@ function CouponCode({ page }) {
   const checkoutDiscount = useSelector(
     (state) => state.checkout.order.discount
   );
-  const checkoutAmount = useSelector(
-    (state) => state.checkout.order.totalAmount
-  );
+  const checkoutAmount = useSelector((state) => state.checkout.order.subtotal);
 
   // States
   const [couponCode, setCouponCode] = useState("");
@@ -169,14 +167,14 @@ function CouponCode({ page }) {
             placeholder="Please enter coupon code"
             value={couponCode}
             onChange={(e) => setCouponCode(e.target.value)}
-            className="block w-1/2 rounded-y-md rounded-l-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-primary placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+            className="block w-full rounded-y-md rounded-l-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-primary placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
           />
           <button
             disabled={couponLoading}
             onClick={applyCouponCode}
             className="px-3 py-2 flex items-center justify-center rounded-r-md text-white text-sm bg-primary hover:bg-primary-hover"
           >
-            {couponLoading ? "Loading" : "Apply Discount"}
+            {couponLoading ? "Loading" : "Apply"}
           </button>
         </div>
       </>
