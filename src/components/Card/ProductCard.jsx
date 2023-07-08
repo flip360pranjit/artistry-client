@@ -1,12 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { FaAngleDown, FaCaretUp, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { MdOutlineCurrencyRupee } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import ProgressBar from "../Browse/ProgressBar";
+import axios from "axios";
+import Rating from "../Browse/Rating";
 
 function ProductCard({ artwork, clickedReview, setClickedReview, sortBy }) {
   const navigate = useNavigate();
+
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    async function fetchReviews() {
+      await axios
+        .get(`${import.meta.env.VITE_REACT_APP_API_URL}/reviews/${artwork._id}`)
+        .then((response) => {
+          setReviews([...response.data].reverse());
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("Something went wrong!");
+        });
+    }
+
+    fetchReviews();
+  }, []);
+
+  // Calculate average rating
+  const averageRating =
+    reviews.reduce((total, review) => total + review.rating, 0) /
+    reviews.length;
+
+  // Calculate count of each star rating
+  const starRatingCount = Array.from({ length: 5 }, (_, index) => {
+    const rating = index + 1;
+    const count = reviews.filter((review) => review.rating === rating).length;
+    return { rating, count };
+  });
 
   function handleReviewClicked(event) {
     event.preventDefault();
@@ -28,6 +60,15 @@ function ProductCard({ artwork, clickedReview, setClickedReview, sortBy }) {
     navigate("/view-artwork", { state: { artwork: artwork } });
   }
 
+  // Open reviews page
+  function handleReview(event) {
+    event.preventDefault();
+
+    navigate("/artwork/reviews", {
+      state: { reviews, averageRating, starRatingCount },
+    });
+  }
+
   return (
     <div className="border rounded-t-lg h-max grid grid-cols-5 sm:grid-cols-1">
       <div
@@ -47,59 +88,67 @@ function ProductCard({ artwork, clickedReview, setClickedReview, sortBy }) {
           <span className="text-sm mobile-start:text-base sm:text-xs">by</span>{" "}
           {artwork.artist.artistName}
         </h4>
-        <div className="flex items-center gap-1 mt-2 relative">
-          <div className="flex">
-            <IconContext.Provider value={{ color: "#ff8400", size: "1.2rem" }}>
-              <FaStar />
-              <FaStar />
-              <FaStar />
-              <FaStar />
-              <FaStarHalfAlt />
-            </IconContext.Provider>
-          </div>
-          <div
-            onClick={handleReviewClicked}
-            className="flex items-center text-primary text-lg mobile:text-xl mobile-start:text-base sm:text-xs font-poppins font-semibold relative top-[2px] cursor-pointer"
-          >
-            <IconContext.Provider value={{ size: "0.8rem" }}>
-              <FaAngleDown />
-            </IconContext.Provider>
-            7
-          </div>
-          {clickedReview === artwork._id && (
-            <div className="absolute top-full right-0 w-[400px] z-[100] bg-white shadow-xl border rounded-md p-3">
-              <div className="flex gap-5 items-center">
-                <div className="flex">
-                  <IconContext.Provider
-                    value={{ color: "#ff8400", size: "0.9rem" }}
-                  >
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStarHalfAlt />
-                  </IconContext.Provider>
-                </div>
-                <span className="font-poppins font-semibold">4.5 out of 5</span>
-              </div>
-              <h4 className="text-sm font-open-sans text-gray-600 mt-2">
-                7 global ratings
-              </h4>
-              <div className="mt-5 border-b-2 border-gray-400">
-                <ProgressBar rating="5" value="75%" />
-                <ProgressBar rating="4" value="8%" />
-                <ProgressBar rating="3" value="4%" />
-                <ProgressBar rating="2" value="3%" />
-                <ProgressBar rating="1" value="10%" />
-              </div>
-              <div className="flex justify-center">
-                <p className="text-xs font-semibold text-teal-600 underline pt-2">
-                  See all review
-                </p>
-              </div>
+        {reviews.length !== 0 && (
+          <div className="flex items-center gap-1 mt-2 relative">
+            <div className="flex">
+              <IconContext.Provider
+                value={{ color: "#ff8400", size: "1.2rem" }}
+              >
+                <Rating rating={averageRating} />
+              </IconContext.Provider>
             </div>
-          )}
-        </div>
+            <div
+              onClick={handleReviewClicked}
+              className="flex items-center text-primary text-lg mobile:text-xl mobile-start:text-base sm:text-xs font-poppins font-semibold relative top-[2px] cursor-pointer"
+            >
+              <IconContext.Provider value={{ size: "0.8rem" }}>
+                <FaAngleDown />
+              </IconContext.Provider>
+              {reviews.length}
+            </div>
+            {clickedReview === artwork._id && (
+              <div className="absolute top-full right-0 w-[400px] z-[100] bg-white shadow-xl border rounded-md p-3">
+                <div className="flex gap-5 items-center">
+                  <div className="flex">
+                    <IconContext.Provider
+                      value={{ color: "#ff8400", size: "0.9rem" }}
+                    >
+                      <FaStar />
+                      <FaStar />
+                      <FaStar />
+                      <FaStar />
+                      <FaStarHalfAlt />
+                    </IconContext.Provider>
+                  </div>
+                  <span className="font-poppins font-semibold">
+                    {averageRating} out of 5
+                  </span>
+                </div>
+                <h4 className="text-sm font-open-sans text-gray-600 mt-2">
+                  {reviews.length} global ratings
+                </h4>
+                <div className="mt-5 border-b-2 border-gray-400">
+                  {starRatingCount.map((rating) => (
+                    <ProgressBar
+                      key={rating.rating}
+                      rating={rating.rating}
+                      count={rating.count}
+                      value={(rating.count / reviews.length) * 100}
+                    />
+                  ))}
+                </div>
+                <div className="flex justify-center">
+                  <p
+                    onClick={handleReview}
+                    className="cursor-pointer text-xs font-semibold text-teal-600 underline pt-2"
+                  >
+                    See all review
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
         <div className="mt-2 flex">
           <IconContext.Provider value={{ size: "1.2rem" }}>
             <MdOutlineCurrencyRupee />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import sellerListings from "../../api/sellerListings.json";
+import Error from "../../assets/images/error.png";
 import Card from "../Card/Card";
 import Button from "../Button/Button";
 import { FaPlus } from "react-icons/fa";
@@ -53,11 +53,22 @@ function Listings() {
           </div>
         </div>
       </div>
-      <div className="grid gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 items-center p-5 mt-5 shadow-xl rounded-lg bg-gray-200">
-        {sellerListings.map((listing) => (
-          <Card key={listing._id} listing={listing} />
-        ))}
-      </div>
+      {sellerListings.length === 0 ? (
+        <div className="h-[70vh] flex items-center justify-center">
+          <div className="flex flex-col items-center">
+            <img src={Error} alt="Empty" className="h-[40vh]" />
+            <h2 className="text-center text-3xl font-montserrat font-semibold mt-3">
+              No listings to view!
+            </h2>
+          </div>
+        </div>
+      ) : (
+        <div className="grid gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 items-center p-5 mt-5 shadow-xl rounded-lg bg-gray-200">
+          {sellerListings.map((listing) => (
+            <Card key={listing._id} listing={listing} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

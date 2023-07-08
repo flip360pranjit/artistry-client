@@ -12,7 +12,7 @@ function Rating({ rating }) {
     stars.push(<FaStarHalfAlt key={0.5} />);
   }
   if (stars.length < 5) {
-    for (let j = 0; j < 5 - stars.length; j++) {
+    for (let j = 0; j <= 5 - stars.length; j++) {
       stars.push(<FaRegStar key={j + 5} />);
     }
   }

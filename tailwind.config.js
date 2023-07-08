@@ -10,6 +10,7 @@ export default {
         "mobile-lg": "389px",
         mobile: "482px",
         "mobile-start": "580px",
+        "pc-small": "912px",
       },
       colors: {
         primary: "#3c166d",

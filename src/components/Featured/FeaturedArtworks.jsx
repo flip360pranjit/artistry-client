@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "../Button/Button";
 // import Swiper core and required modules
 import { Autoplay, Navigation, Pagination } from "swiper";
@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+import axios from "axios";
 
 const breakpoints = {
   640: {
@@ -23,8 +24,34 @@ const breakpoints = {
   },
 };
 
+function getRandomArtworks(artworks, count) {
+  for (let i = artworks.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [artworks[i], artworks[j]] = [artworks[j], artworks[i]];
+  }
+  return artworks.slice(0, count);
+}
+
 function FeaturedArtworks({ featuredArtworksData, heading, description }) {
   const swiperRef = useRef();
+
+  const [artworks, setArtworks] = useState([]);
+
+  useEffect(() => {
+    // Function to fetch seller artworks
+    const fetchArtworks = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/artworks`
+        );
+        const fetchedArtworks = getRandomArtworks(response.data);
+        setArtworks(fetchedArtworks);
+      } catch (error) {}
+    };
+
+    // Fetch seller artworks on component mount
+    fetchArtworks();
+  }, []);
 
   return (
     <section className="rounded-3xl px-6 pt-5 py-14 mt-10 shadow-lg bg-gray-100 max-w-[100vw]">
@@ -100,7 +127,7 @@ function FeaturedArtworks({ featuredArtworksData, heading, description }) {
             // install Swiper modules
             modules={[Autoplay, Navigation, Pagination]}
           >
-            {featuredArtworksData.map((artwork) => (
+            {artworks.map((artwork) => (
               <SwiperSlide key={artwork._id} className="relative">
                 <div className="w-full h-full sm:w-44 sm:h-64 md:w-48 md:h-72 lg:w-52 lg:h-[300px] mb-10 flex flex-col justify-center items-center rounded-md shadow-xl bg-white relative group cursor-pointer">
                   <img

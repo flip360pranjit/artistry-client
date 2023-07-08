@@ -2,6 +2,7 @@ import React from "react";
 import { FaStar } from "react-icons/fa";
 
 function ProgressBar({ rating, count, value }) {
+  const percentageValue = value;
   return (
     <div className="flex justify-between gap-2 items-center mb-3">
       <h6 className="text-xs text-open-sans text-teal-600 flex items-center">

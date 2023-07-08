@@ -2,13 +2,12 @@ import {
   RiDashboard2Line,
   RiFileList3Fill,
   RiShoppingBasketLine,
-  RiBarChart2Line,
   RiShoppingBagFill,
 } from "react-icons/ri";
 const ProfileSidebarLinks = [
   {
     icon: <RiDashboard2Line />,
-    title: "Overview",
+    title: "Account",
     link: "/profile",
   },
   {
@@ -25,11 +24,6 @@ const ProfileSidebarLinks = [
     icon: <RiShoppingBasketLine />,
     title: "Wishlist",
     link: "/wishlist",
-  },
-  {
-    icon: <RiBarChart2Line />,
-    title: "Account",
-    link: "/profile/account",
   },
 ];
 

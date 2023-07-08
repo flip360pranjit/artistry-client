@@ -7,7 +7,7 @@ import ProgressBar from "../Browse/ProgressBar";
 
 function Reviews() {
   const location = useLocation();
-  const reviews = location.state.reviews;
+  const { reviews, averageRating, starRatingCount } = location.state;
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   // Handle window resize
@@ -22,18 +22,6 @@ function Reviews() {
       window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
-
-  // Calculate average rating
-  const averageRating =
-    reviews.reduce((total, review) => total + review.rating, 0) /
-    reviews.length;
-
-  // Calculate count of each star rating
-  const starRatingCount = Array.from({ length: 5 }, (_, index) => {
-    const rating = index + 1;
-    const count = reviews.filter((review) => review.rating === rating).length;
-    return { rating, count };
-  });
 
   const filteredReviews = reviews;
 
@@ -103,7 +91,7 @@ function Reviews() {
           ))}
         </div>
       </div>
-      <div className="bg-gray-100 p-5 mt-7">
+      <div className="bg-gray-100 p-5 mt-7 w-full">
         {pageReviews.map((review) => (
           <div
             key={review._id}
@@ -121,7 +109,7 @@ function Reviews() {
             </div>
             <div className="mt-5 flex gap-3 items-center">
               <img
-                src="https://dummyimage.com/200x300"
+                src={review.user.photoURL}
                 alt="Image"
                 className="w-6 h-5 mobile-sm:w-10 mobile-sm:h-10 rounded-full"
               />
@@ -133,12 +121,7 @@ function Reviews() {
               {review.comment}
             </h6>
             <p className="flex gap-2 items-center text-xs font-semibold text-teal-600 mt-4">
-              <FaCalendar />{" "}
-              {review.createdAt.toLocaleDateString("en-US", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
+              <FaCalendar /> {review.createdAt}
             </p>
           </div>
         ))}

@@ -17,6 +17,10 @@ function BecomeASeller() {
   const [seller, setSeller] = useState({
     contact: "",
     description: "",
+    streetAddress: "",
+    state: "",
+    pincode: "",
+    country: "",
     instagram: "",
     youtube: "",
     facebook: "",
@@ -26,6 +30,7 @@ function BecomeASeller() {
   const [verified, setVerified] = useState(false);
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [loading, setLoading] = useState(false);
+  const [pLoading, setPLoading] = useState(false);
   const [vloading, setVLoading] = useState(false);
 
   // Handle Form input
@@ -70,6 +75,29 @@ function BecomeASeller() {
         auth
       );
     }
+  }
+
+  async function findShippingPostalAddress(event) {
+    event.preventDefault();
+    setPLoading(true);
+
+    await axios
+      .get(`https://api.postalpincode.in/pincode/${seller.pincode}`)
+      .then((response) => {
+        setPLoading(false);
+
+        if (response.data[0].Status === "404")
+          toast.error("Please enter a PinCode first!");
+        else if (response.data[0].Status === "Error")
+          toast.error("Please enter a valid PinCode!");
+        else {
+          setSeller({
+            ...seller,
+            city: response.data[0].PostOffice[0].District,
+            state: response.data[0].PostOffice[0].State,
+          });
+        }
+      });
   }
 
   function handlePhoneSubmit(event) {
@@ -164,6 +192,7 @@ function BecomeASeller() {
       toast.error(error.response.data.error);
     }
   };
+
   return (
     <div className="flex flex-col items-center bg-white lg:px-8 mx-4 md:mx-20 pt-24 pb-10">
       <div id="recaptcha-container"></div>
@@ -284,6 +313,119 @@ function BecomeASeller() {
               <p className="mt-3 text-sm leading-6 text-gray-600">
                 Write a few sentences about yourself.
               </p>
+            </div>
+
+            <div className="sm:col-span-3">
+              <label
+                htmlFor="country"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Country
+              </label>
+              <div className="mt-2">
+                <select
+                  id="country"
+                  name="country"
+                  autoComplete="country-name"
+                  value={seller.country}
+                  onChange={handleChange}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:max-w-xs sm:text-sm sm:leading-6"
+                >
+                  <option value="">Select</option>
+                  <option value="India">India</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="col-span-full">
+              <label
+                htmlFor="street-address"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Street address
+              </label>
+              <div className="mt-2">
+                <input
+                  required
+                  type="text"
+                  name="streetAddress"
+                  id="street-address"
+                  autoComplete="street-address"
+                  value={seller.streetAddress}
+                  onChange={handleChange}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+
+            <div className="sm:col-span-3">
+              <label
+                htmlFor="postal-code"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                ZIP / Postal code
+              </label>
+              <div className="mt-2 flex gap-2">
+                <input
+                  required
+                  type="text"
+                  name="pincode"
+                  id="postal-code"
+                  autoComplete="postal-code"
+                  value={seller.pincode}
+                  onChange={handleChange}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                />
+                <button
+                  disabled={pLoading}
+                  onClick={findShippingPostalAddress}
+                  className="px-10 rounded-md text-white bg-primary hover:bg-primary-hover"
+                >
+                  {pLoading ? "Loading..." : "Find"}
+                </button>
+              </div>
+            </div>
+
+            <div className="sm:col-span-2 sm:col-start-1">
+              <label
+                htmlFor="city"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                District
+              </label>
+              <div className="mt-2">
+                <input
+                  required
+                  type="text"
+                  name="city"
+                  id="city"
+                  autoComplete="address-level2"
+                  value={seller.city}
+                  onChange={handleChange}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="region"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                State
+              </label>
+              <div className="mt-2">
+                <input
+                  required
+                  type="text"
+                  name="state"
+                  id="region"
+                  autoComplete="address-level1"
+                  value={seller.state}
+                  onChange={handleChange}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                />
+              </div>
             </div>
 
             <div className="sm:col-span-4">

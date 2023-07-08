@@ -45,6 +45,8 @@ import CommissionedArtworkSuccess from "../pages/CommissionedArtworkSuccess";
 import ProtectedCommissionedOrder from "./ProtectedCommissionedOrder";
 import ProtectedOrder from "./ProtectedOrder";
 import OrderSuccess from "../pages/OrderSuccess";
+import CommissionedArtists from "../pages/CommissionedArtists";
+import ViewArtist from "../components/ViewArtist/ViewArtist";
 
 function Routers() {
   return (
@@ -105,9 +107,8 @@ function Routers() {
           </ProtectedRoutes>
         }
       >
-        <Route index element={<ProfileOverview />} />
+        <Route index element={<Account />} />
         <Route path="orders" element={<ProfileOrders />} />
-        <Route path="account" element={<Account />} />
       </Route>
 
       <Route
@@ -141,6 +142,10 @@ function Routers() {
           </ProtectedRoutes>
         }
       />
+      <Route
+        path="/commissioned-orders/artists-for-commissions"
+        element={<CommissionedArtists />}
+      />
 
       <Route
         path="/commissioned-orders/submit-commission-request/success"
@@ -159,6 +164,8 @@ function Routers() {
           </ProtectedOrder>
         }
       />
+
+      <Route path="/view-artist" element={<ViewArtist />} />
     </Routes>
   );
 }
