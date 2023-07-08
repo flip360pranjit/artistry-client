@@ -27,11 +27,11 @@ const SidebarLinks = [
     title: "Commissioned Requests",
     link: "/dashboard/commissioned-orders",
   },
-  {
-    icon: <RiBarChart2Line />,
-    title: "Analytics",
-    link: "/dashboard/analytics",
-  },
+  // {
+  //   icon: <RiBarChart2Line />,
+  //   title: "Analytics",
+  //   link: "/dashboard/analytics",
+  // },
 ];
 
 export default SidebarLinks;

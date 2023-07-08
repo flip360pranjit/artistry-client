@@ -44,7 +44,7 @@ function FeaturedArtworks({ featuredArtworksData, heading, description }) {
         const response = await axios.get(
           `${import.meta.env.VITE_REACT_APP_API_URL}/artworks`
         );
-        const fetchedArtworks = getRandomArtworks(response.data);
+        const fetchedArtworks = getRandomArtworks(response.data, 7);
         setArtworks(fetchedArtworks);
       } catch (error) {}
     };
