@@ -71,7 +71,38 @@ function Artwork() {
   function increaseQuantity(event) {
     event.preventDefault();
 
-    setQuantity(quantity + 1);
+    if (quantity === artwork.quantity) {
+      toast.info(`Max quantity is ${artwork.quantity}`, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      setQuantity(quantity + 1);
+    }
+  }
+  function handleQuantityChange(event) {
+    if (event.target.value < 1) setQuantity(1);
+    else if (event.target.value > artwork.quantity) {
+      setQuantity(artwork.quantity);
+      toast.info(`Max quantity is ${artwork.quantity}`, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      setQuantity(event.target.value);
+    }
   }
 
   // Open reviews page
@@ -220,7 +251,7 @@ function Artwork() {
                 type="number"
                 className="w-12 flex h-full text-sm justify-center border border-gray-300 text-center focus:outline-none appearance-none"
                 value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
+                onChange={handleQuantityChange}
               />
               <button
                 onClick={increaseQuantity}

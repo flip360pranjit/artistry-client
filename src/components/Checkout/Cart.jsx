@@ -262,6 +262,7 @@ function Cart() {
                           productId={item.product._id}
                           customQuantity={customQuantity}
                           focusedInput={focusedInput}
+                          maxQuantity={item.product.quantity}
                           setCustomQuantity={setCustomQuantity}
                           setFocusedInput={setFocusedInput}
                           handleSetQuantity={handleSetQuantity}
@@ -271,6 +272,7 @@ function Cart() {
                       <QuantityMenu
                         quantity={item.quantity}
                         productId={item.product._id}
+                        maxQuantity={item.product.quantity}
                         handleSetQuantity={handleSetQuantity}
                       />
                     )
@@ -278,6 +280,7 @@ function Cart() {
                     <QuantityMenu
                       quantity={item.quantity}
                       productId={item.product._id}
+                      maxQuantity={item.product.quantity}
                       handleSetQuantity={handleSetQuantity}
                     />
                   ) : (
@@ -286,6 +289,7 @@ function Cart() {
                       productId={item.product._id}
                       customQuantity={customQuantity}
                       focusedInput={focusedInput}
+                      maxQuantity={item.product.quantity}
                       setCustomQuantity={setCustomQuantity}
                       setFocusedInput={setFocusedInput}
                       handleSetQuantity={handleSetQuantity}
