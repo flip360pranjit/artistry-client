@@ -27,6 +27,7 @@ function AddArtwork() {
   const [customSizeHeightUnit, setCustomSizeHeightUnit] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   const { user } = useSelector((state) => state.auth);
 
@@ -39,6 +40,10 @@ function AddArtwork() {
       ...art,
       [event.target.name]: event.target.value,
     });
+  }
+  function handleQuantityChange(event) {
+    if (event.target.value < 1) setQuantity(1);
+    else setQuantity(event.target.value);
   }
   //   Handle File input
   const handleFileChange = (event) => {
@@ -96,6 +101,7 @@ function AddArtwork() {
       image: data.secure_url,
       createdAt: currentDate,
       updatedAt: currentDate,
+      quantity,
     };
 
     try {
@@ -117,6 +123,7 @@ function AddArtwork() {
         description: "",
       });
       setImage(null);
+      setQuantity(1);
       navigate("/dashboard/listings");
     } catch (error) {
       setLoading(false);
@@ -386,6 +393,26 @@ function AddArtwork() {
                   value={art.price}
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+
+            <div className="col-span-full sm:col-span-3">
+              <label
+                htmlFor="quantity"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Quantity ( You can update this later too)
+              </label>
+              <div className="mt-2">
+                <input
+                  required
+                  type="number"
+                  name="quantity"
+                  id="quantity"
+                  value={quantity}
+                  onChange={handleQuantityChange}
+                  className="block w-28 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
                 />
               </div>
             </div>

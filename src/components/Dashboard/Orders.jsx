@@ -4,12 +4,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Empty from "../../assets/images/success.png";
+import UpdateSellerOrderModal from "../PopupModal/UpdateSellerOrderModal";
 
 function Orders() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [search, setSearch] = useState("");
   const [sellerOrders, setSellerOrders] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [currentOrder, setCurrentOrder] = useState(null);
 
   const { user } = useSelector((state) => state.auth);
 
@@ -28,23 +30,23 @@ function Orders() {
     };
   }, []);
 
+  // Function to fetch seller artworks
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/seller-orders/${user._id}`
+      );
+      const fetchedOrders = response.data;
+      const latestOrders = [...fetchedOrders].reverse();
+
+      setSellerOrders(latestOrders);
+    } catch (error) {
+      // toast.error("Error! Try checking your connection.");
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    // Function to fetch seller artworks
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/seller-orders/${user._id}`
-        );
-        const fetchedOrders = response.data;
-        const latestOrders = [...fetchedOrders].reverse();
-
-        setSellerOrders(latestOrders);
-      } catch (error) {
-        // toast.error("Error! Try checking your connection.");
-        console.log(error);
-      }
-    };
-
     // Fetch seller artworks on component mount
     fetchOrders();
   }, []);
@@ -98,6 +100,13 @@ function Orders() {
       .catch((err) => console.log(err));
   }
 
+  function openUpdate(event, order) {
+    event.preventDefault();
+
+    setIsOpen(true);
+    setCurrentOrder(order);
+  }
+
   return (
     <div>
       <div className="flex flex-col md:flex-row items-center md:items-end justify-between px-6 gap-5">
@@ -142,7 +151,7 @@ function Orders() {
                 <th className="rounded-tl-lg p-3 pl-6">Order No</th>
                 {windowWidth >= 768 && <th className="p-3">Customer Name</th>}
                 {windowWidth >= 768 && <th className="p-3">Order Date</th>}
-                <th className="p-3">Status</th>
+                <th className="p-3 text-center">Status</th>
                 {windowWidth >= 768 && <th className="p-3">Total</th>}
                 <th className="rounded-tr-lg p-3 text-center">Actions</th>
               </tr>
@@ -160,9 +169,9 @@ function Orders() {
                   <td className="px-2 py-1.5">
                     <span
                       className={`text-white p-1 block text-center rounded-xl ${
-                        order.status === "Delivered"
+                        order.deliveryStatus === "Delivered"
                           ? "bg-[#00c853]"
-                          : order.status === "Shipped"
+                          : order.deliveryStatus === "Shipped"
                           ? "bg-[#2196f3]"
                           : "bg-[#ff9800]"
                       }`}
@@ -173,7 +182,7 @@ function Orders() {
                   {windowWidth >= 768 && (
                     <td className="px-3 py-2 ">Rs. {order.totalAmount}</td>
                   )}
-                  <td className="flex items-center gap-4 py-3 ">
+                  <td className="flex items-center gap-4 py-3 justify-center">
                     <h5
                       className="px-3 py-2 font-semibold text-primary flex items-center justify-center md:justify-start gap-2 cursor-pointer hover:gap-4"
                       onClick={(e) => viewOrder(e, order._id)}
@@ -184,7 +193,7 @@ function Orders() {
 
                     <button
                       className="px-3 py-1 rounded-full font-semibold text-white bg-primary hover:bg-primary-hover"
-                      onClick={() => setIsOpen(true)}
+                      onClick={(e) => openUpdate(e, order)}
                     >
                       Update
                     </button>
@@ -259,6 +268,13 @@ function Orders() {
             </ul>
           </div>
         </div>
+      )}
+      {isOpen && (
+        <UpdateSellerOrderModal
+          onClose={() => setIsOpen(false)}
+          order={currentOrder}
+          fetchOrders={fetchOrders}
+        />
       )}
     </div>
   );

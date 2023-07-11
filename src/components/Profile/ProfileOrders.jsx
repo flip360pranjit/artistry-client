@@ -57,6 +57,33 @@ function ProfileOrders() {
     });
   }
 
+  function getDeliveryStatusAndShipmentInvoice(orderId, productId) {
+    for (const order of orders) {
+      if (order._id.toString() === orderId) {
+        for (const sellerOrder of order.sellerOrders) {
+          const { products } = sellerOrder;
+
+          for (const product of products) {
+            if (product.product.toString() === productId) {
+              var deliveryStatus = sellerOrder.deliveryStatus;
+              if (sellerOrder.deliveryStatus === "Shipped Approval")
+                deliveryStatus = "Shipment Created";
+              else if (sellerOrder.deliveryStatus === "Delivered Approval")
+                deliveryStatus = "Shipped";
+              return {
+                deliveryStatus: deliveryStatus,
+                shipmentInvoice: sellerOrder.shipmentInvoice,
+              };
+            }
+          }
+        }
+      }
+    }
+
+    // If the order or product is not found, return null or handle the error accordingly
+    return null;
+  }
+
   return (
     <div>
       <div className="px-5 mb-5">
@@ -162,27 +189,75 @@ function ProfileOrders() {
                     </h3>
                     <h3
                       className={`${
-                        product.deliveryStatus === "Processing"
-                          ? "text-blue-500"
-                          : product.deliveryStatus === "Shipped"
+                        getDeliveryStatusAndShipmentInvoice(
+                          order._id,
+                          product.productID
+                        ).deliveryStatus === "Cancelled"
+                          ? "text-red-500"
+                          : getDeliveryStatusAndShipmentInvoice(
+                              order._id,
+                              product.productID
+                            ).deliveryStatus === "Shipment Created"
+                          ? "text-yellow-500 underline"
+                          : getDeliveryStatusAndShipmentInvoice(
+                              order._id,
+                              product.productID
+                            ).deliveryStatus === "Shipped"
                           ? "text-primary underline"
-                          : product.deliveryStatus === "Delivered"
+                          : getDeliveryStatusAndShipmentInvoice(
+                              order._id,
+                              product.productID
+                            ).deliveryStatus === "Delivered"
                           ? "text-green-500"
-                          : "text-red-500"
+                          : "text-blue-500"
                       } flex gap-1 items-center font-semibold text-xs mobile-sm:text-base`}
                     >
-                      {product.deliveryStatus === "Delivered" ? (
+                      {getDeliveryStatusAndShipmentInvoice(
+                        order._id,
+                        product.productID
+                      ).deliveryStatus === "Delivered" ? (
                         <>
                           <FaCheckCircle />
-                          {product.deliveryStatus}
+                          {
+                            getDeliveryStatusAndShipmentInvoice(
+                              order._id,
+                              product.productID
+                            ).deliveryStatus
+                          }
                         </>
-                      ) : product.deliveryStatus === "Shipped" ? (
-                        <>
-                          {product.deliveryStatus}
+                      ) : getDeliveryStatusAndShipmentInvoice(
+                          order._id,
+                          product.productID
+                        ).deliveryStatus === "Shipped" ||
+                        getDeliveryStatusAndShipmentInvoice(
+                          order._id,
+                          product.productID
+                        ).deliveryStatus === "Shipment Created" ? (
+                        <a
+                          target="_blank"
+                          href={
+                            getDeliveryStatusAndShipmentInvoice(
+                              order._id,
+                              product.productID
+                            ).shipmentInvoice
+                          }
+                          className="cursor-pointer flex items-center"
+                        >
+                          {
+                            getDeliveryStatusAndShipmentInvoice(
+                              order._id,
+                              product.productID
+                            ).deliveryStatus
+                          }
                           <RiShareBoxLine />
-                        </>
+                        </a>
+                      ) : getDeliveryStatusAndShipmentInvoice(
+                          order._id,
+                          product.productID
+                        ).deliveryStatus === "Cancelled" ? (
+                        "Cancelled"
                       ) : (
-                        product.deliveryStatus
+                        "Processing"
                       )}
                     </h3>
                     <h3 className="font-semibold text-xs mobile-sm:text-base sm:text-lg text-primary sm:text-right mt-3 sm:mt-0">
