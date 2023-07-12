@@ -134,7 +134,7 @@ function AboutUs() {
       {/* Our Story */}
       <div className="bg-[#f4e7d3] relative pt-32 mt-16 pb-12">
         <svg
-          className="absolute top-0"
+          className="absolute -top-1"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 320"
         >

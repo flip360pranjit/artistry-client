@@ -23,18 +23,18 @@ export const links = [
         sublinks: [],
         sublinkCount: 0,
       },
-      {
-        name: "Pricing and Payments",
-        link: "/sell-art/pricing-payments",
-        sublinks: [],
-        sublinkCount: 0,
-      },
-      {
-        name: "Artist Resources",
-        link: "/sell-art/artist-resources",
-        sublinks: [],
-        sublinkCount: 0,
-      },
+      // {
+      //   name: "Pricing and Payments",
+      //   link: "/sell-art/pricing-payments",
+      //   sublinks: [],
+      //   sublinkCount: 0,
+      // },
+      // {
+      //   name: "Artist Resources",
+      //   link: "/sell-art/artist-resources",
+      //   sublinks: [],
+      //   sublinkCount: 0,
+      // },
     ],
   },
   {
@@ -70,8 +70,8 @@ export const links = [
     submenu: false,
   },
   {
-    name: "Blog/News",
-    link: "/blog",
+    name: "Contact",
+    link: "/contact",
     isDropdown: false,
     submenu: false,
   },

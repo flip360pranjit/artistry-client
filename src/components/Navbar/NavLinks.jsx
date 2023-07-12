@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { links } from "./Links";
 import DesktopView from "./DesktopView";
 import MobileView from "./MobileView";
 import Button from "../Button/Button";
 import { FaArrowRight } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 
 function NavLinks({ isClicked, isLoggedIn, handleClick }) {
+  const location = useLocation();
+
   const [headLink, setHeadLink] = useState("");
   const [subLink, setSubLink] = useState("");
+
+  useEffect(() => {
+    setHeadLink("");
+    setSubLink("");
+  }, [location]);
 
   function toggleHeadDropdown(event, currentLink) {
     event.preventDefault();

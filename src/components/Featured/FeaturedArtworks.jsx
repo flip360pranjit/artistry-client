@@ -32,7 +32,7 @@ function getRandomArtworks(artworks, count) {
   return artworks.slice(0, count);
 }
 
-function FeaturedArtworks({ featuredArtworksData, heading, description }) {
+function FeaturedArtworks({ heading, description }) {
   const swiperRef = useRef();
 
   const [artworks, setArtworks] = useState([]);
