@@ -3,9 +3,59 @@ import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { BsTelephone, BsEnvelope } from "react-icons/bs";
 import { Switch } from "@headlessui/react";
 import { IconContext } from "react-icons";
+import PhoneInput from "react-phone-input-2";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function ContactUs() {
+  const [phone, setPhone] = useState("");
+  const [details, setDetails] = useState({
+    fName: "",
+    lName: "",
+    email: "",
+    message: "",
+  });
   const [agreed, setAgreed] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  function handleChange(event) {
+    setDetails({
+      ...details,
+      [event.target.name]: event.target.value,
+    });
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setLoading(true);
+
+    const data = {
+      fullName: details.fName + " " + details.lName,
+      email: details.email,
+      phoneNumber: "+" + phone,
+      message: details.message,
+    };
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/contact`,
+        data
+      );
+
+      toast.success("Message sent!");
+      setLoading(false);
+      setPhone("");
+      setDetails({
+        fName: "",
+        lName: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      setLoading(false);
+      toast.error("Something went wrong!");
+    }
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mx-4 md:mx-20">
@@ -28,14 +78,14 @@ function ContactUs() {
             <HiOutlineBuildingOffice2 /> Silchar, Assam, India <br />
             PinCode: 788010
           </a>
-          <a
+          {/* <a
             href="tel:+916000029772"
             target="_blank"
             className="mt-4 text-base leading-5 text-gray-600 flex gap-5 hover:text-[#333333] cursor-pointer"
           >
             <BsTelephone />
             +1 (555) 234-5678
-          </a>
+          </a> */}
           <a
             href="mailto:pranjitkakotiofficial@gmail.com"
             target="_blank"
@@ -48,8 +98,7 @@ function ContactUs() {
 
       <div className="">
         <form
-          action="/contact"
-          method="POST"
+          onSubmit={handleSubmit}
           className="mx-auto mt-16 max-w-sm sm:mt-20"
         >
           <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -58,10 +107,12 @@ function ContactUs() {
                 <input
                   required
                   type="text"
-                  name="first-name"
+                  name="fName"
                   id="first-name"
                   autoComplete="given-name"
                   placeholder="First Name"
+                  value={details.fName}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
                 />
               </div>
@@ -71,10 +122,12 @@ function ContactUs() {
                 <input
                   required
                   type="text"
-                  name="last-name"
+                  name="lName"
                   id="last-name"
                   autoComplete="family-name"
                   placeholder="Last Name"
+                  value={details.lName}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
                 />
               </div>
@@ -88,32 +141,21 @@ function ContactUs() {
                   id="email"
                   autoComplete="email"
                   placeholder="Email"
+                  value={details.email}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
             <div className="sm:col-span-2">
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 flex items-center">
-                  <label htmlFor="country" className="sr-only">
-                    Country
-                  </label>
-                  <select
-                    id="country"
-                    name="country"
-                    className="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-2 text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm"
-                  >
-                    <option>IN(+91)</option>
-                  </select>
-                </div>
-                <input
-                  required
-                  type="tel"
-                  name="phone-number"
-                  id="phone-number"
-                  autoComplete="tel"
-                  placeholder="Phone Number"
-                  className="block w-full rounded-md border-0 pr-3.5 py-2 pl-28 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
+              <div className="">
+                <PhoneInput
+                  country={"in"}
+                  value={phone}
+                  onChange={setPhone}
+                  inputStyle={{ width: "100%" }}
+                  inputClass="block rounded-md py-1.5 text-gray-900 shadow-sm border-3 border-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-primary sm:text-sm sm:leading-6"
+                  containerClass="mobile-sm:col-span-3"
                 />
               </div>
             </div>
@@ -125,6 +167,8 @@ function ContactUs() {
                   rows={4}
                   placeholder="Your Message"
                   required={true}
+                  value={details.message}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
                   defaultValue={""}
                 />
@@ -163,9 +207,14 @@ function ContactUs() {
           <div className="mt-10">
             <button
               type="submit"
-              className="block w-full rounded-md bg-primary px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              disabled={!agreed || loading}
+              className={`block w-full rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+                !agreed || loading
+                  ? "bg-gray-400"
+                  : "bg-primary hover:bg-primary-hover"
+              }`}
             >
-              Let's talk
+              {loading ? "Loading..." : "Let's talk"}
             </button>
           </div>
         </form>

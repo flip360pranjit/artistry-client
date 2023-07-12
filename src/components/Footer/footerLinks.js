@@ -3,7 +3,7 @@ const footerLinks = [
     category: "Company",
     links: [
       { title: "About Us", url: "/about" },
-      { title: "Blog", url: "/blog" },
+      // { title: "Blog", url: "/blog" },
       { title: "Careers", url: "/careers" },
     ],
   },
@@ -11,8 +11,8 @@ const footerLinks = [
     category: "Support",
     links: [
       { title: "FAQ", url: "/faq" },
-      { title: "Terms of Service", url: "/terms" },
-      { title: "Privacy Policy", url: "/privacy" },
+      // { title: "Terms of Service", url: "/terms&conditions" },
+      { title: "Privacy Policy", url: "/privacy-policy" },
     ],
   },
   {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { IconContext } from "react-icons";
 import {
   FaFacebook,
@@ -6,18 +6,42 @@ import {
   FaInstagram,
   FaLinkedin,
   FaTwitter,
+  FaYoutube,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import footerLinks from "./footerLinks";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function Footer() {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/newsletter`,
+        { email }
+      );
+
+      toast.success("Message sent!");
+      setLoading(false);
+      setEmail("");
+    } catch (error) {
+      setLoading(false);
+      toast.error("Something went wrong!");
+    }
+  }
   return (
     <footer className="mt-10 bg-gray-50 px-5 pt-16 pb-8">
       <div className="max-w-md mx-auto">
         <h2 className="text-xl sm:text-3xl font-bold text-center">
           Join Our Newsletter for Exclusive Updates, Latest News and Offers
         </h2>
-        <form action="/subscribe" method="POST" className="mt-6">
+        <form onSubmit={handleSubmit} className="mt-6">
           <div className="relative max-w-lg">
             <label className="sr-only" htmlFor="email">
               {" "}
@@ -25,14 +49,23 @@ function Footer() {
             </label>
 
             <input
+              required
               className="w-full rounded-full border-primary bg-white p-4 pe-32 text-sm font-medium"
               id="email"
               type="email"
               placeholder="example@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
 
-            <button className="absolute end-1 top-1/2 -translate-y-1/2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-white transition hover:bg-primary-hover">
-              Subscribe
+            <button
+              type="submit"
+              disabled={loading}
+              className={`absolute end-1 top-1/2 -translate-y-1/2 rounded-full px-5 py-3 text-sm font-medium text-white transition ${
+                loading ? "bg-gray-400" : "bg-primary hover:bg-primary-hover"
+              }`}
+            >
+              {loading ? "Loading..." : "Subscribe"}
             </button>
           </div>
         </form>
@@ -72,7 +105,7 @@ function Footer() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-7 sm:flex-row justify-between items-center mt-10 border-t-2 pt-8">
+      <div className="flex flex-col gap-7 sm:flex-row justify-between items-center mt-10 pt-8">
         <p className="text-base/relaxed text-gray-500">
           © Pranjit Kakoti/TheArtistry 2023.
         </p>
@@ -83,21 +116,60 @@ function Footer() {
               className: "fill-gray-700 hover:fill-gray-700/75",
             }}
           >
-            <Link to="https://www.linkedin.com/in/pranjit-kakoti-493028229">
-              <FaLinkedin />
-            </Link>
-            <Link to="https://github.com/flip360pranjit">
-              <FaGithub />
-            </Link>
-            <Link to="https://instagram.com/_flip_360_pranjit_?igshid=OTk0YzhjMDVIZA==">
+            <a
+              target="_blank"
+              href="https://instagram.com/theartistry.online?igshid=ZGUzMzM3NWJiOQ=="
+            >
               <FaInstagram />
-            </Link>
-            <Link to="https://www.facebook.com/profile.php?id=100076014226513">
+            </a>
+            <a
+              target="_blank"
+              href="https://www.facebook.com/The-Artistry-115015941645828"
+            >
               <FaFacebook />
-            </Link>
-            <Link to="https://twitter.com/PranjitKakoti2">
+            </a>
+            <a target="_blank" href="https://youtube.com/@theartistry.online">
+              <FaYoutube />
+            </a>
+          </IconContext.Provider>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-7 justify-between items-center mt-10 border-t-2 pt-8">
+        <p className="text-base/relaxed text-gray-500">
+          Developed by Pranjit Kakoti
+        </p>
+        <div className="flex flex-row items-center justify-center gap-10">
+          <IconContext.Provider
+            value={{
+              size: "1.5rem",
+              className: "fill-gray-700 hover:fill-gray-700/75",
+            }}
+          >
+            <a
+              target="_blank"
+              href="https://www.linkedin.com/in/pranjit-kakoti-493028229"
+            >
+              <FaLinkedin />
+            </a>
+            <a target="_blank" href="https://github.com/flip360pranjit">
+              <FaGithub />
+            </a>
+            <a
+              target="_blank"
+              href="https://instagram.com/_flip_360_pranjit_?igshid=OTk0YzhjMDVIZA=="
+            >
+              <FaInstagram />
+            </a>
+            <a
+              target="_blank"
+              href="https://www.facebook.com/profile.php?id=100076014226513"
+            >
+              <FaFacebook />
+            </a>
+            {/* <a target="_blank" href="https://twitter.com/PranjitKakoti2">
               <FaTwitter />
-            </Link>
+            </a> */}
           </IconContext.Provider>
         </div>
       </div>

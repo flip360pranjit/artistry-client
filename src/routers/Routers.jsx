@@ -47,6 +47,8 @@ import ProtectedOrder from "./ProtectedOrder";
 import OrderSuccess from "../pages/OrderSuccess";
 import CommissionedArtists from "../pages/CommissionedArtists";
 import ViewArtist from "../components/ViewArtist/ViewArtist";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
+import FAQPage from "../pages/FAQPage";
 
 function Routers() {
   return (
@@ -166,6 +168,9 @@ function Routers() {
       />
 
       <Route path="/view-artist" element={<ViewArtist />} />
+
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/faq" element={<FAQPage />} />
     </Routes>
   );
 }

@@ -144,7 +144,7 @@ function Shipping() {
     const info = {
       shipping: {
         fullName: shippingAddress.fullName,
-        phoneNumber: "+" + shippingPhone,
+        phoneNumber: shippingPhone,
         email: shippingAddress.email,
         country: shippingAddress.country,
         streetAddress: shippingAddress.streetAddress,
@@ -154,7 +154,7 @@ function Shipping() {
       },
       billing: {
         fullName: billingAddress.fullName,
-        phoneNumber: "+" + billingPhone,
+        phoneNumber: billingPhone,
         email: billingAddress.email,
         country: billingAddress.country,
         streetAddress: billingAddress.streetAddress,
