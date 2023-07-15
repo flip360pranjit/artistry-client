@@ -38,8 +38,8 @@ function CommissionedOrders() {
       const commissionedOrders = [...fetchedOrders].reverse();
       setOrders(commissionedOrders);
     } catch (error) {
-      // toast.error("Error! Try checking your connection.");
-      console.log(error);
+      toast.error("Error! Try checking your connection.");
+      // console.log(error);
     }
   };
 
@@ -66,7 +66,8 @@ function CommissionedOrders() {
           setLoading(false);
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
+      toast.error("Something went wrong!");
       setLoading(false);
     }
   }
@@ -103,7 +104,7 @@ function CommissionedOrders() {
         });
     } catch (err) {
       setALoading(false);
-      console.log(err);
+      // console.log(err);
       toast.error(err.response.data.error);
     }
   }
@@ -126,7 +127,7 @@ function CommissionedOrders() {
         });
     } catch (err) {
       setRLoading(false);
-      console.log(err);
+      // console.log(err);
       toast.error(err.response.data.error);
     }
   }

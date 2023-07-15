@@ -5,6 +5,7 @@ import { FaFacebook, FaInstagram, FaUserAlt, FaYoutube } from "react-icons/fa";
 import { IoLocationSharp, IoMail } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import Card from "../Card/Card";
+import { toast } from "react-toastify";
 
 function ViewArtist() {
   const location = useLocation();
@@ -24,7 +25,8 @@ function ViewArtist() {
         const artworks = response.data;
         setSellerListings(artworks);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
+        toast.error("Something went wrong!");
       }
     };
 

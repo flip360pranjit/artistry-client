@@ -37,7 +37,7 @@ function Account() {
           </div>
 
           {/* Email */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 border-b py-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 border-b py-8">
             <h3 className="font-semibold">Email</h3>
             <h3 className="sm:col-span-2 text-right">{user.email}</h3>
           </div>

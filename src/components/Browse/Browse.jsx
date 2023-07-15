@@ -10,6 +10,7 @@ import FilterError from "../../assets/images/filtererror.png";
 import { useDispatch } from "react-redux";
 import { resetCheckout } from "../../store/slices/CheckoutSlice";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
+import { toast } from "react-toastify";
 
 function Browse() {
   const dispatch = useDispatch();
@@ -51,7 +52,8 @@ function Browse() {
         const artworks = response.data;
         setArtworks(artworks);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
+        toast.error("Something went wrong!");
       }
     };
 

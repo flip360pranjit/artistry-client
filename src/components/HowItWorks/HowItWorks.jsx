@@ -249,7 +249,7 @@ function HowItWorks() {
               piece to enrich your space. Begin your artistic journey now and
               browse our curated collection.
             </h5>
-            <Link to="/browse/artworks">
+            <Link to="/browse">
               <Button type="contained" color="primary" size="large">
                 Get Started
               </Button>

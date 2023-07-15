@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ArtistCard from "../components/Card/ArtistCard";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function CommissionedArtists() {
   const [artists, setArtists] = useState([]);
@@ -18,7 +19,8 @@ function CommissionedArtists() {
         setArtists(latestArtists);
       } catch (error) {
         // toast.error("Error! Try checking your connection.");
-        console.log(error);
+        // console.log(error);
+        toast.error("Something went wrong!");
       }
     };
 

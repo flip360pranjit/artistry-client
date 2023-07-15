@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Empty from "../../assets/images/success.png";
 import UpdateSellerOrderModal from "../PopupModal/UpdateSellerOrderModal";
+import { toast } from "react-toastify";
 
 function Orders() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -42,7 +43,8 @@ function Orders() {
       setSellerOrders(latestOrders);
     } catch (error) {
       // toast.error("Error! Try checking your connection.");
-      console.log(error);
+      // console.log(error);
+      toast.error("Something went wrong!");
     }
   };
 
@@ -97,7 +99,11 @@ function Orders() {
       .then((res) => {
         navigate("/view-seller-order", { state: { order: res.data } });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        toast.error("Something went wrong!");
+        navigate("/");
+      });
   }
 
   function openUpdate(event, order) {

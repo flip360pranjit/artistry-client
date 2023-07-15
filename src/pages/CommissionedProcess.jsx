@@ -7,6 +7,7 @@ import { FaAngleUp } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import FeaturedArtworks from "../components/Featured/FeaturedArtworks";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const heroVariants = {
   hidden: {
@@ -84,7 +85,8 @@ function CommissionedProcess() {
         const artworks = response.data;
         setArtworks(artworks);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
+        toast.error("Something went wrong!");
       }
     };
 

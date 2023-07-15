@@ -9,6 +9,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { IconContext } from "react-icons";
 import UpdateArtworkModal from "../PopupModal/UpdateArtworkModal";
+import { toast } from "react-toastify";
 
 function Listings() {
   const navigate = useNavigate();
@@ -30,7 +31,8 @@ function Listings() {
       const artworks = response.data;
       setSellerListings(artworks);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      toast.error("Something went wrong!");
     }
   };
 

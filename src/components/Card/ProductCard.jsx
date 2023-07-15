@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import ProgressBar from "../Browse/ProgressBar";
 import axios from "axios";
 import Rating from "../Browse/Rating";
+import { toast } from "react-toastify";
 
 function ProductCard({ artwork, clickedReview, setClickedReview, sortBy }) {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ function ProductCard({ artwork, clickedReview, setClickedReview, sortBy }) {
           setReviews([...response.data].reverse());
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
           toast.error("Something went wrong!");
         });
     }

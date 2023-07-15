@@ -46,7 +46,8 @@ function Overview() {
         setSellerOrders(latestOrders);
       } catch (error) {
         // toast.error("Error! Try checking your connection.");
-        console.log(error);
+        // console.log(error);
+        toast.error("Something went wrong!");
       }
     };
 
@@ -67,7 +68,8 @@ function Overview() {
         const artworks = response.data;
         setSellerListings(artworks);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
+        toast.error("Something went wrong!");
       }
     };
 

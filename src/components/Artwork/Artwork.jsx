@@ -54,7 +54,7 @@ function Artwork() {
           setReviews([...response.data].reverse());
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
           toast.error("Something went wrong!");
         });
     }

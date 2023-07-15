@@ -71,7 +71,7 @@ function MobileAuth() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="z-[-10] absolute bg-primary w-full h-screen rounded-full transition duration-1000 top-[-65%] mobile-md1:top-[-75%]"
+            className="z-[-10] absolute bg-primary w-full h-screen rounded-full transition duration-1000 top-[-60%] mobile-md1:top-[-70%]"
           />
         )}
       </AnimatePresence>

@@ -56,7 +56,7 @@ function Authenticate() {
         user
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         toast.success("You have successfully logged in!");
 
         dispatch(resetSocial());
@@ -75,19 +75,19 @@ function Authenticate() {
     async function getSocialAuthResult() {
       await getRedirectResult(auth).then((response) => {
         if (response) {
-          console.log(response);
-          // const user = {
-          //   uid: response.user.uid,
-          //   displayName: response.user.displayName,
-          //   email: response.user.email,
-          //   photoURL: response.user.photoURL,
-          // };
+          // console.log(response);
+          const user = {
+            uid: response.user.uid,
+            displayName: response.user.displayName,
+            email: response.user.email,
+            photoURL: response.user.photoURL,
+          };
 
-          // if (type === "register") {
-          //   socialRegister(user);
-          // } else if (type === "login") {
-          //   socialLogin(user);
-          // }
+          if (type === "register") {
+            socialRegister(user);
+          } else if (type === "login") {
+            socialLogin(user);
+          }
         }
       });
     }
@@ -96,8 +96,11 @@ function Authenticate() {
   }, []);
 
   return loading ? (
-    <div className="min-h-screen flex justify-center items-center">
+    <div className="min-h-screen flex flex-col gap-10 justify-center items-center">
       <LoadingAnimation />
+      <h2 className="text-center font-poppins">
+        Please wait...it may take a while.
+      </h2>
     </div>
   ) : windowWidth < 640 ? (
     <MobileAuth />
