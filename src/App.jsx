@@ -10,6 +10,7 @@ import {
   removeOrder,
 } from "./store/slices/OrderSlice";
 import { resetCheckout } from "./store/slices/CheckoutSlice";
+import getHeadComponent from "./layout/helmetComponents";
 
 function App() {
   const location = useLocation();
@@ -36,6 +37,7 @@ function App() {
 
   return (
     <>
+      {getHeadComponent(location.pathname)}
       <div className="absolute right-0">
         <ToastContainer />
       </div>

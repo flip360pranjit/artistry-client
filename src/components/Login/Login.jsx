@@ -78,9 +78,9 @@ function Login({ handleClick }) {
     // }
   }
 
-  function socialLogin(currentUser) {
-    console.log(currentUser);
-  }
+  // function socialLogin(currentUser) {
+  //   console.log(currentUser);
+  // }
 
   return (
     <div className="grid grid-cols-1 gap-16 sm:grid-cols-2 sm:gap-0 min-h-screen">

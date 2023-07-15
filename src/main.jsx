@@ -8,18 +8,22 @@ import store from "./store/store.js";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import ScrollToTop from "./utils/ScrollToTop.jsx";
+import { HelmetProvider } from "react-helmet-async";
 
 let persistor = persistStore(store);
+let helmetContext = {};
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <BrowserRouter>
-          <ScrollToTop />
-          <App />
-        </BrowserRouter>
-      </PersistGate>
-    </Provider>
+    <HelmetProvider context={helmetContext}>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <BrowserRouter>
+            <ScrollToTop />
+            <App />
+          </BrowserRouter>
+        </PersistGate>
+      </Provider>
+    </HelmetProvider>
   </React.StrictMode>
 );
