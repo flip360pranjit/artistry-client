@@ -4,11 +4,9 @@ import RegisterSvg from "../../assets/svgs/register.svg";
 import Logo from "../../assets/images/logo.png";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, storage } from "../../config/firebase.config";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import axios from "axios";
 import { addUser } from "../../store/slices/AuthSlice";
+import SocialAuth from "../SocialAuth/SocialAuth";
 
 function Register({ handleClick }) {
   const [user, setUser] = useState({
@@ -36,73 +34,55 @@ function Register({ handleClick }) {
     event.preventDefault();
     setLoading(true);
 
-    try {
-      // Create user in Firebase Authentication
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        user.email,
-        user.password
-      );
+    const formData = new FormData();
+    formData.append("file", icon);
+    formData.append("upload_preset", "profile-image");
+    const response = await axios.post(
+      `https://api.cloudinary.com/v1_1/${
+        import.meta.env.VITE_REACT_APP_CLOUDINARY_CLOUD_NAME
+      }/image/upload`,
+      formData
+    );
 
-      // Upload image file to Firebase Storage
-      const storageRef = ref(
-        storage,
-        `images/${Date.now() + user.fName + " " + user.lName}`
-      );
-      uploadBytesResumable(storageRef, icon).then(() => {
-        getDownloadURL(storageRef).then((downloadURL) => {
-          // Update user profile
-          updateProfile(userCredential.user, {
-            displayName: user.fName + " " + user.lName,
-            photoURL: downloadURL,
-          }).then(async () => {
-            const data = {
-              uid: userCredential.user.uid,
-              displayName: userCredential.user.displayName,
-              email: userCredential.user.email,
-              photoURL: userCredential.user.photoURL,
-            };
-
-            // Add user to Database
-            await axios
-              .post(
-                `${import.meta.env.VITE_REACT_APP_API_URL}/users/register`,
-                data
-              )
-              .then((res) => {
-                dispatch(addUser(res.data.user));
-              })
-              .catch((err) => {
-                if (err.response.status === 400) {
-                  toast.error("Email already exists!");
-                } else {
-                  toast.error("Oops, something went wrong!");
-                }
-              });
-          });
+    await axios
+      .post(`${import.meta.env.VITE_REACT_APP_API_URL}/users/register`, {
+        user,
+        downloadURL: response.data.secure_url,
+      })
+      .then((res) => {
+        setLoading(false);
+        setUser({
+          fName: "",
+          lName: "",
+          email: "",
+          password: "",
         });
+        setIcon(null);
+        toast.success("Your account has been created! Login to proceed.");
+        dispatch(addUser(res.data.user));
+        navigate("/profile");
+      })
+      .catch((err) => {
+        const message = err.response.data.error.code;
+        toast.error(
+          message === "auth/email-already-in-use"
+            ? "Email already exists!"
+            : "Oops, something went wrong!"
+        );
+        setLoading(false);
       });
-      setLoading(false);
 
-      setUser({
-        fName: "",
-        lName: "",
-        email: "",
-        password: "",
-      });
-      setIcon(null);
-      toast.success("Your account has been created! Login to proceed.");
-    } catch (err) {
-      // Firebase Authentication error
+    // } catch (err) {
+    //   // Firebase Authentication error
 
-      setLoading(false);
+    //   setLoading(false);
 
-      toast.error(
-        err.message === "Firebase: Error (auth/email-already-in-use)."
-          ? "Email already exists!"
-          : "Oops, something went wrong!"
-      );
-    }
+    //   toast.error(
+    //     err.message === "Firebase: Error (auth/email-already-in-use)."
+    //       ? "Email already exists!"
+    //       : "Oops, something went wrong!"
+    //   );
+    // }
   }
 
   return (
@@ -232,6 +212,7 @@ function Register({ handleClick }) {
             </button>
           </div>
         </form>
+        <SocialAuth type="register" />
       </div>
 
       <div className="flex flex-col justify-center sm:justify-around items-center sm:h-screen gap-4 mx-12 mobile-lg:mx-5 sm:mx-0">

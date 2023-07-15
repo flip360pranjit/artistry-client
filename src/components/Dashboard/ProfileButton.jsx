@@ -9,6 +9,7 @@ function ProfileButton({ size }) {
     <div>
       <Link to="/profile">
         <img
+          referrerPolicy="no-referrer"
           src={user?.photoURL}
           alt="ProfileImg"
           className={`object-cover rounded-full border-2 cursor-pointer active:scale-110 ${

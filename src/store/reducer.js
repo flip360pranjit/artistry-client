@@ -4,6 +4,7 @@ import orderReducer from "./slices/OrderSlice";
 import wishlistReducer from "./slices/WishlistSlice";
 import cartReducer from "./slices/CartSlice";
 import checkoutReducer from "./slices/CheckoutSlice";
+import socialReducer from "./slices/SocialSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   wishlist: wishlistReducer,
   cart: cartReducer,
   checkout: checkoutReducer,
+  social: socialReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

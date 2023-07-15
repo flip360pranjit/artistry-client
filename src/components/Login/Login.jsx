@@ -5,10 +5,9 @@ import LoginSvg from "../../assets/svgs/login.svg";
 import Logo from "../../assets/images/logo.png";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../config/firebase.config";
 import { addUser } from "../../store/slices/AuthSlice";
 import axios from "axios";
+import SocialAuth from "../SocialAuth/SocialAuth";
 
 function Login({ handleClick }) {
   const [user, setUser] = useState({
@@ -34,50 +33,53 @@ function Login({ handleClick }) {
     event.preventDefault();
     setLoading(true);
 
-    try {
-      // Find user in Firebase Authentication
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        user.email,
-        user.password
-      );
+    // try {
+    // // Find user in Firebase Authentication
+    // const userCredential = await signInWithEmailAndPassword(
+    //   auth,
+    //   user.email,
+    //   user.password
+    // );
 
-      // Find user in MongoDB database
-      await axios
-        .post(`${import.meta.env.VITE_REACT_APP_API_URL}/users/login`, {
-          uid: userCredential.user.uid,
-        })
-        .then((res) => {
-          dispatch(addUser(res.data.user));
+    // Find user in MongoDB database
+    await axios
+      .post(`${import.meta.env.VITE_REACT_APP_API_URL}/users/login`, user)
+      .then((res) => {
+        dispatch(addUser(res.data.user));
 
-          setUser({
-            email: "",
-            password: "",
-          });
-          toast.success("You have successfully logged in!");
-          navigate("/profile");
-        })
-        .catch((err) => {
-          if (err.response.status === 404) {
-            toast.error(err.response.data.message);
-          } else {
-            toast.error("Oops, something went wrong!");
-          }
+        setUser({
+          email: "",
+          password: "",
         });
+        toast.success("You have successfully logged in!");
 
-      setLoading(false);
-    } catch (err) {
-      // User Invalid in Firebase Authentication
+        setLoading(false);
+        navigate("/profile");
+      })
+      .catch((err) => {
+        const message = err.response.data.error.code;
+        toast.error(
+          message === "auth/user-not-found"
+            ? "Invalid Email! Please check the email or sign up for a new account."
+            : message === "auth/wrong-password"
+            ? "Access Denied! Invalid Password."
+            : "Oops, something went wrong!"
+        );
 
-      setLoading(false);
-      toast.error(
-        err.message === "Firebase: Error (auth/user-not-found)."
-          ? "Invalid Email! Please check the email or sign up for a new account."
-          : err.message === "Firebase: Error (auth/wrong-password)."
-          ? "Access Denied! Invalid Password."
-          : "Oops, something went wrong!"
-      );
-    }
+        setLoading(false);
+        // console.log(err);
+      });
+    // } catch (err) {
+    //   // User Invalid in Firebase Authentication
+    //   console.log("Frontend: ", err);
+
+    //   setLoading(false);
+
+    // }
+  }
+
+  function socialLogin(currentUser) {
+    console.log(currentUser);
   }
 
   return (
@@ -175,6 +177,7 @@ function Login({ handleClick }) {
             </button>
           </div>
         </form>
+        <SocialAuth type="login" />
       </div>
     </div>
   );

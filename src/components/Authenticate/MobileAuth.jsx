@@ -58,6 +58,8 @@ function MobileAuth() {
   function handleClick(event) {
     event.preventDefault();
     setIsLogin(!isLogin);
+
+    scrollTo(0, 0);
   }
 
   return (
@@ -69,7 +71,7 @@ function MobileAuth() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="z-[-10] absolute bg-primary w-full h-screen rounded-full transition duration-1000 top-[-75%]"
+            className="z-[-10] absolute bg-primary w-full h-screen rounded-full transition duration-1000 top-[-65%] mobile-md1:top-[-75%]"
           />
         )}
       </AnimatePresence>
@@ -80,7 +82,7 @@ function MobileAuth() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="z-[-10] absolute bg-primary w-full h-screen rounded-full transition duration-1000 bottom-[-50%]"
+            className="z-[-10] absolute bg-primary w-full h-screen rounded-full transition duration-1000 bottom-[-45%]"
           />
         )}
       </AnimatePresence>
