@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import dotenv from "dotenv";
-const dot = dotenv.configDotenv().parsed;
+// import dotenv from "dotenv";
+// const dot = dotenv.configDotenv().parsed;
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,7 +9,7 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  define: {
-    "process.env": dot,
-  },
+  // define: {
+  //   "process.env": dot,
+  // },
 });
