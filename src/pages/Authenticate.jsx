@@ -39,7 +39,7 @@ function Authenticate() {
       )
       .then((res) => {
         dispatch(resetSocial());
-        toast.success("Your account has been created! Login to proceed.");
+        toast.success("You have successfully logged in!");
         dispatch(addUser(res.data.user));
         navigate("/profile");
       })
