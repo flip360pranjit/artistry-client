@@ -26,7 +26,7 @@ function Hero() {
   return (
     <section
       id="home"
-      className="flex flex-col-reverse items-center gap-3 bg-center bg-cover px-5 pb-2 rounded-b-3xl bg-[url('./images/mobile-background.jpg')] md:flex-row md:items-start md:gap-12 md:bg-[url('./images/desktop-background.jpg')]"
+      className="flex flex-col-reverse items-center gap-3 bg-center bg-cover px-5 pb-2 rounded-b-3xl bg-[url('/images/mobile-background.jpg')] md:flex-row md:items-start md:gap-12 md:bg-[url('/images/desktop-background.jpg')]"
     >
       <div
         className={`left-wrapper flex flex-col md:items-start items-center lg:mt-7 mb-7 xl:mb-0 ${

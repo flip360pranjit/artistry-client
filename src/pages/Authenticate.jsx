@@ -83,11 +83,12 @@ function Authenticate() {
             photoURL: response.user.photoURL,
           };
 
-          if (type === "register") {
-            socialRegister(user);
-          } else if (type === "login") {
-            socialLogin(user);
-          }
+          // if (type === "register") {
+          //   socialRegister(user);
+          // } else if (type === "login") {
+          //   socialLogin(user);
+          // }
+          socialRegister(user);
         }
       });
     }
