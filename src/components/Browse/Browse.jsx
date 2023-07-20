@@ -187,6 +187,9 @@ function Browse() {
 
   return (
     <div className="pt-20 md:pt-[55px] min-h-screen">
+      {windowWidth < 640 && isSidebarOpen && (
+        <div className="bg-black h-screen w-screen fixed z-[55] opacity-70"></div>
+      )}
       <div className="flex bg-primary px-5 py-2 justify-between items-center fixed top-[74px] sm:sticky sm:top-[52px] w-full z-50">
         <div
           onClick={() => setIsSidebarOpen(true)}
