@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const breakpoints = {
   640: {
@@ -33,6 +34,7 @@ function getRandomArtworks(artworks, count) {
 }
 
 function FeaturedArtworks({ heading, description }) {
+  const navigate = useNavigate();
   const swiperRef = useRef();
 
   const [artworks, setArtworks] = useState([]);
@@ -52,6 +54,12 @@ function FeaturedArtworks({ heading, description }) {
     // Fetch seller artworks on component mount
     fetchArtworks();
   }, []);
+
+  function viewArtist(event, artwork) {
+    event.preventDefault();
+
+    navigate("/view-artwork", { state: { artwork } });
+  }
 
   return (
     <section className="rounded-3xl px-6 pt-5 py-14 mt-10 shadow-lg bg-gray-100 max-w-[100vw]">
@@ -157,7 +165,9 @@ function FeaturedArtworks({ heading, description }) {
                         size="small"
                         layered={true}
                       >
-                        View More
+                        <span onClick={(e) => viewArtist(e, artwork)}>
+                          View More
+                        </span>
                       </Button>
                     </div>
                     <div className="md:hidden flex justify-center mt-5">
@@ -167,7 +177,9 @@ function FeaturedArtworks({ heading, description }) {
                         size="large"
                         layered={true}
                       >
-                        View More
+                        <span onClick={(e) => viewArtist(e, artwork)}>
+                          View More
+                        </span>
                       </Button>
                     </div>
                   </div>
