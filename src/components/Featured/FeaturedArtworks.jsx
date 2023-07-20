@@ -141,7 +141,7 @@ function FeaturedArtworks({ heading, description }) {
                   <img
                     src={artwork.image}
                     alt={artwork.title}
-                    className="rounded-sm"
+                    className="rounded-sm w-auto h-auto"
                   />
                   <h3 className="text-base md:text-[16px] lg:text-xl font-semibold font-playfair-display absolute bottom-0 bg-white w-full text-center pb-7 sm:pb-0">
                     {artwork.title}

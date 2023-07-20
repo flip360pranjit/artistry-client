@@ -49,7 +49,7 @@ function Hero() {
       </div>
       <div className="right-wrapper">
         <img
-          className="img flex-1 top-0"
+          className="img w-[calc(100vw-16px)] md:w-[100vw] pc-small:w-[60vw] top-0"
           src="./images/paintings.png"
           alt="Paintings"
         />

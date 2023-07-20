@@ -75,7 +75,7 @@ function Footer() {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-32 mt-16 mx-5">
         <div className="mx-auto max-w-sm lg:max-w-lg">
           <div className="flex justify-center md:justify-start">
-            <img src={Logo} alt="Logo" className="w-20" />
+            <img src={Logo} alt="Logo" className="w-20 h-20" />
           </div>
           <p className="mt-4 text-center text-[#666666] lg:text-left lg:text-lg">
             Making the world more vibrant, one brushstroke at a time.
