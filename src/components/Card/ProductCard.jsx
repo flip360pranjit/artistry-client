@@ -7,6 +7,7 @@ import ProgressBar from "../Browse/ProgressBar";
 import axios from "axios";
 import Rating from "../Browse/Rating";
 import { toast } from "react-toastify";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function ProductCard({ artwork, clickedReview, setClickedReview, sortBy }) {
   const navigate = useNavigate();
@@ -76,7 +77,19 @@ function ProductCard({ artwork, clickedReview, setClickedReview, sortBy }) {
         onClick={viewListing}
         className="flex items-center justify-center col-span-2 bg-gray-200 p-1 cursor-pointer"
       >
-        <img src={artwork.image} alt={artwork.title} className="rounded-t-md" />
+        {isWebpSupported() ? (
+          <img
+            src={artwork.imageWebp}
+            alt={artwork.title}
+            className="rounded-t-md"
+          />
+        ) : (
+          <img
+            src={artwork.imageWe}
+            alt={artwork.title}
+            className="rounded-t-md"
+          />
+        )}
       </div>
       <div className="p-3 sm:p-1 col-span-3 flex flex-col sm:justify-between">
         <h2 className="font-playfair-display font-semibold text-xl mobile:text-3xl mobile-start:text-4xl sm:text-lg">

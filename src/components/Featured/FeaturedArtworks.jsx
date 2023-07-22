@@ -3,6 +3,7 @@ import Button from "../Button/Button";
 // import Swiper core and required modules
 import { Autoplay, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 // Import Swiper styles
 import "swiper/css";
@@ -138,11 +139,19 @@ function FeaturedArtworks({ heading, description }) {
             {artworks.map((artwork) => (
               <SwiperSlide key={artwork._id} className="relative">
                 <div className="w-full h-full sm:w-44 sm:h-64 md:w-48 md:h-72 lg:w-52 lg:h-[300px] mb-10 flex flex-col justify-center items-center rounded-md shadow-xl bg-white relative group cursor-pointer">
-                  <img
-                    src={artwork.image}
-                    alt={artwork.title}
-                    className="rounded-sm"
-                  />
+                  {isWebpSupported() ? (
+                    <img
+                      src={artwork.imageWebp}
+                      alt={artwork.title}
+                      className="rounded-sm"
+                    />
+                  ) : (
+                    <img
+                      src={artwork.image}
+                      alt={artwork.title}
+                      className="rounded-sm"
+                    />
+                  )}
                   <h3 className="text-base md:text-[16px] lg:text-xl font-semibold font-playfair-display absolute bottom-0 bg-white w-full text-center pb-7 sm:pb-0">
                     {artwork.title}
                   </h3>

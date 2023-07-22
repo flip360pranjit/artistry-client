@@ -60,74 +60,108 @@ function AddArtwork() {
     e.preventDefault();
     setLoading(true);
 
-    const formData = new FormData();
-    formData.append("file", image);
-    formData.append("upload_preset", "artworks");
-    const response = await axios.post(
-      `https://api.cloudinary.com/v1_1/${
-        import.meta.env.VITE_REACT_APP_CLOUDINARY_CLOUD_NAME
-      }/image/upload`,
-      formData
+    const signatureRes = await axios.post(
+      `${import.meta.env.VITE_REACT_APP_API_URL}/get-signature`,
+      { uploadPreset: "artworks-webp" }
     );
 
-    const data = await response.data;
+    const formDataWebp = new FormData();
+    formDataWebp.append("file", image);
+    // formData.append("upload_preset", "artworks");
+    formDataWebp.append("timestamp", signatureRes.data.timestamp);
+    formDataWebp.append("upload_preset", "artworks-webp");
+    formDataWebp.append(
+      "api_key",
+      import.meta.env.VITE_REACT_APP_CLOUDINARY_API_KEY
+    );
+    formDataWebp.append("format", "webp");
+    formDataWebp.append("signature", signatureRes.data.signature);
 
-    const currentDate = new Date().toLocaleDateString("en-US", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-
-    const artworkData = {
-      title: art.title,
-      artist: {
-        artistId: user._id,
-        artistName: user.displayName,
-      },
-      medium: art.medium === "Other" ? customMedium : art.medium,
-      category: art.category === "Other" ? customCategory : art.category,
-      size:
-        art.size === "Other"
-          ? customSizeWidth +
-            " " +
-            customSizeWidthUnit +
-            " x " +
-            customSizeHeight +
-            " " +
-            customSizeHeightUnit
-          : art.size,
-      price: art.price,
-      description: art.description,
-      image: data.secure_url,
-      createdAt: currentDate,
-      updatedAt: currentDate,
-      quantity,
-    };
-
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("upload_preset", "artworks-original");
     try {
-      await axios
-        .post(`${import.meta.env.VITE_REACT_APP_API_URL}/artworks`, artworkData)
-        .then(() => {
-          toast.success("Artwork has been created!");
-        });
-      setLoading(false);
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/${
+          import.meta.env.VITE_REACT_APP_CLOUDINARY_CLOUD_NAME
+        }/image/upload`,
+        formData
+      );
+      const data = await response.data;
 
-      // Reset form fields after successful submission
-      setArt({
-        title: "",
-        artistId: "",
-        artistName: "",
-        medium: "",
-        category: "",
-        price: 0,
-        description: "",
+      const responseWebp = await axios.post(
+        `https://api.cloudinary.com/v1_1/${
+          import.meta.env.VITE_REACT_APP_CLOUDINARY_CLOUD_NAME
+        }/image/upload`,
+        formDataWebp
+      );
+      const dataWebp = await responseWebp.data;
+
+      // console.log({ original: data.secure_url, webp: dataWebp.secure_url });
+
+      const currentDate = new Date().toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
       });
-      setImage(null);
-      setQuantity(1);
-      navigate("/dashboard/listings");
-    } catch (error) {
-      setLoading(false);
-      toast.error(error.response.data.error);
+
+      const artworkData = {
+        title: art.title,
+        artist: {
+          artistId: user._id,
+          artistName: user.displayName,
+        },
+        medium: art.medium === "Other" ? customMedium : art.medium,
+        category: art.category === "Other" ? customCategory : art.category,
+        size:
+          art.size === "Other"
+            ? customSizeWidth +
+              " " +
+              customSizeWidthUnit +
+              " x " +
+              customSizeHeight +
+              " " +
+              customSizeHeightUnit
+            : art.size,
+        price: art.price,
+        description: art.description,
+        image: data.secure_url,
+        imageWebp: dataWebp.secure_url,
+        createdAt: currentDate,
+        updatedAt: currentDate,
+        quantity,
+      };
+
+      try {
+        await axios
+          .post(
+            `${import.meta.env.VITE_REACT_APP_API_URL}/artworks`,
+            artworkData
+          )
+          .then(() => {
+            toast.success("Artwork has been created!");
+          });
+        setLoading(false);
+
+        // Reset form fields after successful submission
+        setArt({
+          title: "",
+          artistId: "",
+          artistName: "",
+          medium: "",
+          category: "",
+          price: 0,
+          description: "",
+        });
+        setImage(null);
+        setQuantity(1);
+        navigate("/dashboard/listings");
+      } catch (error) {
+        setLoading(false);
+        toast.error(error.response.data.error);
+      }
+    } catch (err) {
+      toast.error("Something went wrong!");
     }
   };
 
