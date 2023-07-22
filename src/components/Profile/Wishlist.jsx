@@ -13,6 +13,7 @@ import {
 } from "../../store/thunks/WishlistThunks";
 import { clearWishlist } from "../../store/slices/WishlistSlice";
 import { addToCart } from "../../store/thunks/CartThunks";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function Wishlist() {
   const navigate = useNavigate();
@@ -123,11 +124,19 @@ function Wishlist() {
                 onClick={(e) => viewArtwork(e, item.product)}
                 className="cursor-pointer border p-3"
               >
-                <img
-                  src={item.product.image}
-                  alt={item.product.title}
-                  className=""
-                />
+                {isWebpSupported() ? (
+                  <img
+                    src={item.product.imageWebp}
+                    alt={item.product.title}
+                    className=""
+                  />
+                ) : (
+                  <img
+                    src={item.product.image}
+                    alt={item.product.title}
+                    className=""
+                  />
+                )}
               </div>
               <div className="py-2 sm:py-0 sm:col-span-4 grid grid-cols-1 sm:grid-cols-4 border sm:border-none">
                 <div className="flex items-center justify-center sm:border">

@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { IconContext } from "react-icons";
 import { MdOutlineCurrencyRupee } from "react-icons/md";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function ReviewOrder() {
   const [items] = useOutletContext();
@@ -21,7 +22,19 @@ function ReviewOrder() {
             className="grid grid-cols-1 sm:grid-cols-3 gap-2 py-10 sm:px-10 border-t-2"
           >
             <div className="">
-              <img src={item.product.image} alt="" className="" />
+              {isWebpSupported() ? (
+                <img
+                  src={item.product.image}
+                  alt={item.product.title}
+                  className=""
+                />
+              ) : (
+                <img
+                  src={item.product.image}
+                  alt={item.product.title}
+                  className=""
+                />
+              )}
             </div>
             <div className="sm:col-span-2 flex items-center px-7">
               <div className="">

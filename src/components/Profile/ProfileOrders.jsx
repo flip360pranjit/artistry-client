@@ -7,6 +7,7 @@ import { RiShareBoxLine } from "react-icons/ri";
 import WishlistError from "../../assets/images/wishlistError.png";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function ProfileOrders() {
   const navigate = useNavigate();
@@ -167,7 +168,19 @@ function ProfileOrders() {
                   className="grid grid-cols-3 sm:grid-cols-6 border-b items-center"
                 >
                   <div className="col-span-1 sm:col-span-3 sm:grid sm:grid-cols-3 py-5 items-center">
-                    <img src={product.image} alt={product.title} className="" />
+                    {isWebpSupported() ? (
+                      <img
+                        src={product.imageWebp}
+                        alt={product.title}
+                        className=""
+                      />
+                    ) : (
+                      <img
+                        src={product.image}
+                        alt={product.title}
+                        className=""
+                      />
+                    )}
                     <div className="hidden sm:block sm:col-span-2 px-5">
                       <h3 className="font-semibold text-lg">{product.title}</h3>
                       <h5 className="text-[#555555] text-sm">

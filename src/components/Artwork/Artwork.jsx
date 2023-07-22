@@ -15,6 +15,7 @@ import generateCode from "../../utils/generateCode";
 import { setOrderItems } from "../../store/slices/CheckoutSlice";
 import axios from "axios";
 import ReviewModal from "../PopupModal/ReviewModal";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function Artwork() {
   const location = useLocation();
@@ -189,11 +190,19 @@ function Artwork() {
     <div className="pt-20 md:pt-12 mx-10 md:mx-20">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-0">
         <div className="bg-gray-100 flex items-center justify-center p-5">
-          <img
-            src={artwork.image}
-            alt={artwork.title}
-            className="max-h-[80vh]"
-          />
+          {isWebpSupported() ? (
+            <img
+              src={artwork.imageWebp}
+              alt={artwork.title}
+              className="max-h-[80vh]"
+            />
+          ) : (
+            <img
+              src={artwork.image}
+              alt={artwork.title}
+              className="max-h-[80vh]"
+            />
+          )}
         </div>
         <div className="flex items-center px-7">
           <div className="">

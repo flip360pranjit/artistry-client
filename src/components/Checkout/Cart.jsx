@@ -15,6 +15,7 @@ import QuantityMenu from "./QuantityMenu";
 import Button from "../Button/Button";
 import CouponCode from "./CouponCode";
 import { resetCheckout, setOrderItems } from "../../store/slices/CheckoutSlice";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function Cart() {
   const navigate = useNavigate();
@@ -210,12 +211,21 @@ function Cart() {
             >
               <div className="col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-5">
                 <div className="">
-                  <img
-                    src={item.product.image}
-                    alt={item.product.title}
-                    onClick={(e) => viewArtwork(e, item.artwork)}
-                    className="cursor-pointer"
-                  />
+                  {isWebpSupported() ? (
+                    <img
+                      src={item.product.imageWebp}
+                      alt={item.product.title}
+                      onClick={(e) => viewArtwork(e, item.artwork)}
+                      className="cursor-pointer"
+                    />
+                  ) : (
+                    <img
+                      src={item.product.image}
+                      alt={item.product.title}
+                      onClick={(e) => viewArtwork(e, item.artwork)}
+                      className="cursor-pointer"
+                    />
+                  )}
                 </div>
                 <div className="sm:col-span-2">
                   <h3 className="font-playfair-display font-bold text-2xl">

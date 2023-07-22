@@ -13,10 +13,7 @@ function CommissionedOrder() {
     event.preventDefault();
     setLoading(true);
 
-    saveAs(
-      "https://res.cloudinary.com/dgjsucqux/image/upload/v1687248545/artistry/artworks/voyzzhqjfryoqkzi7xyn.jpg",
-      `ReferenceImage_${order.fullName}`
-    );
+    saveAs(order.referenceImage, `ReferenceImage_${order.fullName}`);
     setLoading(false);
   };
 
