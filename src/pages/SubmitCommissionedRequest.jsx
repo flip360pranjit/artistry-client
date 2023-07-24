@@ -105,9 +105,27 @@ function SubmitCommissionedRequest() {
     scrollTo(0, 0);
     setLoading(true);
 
+    const signatureRes = await axios.post(
+      `${import.meta.env.VITE_REACT_APP_API_URL}/get-signature`,
+      { uploadPreset: "clients-webp" }
+    );
+
     const formData = new FormData();
     formData.append("file", image);
     formData.append("upload_preset", "clients");
+
+    const formDataWebp = new FormData();
+    formDataWebp.append("file", image);
+    // formData.append("upload_preset", "artworks");
+    formDataWebp.append("timestamp", signatureRes.data.timestamp);
+    formDataWebp.append("upload_preset", "clients-webp");
+    formDataWebp.append(
+      "api_key",
+      import.meta.env.VITE_REACT_APP_CLOUDINARY_API_KEY
+    );
+    formDataWebp.append("format", "webp");
+    formDataWebp.append("signature", signatureRes.data.signature);
+
     const response = await axios.post(
       `https://api.cloudinary.com/v1_1/${
         import.meta.env.VITE_REACT_APP_CLOUDINARY_CLOUD_NAME
@@ -115,6 +133,14 @@ function SubmitCommissionedRequest() {
       formData
     );
     const data = await response.data;
+
+    const responseWebp = await axios.post(
+      `https://api.cloudinary.com/v1_1/${
+        import.meta.env.VITE_REACT_APP_CLOUDINARY_CLOUD_NAME
+      }/image/upload`,
+      formDataWebp
+    );
+    const dataWebp = await responseWebp.data;
 
     const desiredCompletionDate = new Date(
       request.desiredDate
@@ -166,6 +192,7 @@ function SubmitCommissionedRequest() {
           : request.size,
       description: request.description,
       referenceImage: data.secure_url,
+      referenceImageWebp: dataWebp.secure_url,
       dateTime: {
         date: formattedDate,
         time: formattedTime,

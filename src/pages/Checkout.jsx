@@ -177,7 +177,7 @@ function Checkout() {
             <LoadingAnimation />
             <h2 className="mt-7 text-xl font-semibold">Please Wait...</h2>
             <p className="mt-2 text-[#555555]">Do not close the window!</p>
-            <p className="mt-3 text-[#555555]">
+            <p className="text-center mt-3 text-[#555555]">
               Your order is being placed! It may take a while.
             </p>
           </div>

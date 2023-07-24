@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { saveAs } from "file-saver";
 import { FiCheck } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function CommissionedOrder() {
   const location = useLocation();
@@ -75,7 +76,15 @@ function CommissionedOrder() {
           <h3 className="font-semibold text-lg text-[#555555] mt-1">
             Reference Image:
           </h3>
-          <img src={order.referenceImage} alt="" className="w-full sm:w-1/3" />
+          <img
+            src={
+              isWebpSupported()
+                ? order.referenceImageWebp
+                : order.referenceImage
+            }
+            alt=""
+            className="w-full sm:w-1/3"
+          />
           <button
             disabled={loading}
             onClick={handleImageDownload}
