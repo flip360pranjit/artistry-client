@@ -19,6 +19,7 @@ const initialState = {
         offerHeading: "",
         offerDescription: "",
         image: "",
+        imageWebp: "",
         theme: "",
       },
     },
@@ -79,11 +80,13 @@ const checkoutSlice = createSlice({
           offerHeading: "",
           offerDescription: "",
           image: "",
+          imageWebp: "",
           theme: "",
         },
       };
     },
     setOrderItems: (state, action) => {
+      // console.log("Data passed:", action.payload);
       state.order = {
         items: action.payload.items,
         totalQuantity: action.payload.totalQuantity,

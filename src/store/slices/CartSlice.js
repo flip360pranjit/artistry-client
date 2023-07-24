@@ -37,6 +37,7 @@ const cartSlice = createSlice({
         offerHeading: "",
         offerDescription: "",
         image: "",
+        imageWebp: "",
         theme: "",
       },
     },
@@ -60,6 +61,7 @@ const cartSlice = createSlice({
           offerHeading: "",
           offerDescription: "",
           image: "",
+          imageWebp: "",
           theme: "",
         },
       };
@@ -86,6 +88,7 @@ const cartSlice = createSlice({
             offerHeading: "",
             offerDescription: "",
             image: "",
+            imageWebp: "",
             theme: "",
           },
         };
@@ -108,6 +111,7 @@ const cartSlice = createSlice({
             offerHeading: "",
             offerDescription: "",
             image: "",
+            imageWebp: "",
             theme: "",
           },
         };

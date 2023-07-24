@@ -109,6 +109,7 @@ function Checkout() {
             productID: item.product._id,
             title: item.product.title,
             image: item.product.image,
+            imageWebp: item.product.imageWebp,
             medium: item.product.medium,
             category: item.product.category,
             size: item.product.size,
