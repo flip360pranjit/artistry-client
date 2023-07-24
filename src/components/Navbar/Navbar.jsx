@@ -4,9 +4,11 @@ import NavLinks from "./NavLinks";
 import { IconContext } from "react-icons";
 import Button from "../Button/Button";
 import Logo from "../../assets/images/logo.png";
+import LogoWebp from "../../assets/images/logo.webp";
 import ProfileIcon from "./ProfileIcon";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function Navbar() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -50,7 +52,11 @@ function Navbar() {
             </button>
             {/* Brand */}
             <Link to="/" className="flex items-center justify-center lg:gap-2">
-              <img src={Logo} alt="Logo" className="w-14 lg:w-14 xl:w-18" />
+              <img
+                src={isWebpSupported() ? LogoWebp : Logo}
+                alt="Logo"
+                className="w-14 lg:w-14 xl:w-18"
+              />
               <h3 className="font-lobster mb-1 lg:mb-2 text-[#cca300] text-2xl lg:text-3xl xl:text-4xl">
                 Art
                 <span className="text-[#3c166d]">istry</span>

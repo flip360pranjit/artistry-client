@@ -2,9 +2,11 @@ import React from "react";
 import Button from "../components/Button/Button";
 import { motion } from "framer-motion";
 import Image from "../assets/images/mission.jpg";
+import ImageWebp from "../assets/images/mission.webp";
 import { Link, useNavigate } from "react-router-dom";
 import { FaAngleUp } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 const heroVariants = {
   hidden: {
@@ -156,7 +158,11 @@ function HowToSell() {
               key={step.id}
               className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center mt-6"
             >
-              <img src={Image} alt={step.image} className="" />
+              <img
+                src={isWebpSupported() ? ImageWebp : Image}
+                alt={step.image}
+                className=""
+              />
               <div
                 className={`col-span-2 ${
                   step.id % 2 !== 0 && "sm:order-first"

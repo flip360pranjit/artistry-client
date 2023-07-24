@@ -5,6 +5,7 @@ import { BsCartPlus } from "react-icons/bs";
 import { MdOutlineCurrencyRupee } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import WishlistError from "../../assets/images/wishlistError.png";
+import WishlistErrorWebp from "../../assets/images/wishlistError.webp";
 import Button from "../Button/Button";
 import { toast } from "react-toastify";
 import {
@@ -79,7 +80,7 @@ function Wishlist() {
         <div className="h-full flex items-center justify-center mt-10">
           <div className="flex flex-col items-center font-poppins max-w-xl">
             <img
-              src={WishlistError}
+              src={isWebpSupported() ? WishlistErrorWebp : WishlistError}
               alt="Wishlist Error"
               className="h-[40vh] w-auto"
             />

@@ -3,11 +3,13 @@ import { useDispatch } from "react-redux";
 import Button from "../Button/Button";
 import LoginSvg from "../../assets/svgs/login.svg";
 import Logo from "../../assets/images/logo.png";
+import LogoWebp from "../../assets/images/logo.webp";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { addUser } from "../../store/slices/AuthSlice";
 import axios from "axios";
 import SocialAuth from "../SocialAuth/SocialAuth";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function Login({ handleClick }) {
   const [user, setUser] = useState({
@@ -107,7 +109,11 @@ function Login({ handleClick }) {
       <div className="lg:h-screen flex flex-col justify-center px-10">
         <div className="flex justify-center">
           <a href="/" className="inline-block">
-            <img src={Logo} alt="Logo" className="w-20" />
+            <img
+              src={isWebpSupported() ? LogoWebp : Logo}
+              alt="Logo"
+              className="w-20"
+            />
           </a>
         </div>
         <form className="space-y-6" onSubmit={handleSubmit}>

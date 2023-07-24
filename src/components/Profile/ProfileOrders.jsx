@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { FaCheckCircle } from "react-icons/fa";
 import { RiShareBoxLine } from "react-icons/ri";
 import WishlistError from "../../assets/images/wishlistError.png";
+import WishlistErrorWebp from "../../assets/images/wishlistError.webp";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 import { isWebpSupported } from "react-image-webp/dist/utils";
@@ -100,7 +101,7 @@ function ProfileOrders() {
         <div className="h-[70vh] flex items-center justify-center mt-10">
           <div className="flex flex-col items-center font-poppins max-w-xl">
             <img
-              src={WishlistError}
+              src={isWebpSupported() ? WishlistErrorWebp : WishlistError}
               alt="Wishlist Error"
               className="h-[40vh] w-auto"
             />

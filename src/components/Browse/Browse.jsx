@@ -7,10 +7,12 @@ import { FaChevronDown, FaTimes } from "react-icons/fa";
 import { ImEqualizer2 } from "react-icons/im";
 import { motion, AnimatePresence } from "framer-motion";
 import FilterError from "../../assets/images/filtererror.png";
+import FilterErrorWebp from "../../assets/images/filtererror.webp";
 import { useDispatch } from "react-redux";
 import { resetCheckout } from "../../store/slices/CheckoutSlice";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import { toast } from "react-toastify";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function Browse() {
   const dispatch = useDispatch();
@@ -341,7 +343,7 @@ function Browse() {
             <div className="h-[90%] flex items-center justify-center">
               <div className="flex flex-col items-center font-poppins max-w-xl">
                 <img
-                  src={FilterError}
+                  src={isWebpSupported() ? FilterErrorWebp : FilterError}
                   alt="Filter Error"
                   className="h-[40vh] w-auto"
                 />

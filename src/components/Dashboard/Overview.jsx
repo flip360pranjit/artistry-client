@@ -5,10 +5,12 @@ import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import { ResponsiveBar } from "@nivo/bar";
 import { ResponsivePie } from "@nivo/pie";
 import Empty from "../../assets/images/success.png";
+import EmptyWebp from "../../assets/images/success.webp";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function Overview() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -188,7 +190,11 @@ function Overview() {
       {sellerOrders.length === 0 ? (
         <div className="h-[70vh] flex items-center justify-center">
           <div className="flex flex-col items-center">
-            <img src={Empty} alt="Empty" className="w-2/3" />
+            <img
+              src={isWebpSupported() ? EmptyWebp : Empty}
+              alt="Empty"
+              className="w-2/3"
+            />
             <h2 className="text-center text-3xl font-montserrat font-semibold mt-3">
               No orders! Be patient.
             </h2>

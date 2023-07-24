@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "../components/Button/Button";
 import { motion } from "framer-motion";
-import Image from "../assets/images/mission.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { FaAngleUp } from "react-icons/fa";
 import { useSelector } from "react-redux";

@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import Button from "../Button/Button";
 import RegisterSvg from "../../assets/svgs/register.svg";
 import Logo from "../../assets/images/logo.png";
+import LogoWebp from "../../assets/images/logo.webp";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { addUser } from "../../store/slices/AuthSlice";
 import SocialAuth from "../SocialAuth/SocialAuth";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function Register({ handleClick }) {
   const [user, setUser] = useState({
@@ -90,7 +92,11 @@ function Register({ handleClick }) {
       <div className="flex flex-col justify-center px-10">
         <div className="flex justify-center">
           <a href="/" className="inline-block">
-            <img src={Logo} alt="Logo" className="w-20" />
+            <img
+              src={isWebpSupported() ? LogoWebp : Logo}
+              alt="Logo"
+              className="w-20"
+            />
           </a>
         </div>
         <form className="space-y-6" onSubmit={handleSubmit}>

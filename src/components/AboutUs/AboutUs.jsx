@@ -4,6 +4,7 @@ import { HiArrowNarrowRight } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { RiDoubleQuotesL, RiDoubleQuotesR } from "react-icons/ri";
 import { IconContext } from "react-icons";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 const heroVariants = {
   hidden: {
@@ -78,7 +79,11 @@ function AboutUs() {
 
       {/* Our Misson */}
       <div className="grid grid-cols-1 md:grid-cols-3 justify-center items-center relative -top-16 mt-16">
-        <img src="./images/mission.jpg" alt="Our Mission" className="h-auto" />
+        <img
+          src={`./images/mission.${isWebpSupported() ? "webp" : "jpg"}`}
+          alt="Our Mission"
+          className="h-auto"
+        />
         <div className="md:col-span-2">
           <h2 className="text-end font-montserrat font-bold text-4xl">
             Our Mission
@@ -108,7 +113,7 @@ function AboutUs() {
           </p>
         </div>
         <img
-          src="./images/vision.jpg"
+          src={`./images/vision.${isWebpSupported() ? "webp" : "jpg"}`}
           alt="Our Vission"
           className="h-auto order-first md:order-last"
         />
@@ -116,7 +121,11 @@ function AboutUs() {
 
       {/* Our Goals */}
       <div className="grid grid-cols-1 md:grid-cols-3 justify-center items-center mt-16">
-        <img src="./images/goal.jpg" alt="Our Goal" className="h-auto" />
+        <img
+          src={`./images/goal.${isWebpSupported() ? "webp" : "jpg"}`}
+          alt="Our Goal"
+          className="h-auto"
+        />
         <div className="md:col-span-2">
           <h2 className="text-end font-montserrat font-bold text-4xl">
             Our Goal
@@ -160,7 +169,7 @@ function AboutUs() {
             </p>
           </div>
           <img
-            src="./images/story.png"
+            src={`./images/story.${isWebpSupported() ? "webp" : "png"}`}
             alt="Our Story"
             className="h-auto mb-10"
           />
@@ -170,7 +179,7 @@ function AboutUs() {
       {/* Our Founder */}
       <div className="flex flex-col gap-5 md:flex-row items-center justify-around mt-16">
         <img
-          src="./images/founder.png"
+          src={`./images/founder.${isWebpSupported() ? "webp" : "png"}`}
           alt="Founder"
           className=" rounded-md w-full md:w-1/3"
         />

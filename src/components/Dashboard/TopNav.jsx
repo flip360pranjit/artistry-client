@@ -2,8 +2,10 @@ import React from "react";
 import { IconContext } from "react-icons";
 import { FaBars } from "react-icons/fa";
 import Logo from "../../assets/images/logo.png";
+import LogoWebp from "../../assets/images/logo.webp";
 import { Link } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function TopNav({ isOpen, handleClick }) {
   return (
@@ -17,7 +19,11 @@ function TopNav({ isOpen, handleClick }) {
       </div>
       <Link to="/">
         <div className="flex items-center">
-          <img src={Logo} alt="Logo" className="w-12" />
+          <img
+            src={isWebpSupported() ? LogoWebp : Logo}
+            alt="Logo"
+            className="w-12"
+          />
           <h1 className="font-lobster mb-1 lg:mb-2 text-[#cca300] text-2xl lg:text-3xl xl:text-4xl">
             Art
             <span className="text-[#3c166d]">istry</span>

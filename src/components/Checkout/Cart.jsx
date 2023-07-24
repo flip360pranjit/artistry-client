@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { MdOutlineCurrencyRupee } from "react-icons/md";
 import { toast } from "react-toastify";
 import WishlistError from "../../assets/images/wishlistError.png";
+import WishlistErrorWebp from "../../assets/images/wishlistError.webp";
 import {
   clearCart,
   getCart,
@@ -171,7 +172,7 @@ function Cart() {
         <div className="h-full flex items-center justify-center mt-10">
           <div className="flex flex-col items-center font-poppins max-w-xl">
             <img
-              src={WishlistError}
+              src={isWebpSupported() ? WishlistErrorWebp : WishlistError}
               alt="Wishlist Error"
               className="h-[40vh] w-auto"
             />

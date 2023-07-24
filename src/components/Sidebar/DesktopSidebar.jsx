@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { IconContext } from "react-icons";
 import Logo from "../../assets/images/logo.png";
+import LogoWebp from "../../assets/images/logo.webp";
 import { Link } from "react-router-dom";
 import ProfileButton from "../Dashboard/ProfileButton";
 import "./Sidebar.scss";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function DesktopSidebar({ links }) {
   const [isOpen, setIsOpen] = useState(true);
@@ -12,7 +14,11 @@ function DesktopSidebar({ links }) {
       <div className="sidebar bg-primary h-screen p-5 duration-300 w-52 sticky overflow-y-scroll">
         <Link to="/">
           <div className="flex items-center justify-start gap-1 cursor-pointer">
-            <img src={Logo} alt="Logo" className="w-16 mt-2" />
+            <img
+              src={isWebpSupported() ? LogoWebp : Logo}
+              alt="Logo"
+              className="w-16 mt-2"
+            />
             <h1 className="font-lobster text-2xl duration-200">Artistry</h1>
           </div>
         </Link>

@@ -1,11 +1,17 @@
 import React from "react";
 import ErrorImg from "../assets/images/error.png";
+import ErrorImgWebp from "../assets/images/error.webp";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function Error() {
   return (
     <div className="flex flex-col justify-center items min-h-full bg-white px-6 py-24 sm:py-20 lg:px-8 mx-4 md:mx-20">
       <div className="flex justify-center">
-        <img src={ErrorImg} alt="Error" className="h-[40vh]" />
+        <img
+          src={isWebpSupported() ? ErrorImgWebp : ErrorImg}
+          alt="Error"
+          className="h-[40vh]"
+        />
       </div>
       <div className="text-center">
         <p className="text-lg font-semibold text-primary">404</p>

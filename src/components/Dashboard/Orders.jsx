@@ -4,8 +4,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Empty from "../../assets/images/success.png";
+import EmptyWebp from "../../assets/images/success.webp";
 import UpdateSellerOrderModal from "../PopupModal/UpdateSellerOrderModal";
 import { toast } from "react-toastify";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function Orders() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -143,7 +145,11 @@ function Orders() {
       {orders.length === 0 ? (
         <div className="h-[90vh] flex items-center justify-center">
           <div className="flex flex-col items-center">
-            <img src={Empty} alt="Empty" className="w-2/3" />
+            <img
+              src={isWebpSupported() ? EmptyWebp : Empty}
+              alt="Empty"
+              className="w-2/3"
+            />
             <h2 className="text-center text-3xl font-montserrat font-semibold mt-3">
               No orders! Be patient.
             </h2>

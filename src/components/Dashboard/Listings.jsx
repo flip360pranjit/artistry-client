@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Error from "../../assets/images/error.png";
+import ErrorWebp from "../../assets/images/error.webp";
 import Card from "../Card/Card";
 import Button from "../Button/Button";
 import { FaPlus, FaCheckCircle } from "react-icons/fa";
@@ -10,6 +11,7 @@ import { useSelector } from "react-redux";
 import { IconContext } from "react-icons";
 import UpdateArtworkModal from "../PopupModal/UpdateArtworkModal";
 import { toast } from "react-toastify";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function Listings() {
   const navigate = useNavigate();
@@ -70,7 +72,11 @@ function Listings() {
       {sellerListings.length === 0 ? (
         <div className="h-[70vh] flex items-center justify-center">
           <div className="flex flex-col items-center">
-            <img src={Error} alt="Empty" className="h-[40vh]" />
+            <img
+              src={isWebpSupported() ? ErrorWebp : Error}
+              alt="Empty"
+              className="h-[40vh]"
+            />
             <h2 className="text-center text-3xl font-montserrat font-semibold mt-3">
               No listings to view!
             </h2>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Hero.scss";
 import Button from "../Button/Button";
 import { FaEye } from "react-icons/fa";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function Hero() {
   const navigate = useNavigate();
@@ -50,7 +51,9 @@ function Hero() {
       <div className="right-wrapper">
         <img
           className="img w-[calc(100vw-16px)] md:w-[100vw] pc-small:w-[60vw] top-0"
-          src="./images/paintings.png"
+          src={`./images/paintings.${
+            isWebpSupported() ? "webp" : "./images/paintings.png"
+          }`}
           alt="Paintings"
         />
       </div>
