@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 import { HiArrowNarrowRight } from "react-icons/hi";
 import { motion } from "framer-motion";
@@ -23,6 +24,13 @@ const heroVariants = {
 };
 
 function AboutUs() {
+  const navigate = useNavigate();
+
+  function goToBrowse(event) {
+    event.preventDefault();
+
+    navigate("/browse");
+  }
   return (
     <div>
       {/* Hero Section */}
@@ -51,6 +59,7 @@ function AboutUs() {
             artworks.
           </motion.h3>
           <motion.div
+            onClick={goToBrowse}
             variants={heroVariants}
             initial="hidden"
             animate="visible"

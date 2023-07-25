@@ -171,7 +171,7 @@ function HowItWorks() {
               animate="visible"
               exit="exit"
             >
-              <Link to="/browse/artworks">
+              <Link to="/browse">
                 <Button type="contained" color="primary" size="medium">
                   Get Started
                 </Button>

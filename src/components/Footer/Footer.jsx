@@ -30,7 +30,7 @@ function Footer() {
         { email }
       );
 
-      toast.success("Message sent!");
+      toast.success("You're subscribed!");
       setLoading(false);
       setEmail("");
     } catch (error) {
