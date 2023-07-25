@@ -54,7 +54,7 @@ function ProfileIcon() {
         onClick={handleClick}
         src={user?.photoURL}
         alt="ProfileImg"
-        className="w-10 h-10 xl:w-12 xl:h-12 object-cover rounded-full border-2 border-primary cursor-pointer active:scale-110"
+        className="w-10 h-10 object-cover rounded-full border-2 border-primary cursor-pointer active:scale-110"
       />
       {isOpen && (
         <ul
@@ -68,31 +68,41 @@ function ProfileIcon() {
             Hi! {user.displayName}
           </li>
           {user?.isSeller && (
+            <Link key="Seller" to="/dashboard">
+              <li
+                key="Seller"
+                className="p-2 text-sm rounded cursor-pointer hover:bg-violet-100"
+              >
+                Seller Dashboard
+              </li>{" "}
+            </Link>
+          )}
+          <Link key="Buyer" to="/profile">
             <li
-              key="Seller"
+              key="Buyer"
               className="p-2 text-sm rounded cursor-pointer hover:bg-violet-100"
             >
-              <Link to="/dashboard"> Seller Dashboard </Link>
+              View Profile
             </li>
-          )}
-          <li
-            key="Buyer"
-            className="p-2 text-sm rounded cursor-pointer hover:bg-violet-100"
-          >
-            <Link to="/profile"> View Profile</Link>
-          </li>
-          <li
-            key="Wishlist"
-            className="p-2 text-sm rounded cursor-pointer hover:bg-violet-100"
-          >
-            <Link to="/wishlist"> My Wishlist</Link>
-          </li>
-          <li
-            key="cart"
-            className="p-2 text-sm rounded cursor-pointer hover:bg-violet-100"
-          >
-            <Link to="/cart"> View Cart</Link>
-          </li>
+          </Link>
+
+          <Link key="Wishlist" to="/wishlist">
+            {" "}
+            <li
+              key="Wishlist"
+              className="p-2 text-sm rounded cursor-pointer hover:bg-violet-100"
+            >
+              My Wishlist
+            </li>
+          </Link>
+          <Link key="cart" to="/cart">
+            <li
+              key="cart"
+              className="p-2 text-sm rounded cursor-pointer hover:bg-violet-100"
+            >
+              View Cart
+            </li>
+          </Link>
           <li
             key="Logout"
             onClick={handleLogout}
