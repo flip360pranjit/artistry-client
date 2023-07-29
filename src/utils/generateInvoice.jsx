@@ -184,7 +184,7 @@ const generateInvoicePdf = async (order, user, num) => {
             <View style={styles.text}>
               <Text>Phone Number:</Text>
               <Text style={{ color: "#191825" }}>
-                {" "}
+                {" +"}
                 {order.shippingInfo.billing.phoneNumber}
               </Text>
             </View>
@@ -251,7 +251,7 @@ const generateInvoicePdf = async (order, user, num) => {
             <View style={styles.text}>
               <Text>Phone Number:</Text>
               <Text style={{ color: "#191825" }}>
-                {" "}
+                {" +"}
                 {order.shippingInfo.shipping.phoneNumber}
               </Text>
             </View>
