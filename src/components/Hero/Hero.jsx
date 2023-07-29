@@ -51,9 +51,7 @@ function Hero() {
       <div className="right-wrapper">
         <img
           className="img w-[calc(100vw-16px)] md:w-[100vw] pc-small:w-[60vw] top-0"
-          src={`./images/paintings.${
-            isWebpSupported() ? "webp" : "./images/paintings.png"
-          }`}
+          src={`./images/paintings.${isWebpSupported() ? "webp" : "png"}`}
           alt="Paintings"
         />
       </div>

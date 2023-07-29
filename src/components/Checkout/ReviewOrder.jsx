@@ -24,7 +24,7 @@ function ReviewOrder() {
             <div className="">
               {isWebpSupported() ? (
                 <img
-                  src={item.product.image}
+                  src={item.product.imageWebp}
                   alt={item.product.title}
                   className=""
                 />

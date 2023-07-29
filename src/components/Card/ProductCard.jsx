@@ -85,7 +85,7 @@ function ProductCard({ artwork, clickedReview, setClickedReview, sortBy }) {
           />
         ) : (
           <img
-            src={artwork.imageWe}
+            src={artwork.image}
             alt={artwork.title}
             className="rounded-t-md"
           />
