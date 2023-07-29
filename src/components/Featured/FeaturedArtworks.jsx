@@ -10,6 +10,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ImagePlaceholder from "../LoadingAnimation/ImagePlaceholder";
 
 const breakpoints = {
   640: {
@@ -26,6 +27,13 @@ const breakpoints = {
   },
 };
 
+const placeholderArtworks = [
+  { id: 1, name: "Artist 1" },
+  { id: 2, name: "Artist 2" },
+  { id: 3, name: "Artist 3" },
+  { id: 4, name: "Artist 4" },
+];
+
 function getRandomArtworks(artworks, count) {
   for (let i = artworks.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -38,18 +46,23 @@ function FeaturedArtworks({ heading, description }) {
   const navigate = useNavigate();
   const swiperRef = useRef();
 
+  const [loading, setLoading] = useState(false);
   const [artworks, setArtworks] = useState([]);
 
   useEffect(() => {
     // Function to fetch seller artworks
     const fetchArtworks = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_REACT_APP_API_URL}/artworks`
         );
+        setLoading(false);
         const fetchedArtworks = getRandomArtworks(response.data, 7);
         setArtworks(fetchedArtworks);
-      } catch (error) {}
+      } catch (error) {
+        setLoading(false);
+      }
     };
 
     // Fetch seller artworks on component mount
@@ -136,65 +149,73 @@ function FeaturedArtworks({ heading, description }) {
             // install Swiper modules
             modules={[Autoplay, Navigation, Pagination]}
           >
-            {artworks.map((artwork) => (
-              <SwiperSlide key={artwork._id} className="relative">
-                <div className="w-full h-full sm:w-44 sm:h-64 md:w-48 md:h-72 lg:w-52 lg:h-[300px] mb-10 flex flex-col justify-center items-center rounded-md shadow-xl bg-white relative group cursor-pointer">
-                  {isWebpSupported() ? (
-                    <img
-                      src={artwork.imageWebp}
-                      alt={artwork.title}
-                      className="rounded-sm"
-                    />
-                  ) : (
-                    <img
-                      src={artwork.image}
-                      alt={artwork.title}
-                      className="rounded-sm"
-                    />
-                  )}
-                  <h3 className="text-base md:text-[16px] lg:text-xl font-semibold font-playfair-display absolute bottom-0 bg-white w-full text-center pb-7 sm:pb-0">
-                    {artwork.title}
-                  </h3>
-                  <div className="hidden absolute top-0 left-0 w-full h-full p-5 group-hover:flex flex-col justify-center bg-opacity-90 bg-primary text-white transition-all duration-300 ease-in-out">
-                    <p className="font-poppins text-base mobile-md1:text-lg sm:text-sm md:text-base text-center mobile:text-start">
-                      <span className="font-semibold">Artist:</span>{" "}
-                      {artwork.artist.artistName}
-                    </p>
-                    <p className="font-poppins text-base mobile-md1:text-lg sm:text-sm md:text-base text-center mobile:text-start">
-                      <span className="font-semibold">Medium:</span>{" "}
-                      {artwork.medium}
-                    </p>
-                    <p className="font-open-sans text-base mobile-md1:text-lg sm:text-sm md:text-base mt-5 text-center mobile:text-start">
-                      {artwork.description}
-                    </p>
-                    <div className="hidden md:flex justify-center mt-5">
-                      <Button
-                        type="contained"
-                        color="primary"
-                        size="small"
-                        layered={true}
-                      >
-                        <span onClick={(e) => viewArtist(e, artwork)}>
-                          View More
-                        </span>
-                      </Button>
+            {loading
+              ? placeholderArtworks.map((artwork) => (
+                  <SwiperSlide key={artwork.id} className="relative">
+                    <div className="w-full h-[40vh] sm:w-44 sm:h-64 md:w-48 md:h-72 lg:w-52 lg:h-[300px] mb-10 flex flex-col justify-center items-center rounded-md shadow-xl bg-white relative group cursor-pointer">
+                      <ImagePlaceholder />
                     </div>
-                    <div className="md:hidden flex justify-center mt-5">
-                      <Button
-                        type="contained"
-                        color="primary"
-                        size="large"
-                        layered={true}
-                      >
-                        <span onClick={(e) => viewArtist(e, artwork)}>
-                          View More
-                        </span>
-                      </Button>
+                  </SwiperSlide>
+                ))
+              : artworks.map((artwork) => (
+                  <SwiperSlide key={artwork._id} className="relative">
+                    <div className="w-full h-full sm:w-44 sm:h-64 md:w-48 md:h-72 lg:w-52 lg:h-[300px] mb-10 flex flex-col justify-center items-center rounded-md shadow-xl bg-white relative group cursor-pointer">
+                      {isWebpSupported() ? (
+                        <img
+                          src={artwork.imageWebp}
+                          alt={artwork.title}
+                          className="rounded-sm"
+                        />
+                      ) : (
+                        <img
+                          src={artwork.image}
+                          alt={artwork.title}
+                          className="rounded-sm"
+                        />
+                      )}
+                      <h3 className="text-base md:text-[16px] lg:text-xl font-semibold font-playfair-display absolute bottom-0 bg-white w-full text-center pb-7 sm:pb-0">
+                        {artwork.title}
+                      </h3>
+                      <div className="hidden absolute top-0 left-0 w-full h-full p-5 group-hover:flex flex-col justify-center bg-opacity-90 bg-primary text-white transition-all duration-300 ease-in-out">
+                        <p className="font-poppins text-base mobile-md1:text-lg sm:text-sm md:text-base text-center mobile:text-start">
+                          <span className="font-semibold">Artist:</span>{" "}
+                          {artwork.artist.artistName}
+                        </p>
+                        <p className="font-poppins text-base mobile-md1:text-lg sm:text-sm md:text-base text-center mobile:text-start">
+                          <span className="font-semibold">Medium:</span>{" "}
+                          {artwork.medium}
+                        </p>
+                        <p className="font-open-sans text-base mobile-md1:text-lg sm:text-sm md:text-base mt-5 text-center mobile:text-start">
+                          {artwork.description}
+                        </p>
+                        <div className="hidden md:flex justify-center mt-5">
+                          <Button
+                            type="contained"
+                            color="primary"
+                            size="small"
+                            layered={true}
+                          >
+                            <span onClick={(e) => viewArtist(e, artwork)}>
+                              View More
+                            </span>
+                          </Button>
+                        </div>
+                        <div className="md:hidden flex justify-center mt-5">
+                          <Button
+                            type="contained"
+                            color="primary"
+                            size="large"
+                            layered={true}
+                          >
+                            <span onClick={(e) => viewArtist(e, artwork)}>
+                              View More
+                            </span>
+                          </Button>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </SwiperSlide>
-            ))}
+                  </SwiperSlide>
+                ))}
           </Swiper>
         </div>
 
