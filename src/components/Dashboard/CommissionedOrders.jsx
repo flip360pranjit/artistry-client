@@ -18,6 +18,8 @@ function CommissionedOrders() {
 
   const { user } = useSelector((state) => state.auth);
 
+  const [fLoading, setFLoading] = useState(false);
+
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [aLoading, setALoading] = useState(false);
@@ -30,16 +32,20 @@ function CommissionedOrders() {
 
   // Function to fetch seller artworks
   const fetchOrders = async () => {
+    setFLoading(true);
+
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_REACT_APP_API_URL}/commissioned/seller/${
           user._id
         }`
       );
+      setFLoading(false);
       const fetchedOrders = response.data;
       const commissionedOrders = [...fetchedOrders].reverse();
       setOrders(commissionedOrders);
     } catch (error) {
+      setFLoading(false);
       toast.error("Error! Try checking your connection.");
       // console.log(error);
     }
@@ -155,7 +161,11 @@ function CommissionedOrders() {
           </div>
 
           {user.acceptCommisionedOrder ? (
-            orders.length === 0 ? (
+            fLoading ? (
+              <div className="h-[80vh] flex justify-center items-center">
+                <LoadingAnimation />
+              </div>
+            ) : orders.length === 0 ? (
               <div className="h-[90vh] flex items-center justify-center">
                 <div className="flex flex-col items-center">
                   <img

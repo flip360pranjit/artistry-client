@@ -11,8 +11,11 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { isWebpSupported } from "react-image-webp/dist/utils";
+import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 
 function Overview() {
+  const [loading, setLoading] = useState(false);
+
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [sellerOrders, setSellerOrders] = useState([]);
   const [sellerListings, setSellerListings] = useState([]);
@@ -38,10 +41,12 @@ function Overview() {
   useEffect(() => {
     // Function to fetch seller artworks
     const fetchOrders = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_REACT_APP_API_URL}/seller-orders/${user._id}`
         );
+        setLoading(false);
         const fetchedOrders = response.data;
         const latestOrders = [...fetchedOrders].reverse();
 
@@ -49,6 +54,7 @@ function Overview() {
       } catch (error) {
         // toast.error("Error! Try checking your connection.");
         // console.log(error);
+        setLoading(false);
         toast.error("Something went wrong!");
       }
     };
@@ -187,7 +193,11 @@ function Overview() {
           </div>
         </div>
       </IconContext.Provider>
-      {sellerOrders.length === 0 ? (
+      {loading ? (
+        <div className="h-[80vh] flex justify-center items-center">
+          <LoadingAnimation />
+        </div>
+      ) : sellerOrders.length === 0 ? (
         <div className="h-[70vh] flex items-center justify-center">
           <div className="flex flex-col items-center">
             <img

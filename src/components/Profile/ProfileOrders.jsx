@@ -9,14 +9,20 @@ import WishlistErrorWebp from "../../assets/images/wishlistError.webp";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 import { isWebpSupported } from "react-image-webp/dist/utils";
+import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 
 function ProfileOrders() {
   const navigate = useNavigate();
+
   const { user } = useSelector((state) => state.auth);
+
+  const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     async function fetchOrders() {
+      setLoading(true);
+
       await axios
         .get(
           `${import.meta.env.VITE_REACT_APP_API_URL}/orders/user-orders/${
@@ -24,9 +30,11 @@ function ProfileOrders() {
           }`
         )
         .then((response) => {
+          setLoading(false);
           setOrders([...response.data.orders].reverse());
         })
         .catch((error) => {
+          setLoading(false);
           toast.error("Something went wrong!");
         });
     }
@@ -97,7 +105,11 @@ function ProfileOrders() {
         </p>
       </div>
 
-      {orders.length === 0 ? (
+      {loading ? (
+        <div className="h-[80vh] flex justify-center items-center">
+          <LoadingAnimation />
+        </div>
+      ) : orders.length === 0 ? (
         <div className="h-[70vh] flex items-center justify-center mt-10">
           <div className="flex flex-col items-center font-poppins max-w-xl">
             <img

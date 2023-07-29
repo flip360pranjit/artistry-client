@@ -12,7 +12,7 @@ import {
   getWishlist,
   removeFromWishlist,
 } from "../../store/thunks/WishlistThunks";
-import { clearWishlist } from "../../store/slices/WishlistSlice";
+// import { clearWishlist } from "../../store/slices/WishlistSlice";
 import { addToCart } from "../../store/thunks/CartThunks";
 import { isWebpSupported } from "react-image-webp/dist/utils";
 

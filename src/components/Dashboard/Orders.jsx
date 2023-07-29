@@ -8,8 +8,11 @@ import EmptyWebp from "../../assets/images/success.webp";
 import UpdateSellerOrderModal from "../PopupModal/UpdateSellerOrderModal";
 import { toast } from "react-toastify";
 import { isWebpSupported } from "react-image-webp/dist/utils";
+import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 
 function Orders() {
+  const [loading, setLoading] = useState(false);
+
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [search, setSearch] = useState("");
   const [sellerOrders, setSellerOrders] = useState([]);
@@ -35,10 +38,13 @@ function Orders() {
 
   // Function to fetch seller artworks
   const fetchOrders = async () => {
+    setLoading(true);
+
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_REACT_APP_API_URL}/seller-orders/${user._id}`
       );
+      setLoading(false);
       const fetchedOrders = response.data;
       const latestOrders = [...fetchedOrders].reverse();
 
@@ -46,6 +52,7 @@ function Orders() {
     } catch (error) {
       // toast.error("Error! Try checking your connection.");
       // console.log(error);
+      setLoading(false);
       toast.error("Something went wrong!");
     }
   };
@@ -128,7 +135,7 @@ function Orders() {
             Manage and track your orders.
           </p>
         </div>
-        {orders.length !== 0 && (
+        {!loading && orders.length !== 0 && (
           <div className="flex gap-1 items-center">
             <label htmlFor="search" className="text-lg font-montserrat">
               Search:
@@ -144,7 +151,11 @@ function Orders() {
           </div>
         )}
       </div>
-      {orders.length === 0 ? (
+      {loading ? (
+        <div className="h-[80vh] flex justify-center items-center">
+          <LoadingAnimation />
+        </div>
+      ) : orders.length === 0 ? (
         <div className="h-[90vh] flex items-center justify-center">
           <div className="flex flex-col items-center">
             <img

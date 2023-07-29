@@ -12,9 +12,13 @@ import { IconContext } from "react-icons";
 import UpdateArtworkModal from "../PopupModal/UpdateArtworkModal";
 import { toast } from "react-toastify";
 import { isWebpSupported } from "react-image-webp/dist/utils";
+import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 
 function Listings() {
   const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
+
   const [sellerListings, setSellerListings] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [artworkToEdit, setArtworkToEdit] = useState("");
@@ -23,6 +27,8 @@ function Listings() {
 
   // Function to fetch seller artworks
   const fetchSellerListings = async () => {
+    setLoading(true);
+
     try {
       const sellerId = user._id; // Replace with the actual seller ID
       const response = await axios.get(
@@ -30,10 +36,12 @@ function Listings() {
           import.meta.env.VITE_REACT_APP_API_URL
         }/artworks/seller-artworks/${sellerId}`
       );
+      setLoading(false);
       const artworks = response.data;
       setSellerListings(artworks);
     } catch (error) {
       // console.log(error);
+      setLoading(false);
       toast.error("Something went wrong!");
     }
   };
@@ -69,7 +77,11 @@ function Listings() {
           </div>
         </div>
       </div>
-      {sellerListings.length === 0 ? (
+      {loading ? (
+        <div className="h-[80vh] flex justify-center items-center">
+          <LoadingAnimation />
+        </div>
+      ) : sellerListings.length === 0 ? (
         <div className="h-[70vh] flex items-center justify-center">
           <div className="flex flex-col items-center">
             <img
