@@ -49,6 +49,7 @@ import CommissionedArtists from "../pages/CommissionedArtists";
 import ViewArtist from "../components/ViewArtist/ViewArtist";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
 import FAQPage from "../pages/FAQPage";
+import Order from "../components/Dashboard/Order";
 
 function Routers() {
   return (
@@ -125,6 +126,7 @@ function Routers() {
         <Route path="listings" element={<Listings />} />
         <Route path="commissioned-orders" element={<CommissionedOrders />} />
         <Route path="orders" element={<Orders />} />
+        <Route path="orders/view-seller-order" element={<Order />} />
         <Route path="analytics" element={<Analytics />} />
         <Route path="add-artwork" element={<AddArtwork />} />
         <Route path="view-seller-order" element={<ViewSellerOrder />} />

@@ -131,6 +131,11 @@ const helmetComponents = [
     description: "View and track your orders on Artistry.",
   },
   {
+    route: "/dashboard/orders/view-seller-order",
+    title: "Order",
+    description: "View customer order.",
+  },
+  {
     route: "/dashboard/analytics",
     title: "Analytics",
     description: "Analyze your sales and performance metrics on Artistry.",

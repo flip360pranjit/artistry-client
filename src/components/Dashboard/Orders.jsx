@@ -99,7 +99,9 @@ function Orders() {
         }/seller-orders/view-order/${orderID}`
       )
       .then((res) => {
-        navigate("/view-seller-order", { state: { order: res.data } });
+        navigate("/dashboard/orders/view-seller-order", {
+          state: { order: res.data },
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -196,7 +198,7 @@ function Orders() {
                   )}
                   <td className="flex items-center gap-4 py-3 justify-center">
                     <h5
-                      className="px-3 py-2 font-semibold text-primary flex items-center justify-center md:justify-start gap-2 cursor-pointer hover:gap-4"
+                      className="px-3 py-2 font-semibold text-primary flex items-center justify-center md:justify-start gap-2 cursor-pointer"
                       onClick={(e) => viewOrder(e, order._id)}
                     >
                       <span className="underline"> View </span>
