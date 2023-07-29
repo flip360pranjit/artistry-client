@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { FaAngleUp } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import FeaturedArtworks from "../components/Featured/FeaturedArtworks";
+// import FeaturedArtworks from "../components/Featured/FeaturedArtworks";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -72,26 +72,26 @@ const steps = [
 function CommissionedProcess() {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
-  const [artworks, setArtworks] = useState([]);
+  // const [artworks, setArtworks] = useState([]);
 
-  useEffect(() => {
-    // Function to fetch seller artworks
-    const fetchArtworks = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_REACT_APP_API_URL}/artworks`
-        );
-        const artworks = response.data;
-        setArtworks(artworks);
-      } catch (error) {
-        // console.log(error);
-        toast.error("Something went wrong!");
-      }
-    };
+  // useEffect(() => {
+  //   // Function to fetch seller artworks
+  //   const fetchArtworks = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${import.meta.env.VITE_REACT_APP_API_URL}/artworks`
+  //       );
+  //       const artworks = response.data;
+  //       setArtworks(artworks);
+  //     } catch (error) {
+  //       // console.log(error);
+  //       toast.error("Something went wrong!");
+  //     }
+  //   };
 
-    // Fetch seller artworks on component mount
-    fetchArtworks();
-  }, []);
+  //   // Fetch seller artworks on component mount
+  //   fetchArtworks();
+  // }, []);
 
   function submitRequest(event) {
     event.preventDefault();
@@ -103,7 +103,7 @@ function CommissionedProcess() {
   }
 
   return (
-    <div className="flex flex-col items-center bg-white lg:px-8 mx-10">
+    <div className="flex flex-col items-center bg-white lg:px-8 mx-5 sm:mx-10">
       <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 pt-12 mobile-sm:pt-24 sm:pt-24 px-7 rounded-b-3xl mb-5">
         <motion.h1
           variants={heroVariants}
@@ -122,7 +122,7 @@ function CommissionedProcess() {
           animate="visible"
           transition={{ delay: 0.3, duration: 0.6 }}
           exit="exit"
-          className="text-center text-[8px] mobile-sm:text-xs sm:text-base font-open-sans text-[#555555] mt-7"
+          className="text-center text-xs mobile-sm:text-sm sm:text-base font-open-sans text-[#555555] mt-7"
         >
           We're passionate about creating unique and personalized artworks just
           for you. Our commissioned art service offers you the opportunity to
@@ -144,7 +144,7 @@ function CommissionedProcess() {
       </div>
 
       {/* Overview */}
-      <div className="my-16">
+      <div className="my-5 sm:my-12">
         <h2 className="text-center text-3xl sm:text-5xl font-semibold font-poppins">
           Overview
         </h2>
@@ -158,21 +158,21 @@ function CommissionedProcess() {
         </p>
       </div>
 
-      <div className="max-w-[90vw]">
+      {/* <div className="max-w-[90vw]">
         <FeaturedArtworks
           featuredArtworksData={artworks}
           heading="Past Artworks"
           description="Take a look at our portfolio of commissioned artworks. Each piece is a testament to our dedication to craftsmanship and attention to detail. We have worked with a diverse range of clients, creating artworks that are tailored to their specific preferences and requirements."
         />
-      </div>
+      </div> */}
 
-      <div className="my-12">
+      <div className="my-5 sm:my-12">
         <h3 className="text-center text-3xl sm:text-5xl font-semibold font-poppins my-5">
           Let's get started!
         </h3>
         <div className="flex flex-col items-center mb-16">
           <iframe
-            className="w-[50vw] h-[28.2vw]"
+            className="w-[85vw] h-[49vw] sm:w-[70vw] sm:h-[40vw]"
             src="https://www.youtube.com/embed/OcLPtlzj7cU"
             title="OG HORROR IS BACK - NO PROMOTION"
             frameBorder="0"
@@ -183,13 +183,13 @@ function CommissionedProcess() {
             <FaAngleUp /> <span>Click to see the tutorial</span>
           </p>
         </div>
-        <div className="mb-16 bg-gray-200 p-7 rounded-3xl shadow-xl">
+        <div className="mb-7 sm:mb-16 bg-gray-200 p-7 rounded-3xl shadow-xl">
           <h2 className="text-center text-3xl sm:text-5xl font-semibold font-poppins">
             Step-by-Step Process
           </h2>
-          <div className="mt-5">
+          <div className="mt-10">
             {steps.map((step) => (
-              <div key={step.id} className="mb-3">
+              <div key={step.id} className="mb-5">
                 <h2 className="font-montserrat font-semibold text-2xl">
                   <span className="font-poppins font-bold">
                     Step {step.id}:
@@ -205,7 +205,7 @@ function CommissionedProcess() {
         </div>
       </div>
 
-      <div className="mb-16">
+      <div className="mb-10">
         <h2 className="text-center sm:text-left text-3xl sm:text-5xl font-semibold font-poppins">
           Artist's Approach and Style
         </h2>
@@ -219,7 +219,7 @@ function CommissionedProcess() {
         </p>
       </div>
 
-      <div className="mb-16">
+      <div className="mb-5 sm:mb-16">
         <h2 className="text-center sm:text-right text-3xl sm:text-5xl font-semibold font-poppins">
           Pricing and Timeframe
         </h2>
@@ -234,7 +234,7 @@ function CommissionedProcess() {
         </p>
       </div>
 
-      <div className="pt-5 pb-12">
+      <div className="pt-5 pb-12 sm:pb-16">
         <h2 className="text-center text-3xl sm:text-5xl font-semibold font-poppins">
           Get Started!
         </h2>
@@ -245,7 +245,7 @@ function CommissionedProcess() {
         </div>
       </div>
 
-      <div className="pt-20 pb-12 w-full bg-gray-200 rounded-3xl shadow-xl mb-10">
+      <div className="pt-20 px-2 sm:px-10 pb-12 w-full bg-gray-200 rounded-3xl shadow-xl mb-10">
         <h2 className="text-center text-3xl sm:text-5xl font-semibold font-poppins">
           Contact for any queries
         </h2>
