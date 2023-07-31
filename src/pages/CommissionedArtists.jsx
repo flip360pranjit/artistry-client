@@ -3,6 +3,9 @@ import ArtistCard from "../components/Card/ArtistCard";
 import axios from "axios";
 import { toast } from "react-toastify";
 import LoadingAnimation from "../components/LoadingAnimation/LoadingAnimation";
+import Empty from "../assets/images/success.png";
+import EmptyWebp from "../assets/images/success.webp";
+import { isWebpSupported } from "react-image-webp/dist/utils";
 
 function CommissionedArtists() {
   const [loading, setLoading] = useState(false);
@@ -46,6 +49,19 @@ function CommissionedArtists() {
       {loading ? (
         <div className="flex justify-center items-center h-[50vh]">
           <LoadingAnimation />
+        </div>
+      ) : artists.length === 0 ? (
+        <div className="flex justify-center items-center h-[50vh]">
+          <div className="flex flex-col items-center gap-5">
+            <img
+              src={isWebpSupported() ? EmptyWebp : Empty}
+              alt="No artworks"
+              className="h-[40vh] w-auto"
+            />
+            <h3 className="font-poppins text-2xl text-[#555555]">
+              No artist available currently. Stay tuned!
+            </h3>
+          </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

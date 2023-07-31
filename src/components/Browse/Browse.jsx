@@ -6,6 +6,8 @@ import ProductCard from "../Card/ProductCard";
 import { FaChevronDown, FaTimes } from "react-icons/fa";
 import { ImEqualizer2 } from "react-icons/im";
 import { motion, AnimatePresence } from "framer-motion";
+import Empty from "../../assets/images/success.png";
+import EmptyWebp from "../../assets/images/success.webp";
 import FilterError from "../../assets/images/filtererror.png";
 import FilterErrorWebp from "../../assets/images/filtererror.webp";
 import { useDispatch } from "react-redux";
@@ -17,6 +19,7 @@ import { isWebpSupported } from "react-image-webp/dist/utils";
 function Browse() {
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [artworks, setArtworks] = useState([]);
   const [sortBy, setSortBy] = useState("Featured");
@@ -47,14 +50,17 @@ function Browse() {
   useEffect(() => {
     // Function to fetch seller artworks
     const fetchArtworks = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_REACT_APP_API_URL}/artworks`
         );
+        setLoading(false);
         const artworks = response.data;
         setArtworks(artworks);
       } catch (error) {
         // console.log(error);
+        setLoading(false);
         toast.error("Something went wrong!");
       }
     };
@@ -335,9 +341,25 @@ function Browse() {
           </div>
         )}
         <div className="w-full sm:w-4/5 px-2 sm:px-7 pt-3 pb-20 md:pb-[55px] mt-8 sm:mt-0 min-h-screen">
-          {artworks.length === 0 ? (
+          {loading ? (
             <div className="h-[90%] flex items-center justify-center">
               <LoadingAnimation />
+            </div>
+          ) : artworks.length === 0 ? (
+            <div className="h-[90%] flex items-center justify-center">
+              <div className="flex flex-col items-center font-poppins max-w-xl">
+                <img
+                  src={isWebpSupported() ? EmptyWebp : Empty}
+                  alt="No artworks"
+                  className="h-[40vh] w-auto"
+                />
+                <h2 className="font-bold text-5xl text-center mt-2">
+                  Stay tuned!
+                </h2>
+                <p className="text-lg text-[#555555] text-center mt-2">
+                  We're currently out of products for sale, but fret not!
+                </p>
+              </div>
             </div>
           ) : pageArtworks.length === 0 ? (
             <div className="h-[90%] flex items-center justify-center">
