@@ -1,8 +1,6 @@
 import React from "react";
 import Button from "../components/Button/Button";
 import { motion } from "framer-motion";
-import Image from "../assets/images/mission.jpg";
-import ImageWebp from "../assets/images/mission.webp";
 import { Link, useNavigate } from "react-router-dom";
 import { FaAngleUp } from "react-icons/fa";
 import { useSelector } from "react-redux";
@@ -30,49 +28,56 @@ const steps = [
     title: "Step 1: Create Your Seller Portfolio",
     description:
       "To become a seller on our platform, you'll need to create a seller portfolio. Showcase your best artwork, provide a compelling artist bio, and include relevant details about your artistic journey and inspirations. A well-curated portfolio will help you attract potential buyers and establish your credibility as an artist.",
-    image: "Step1",
+    image: "/images/create-seller-portfolio.jpg",
+    imageWebp: "/images/create-seller-portfolio.webp",
   },
   {
     id: 2,
     title: "Step 2: Prepare Your Artwork",
     description:
       "Ensure that your artwork is in its best condition before listing it for sale. Clean, repair, and frame your pieces if necessary. Take high-quality photographs or create digital scans of your artwork to showcase them accurately to potential buyers. Pay attention to details like lighting, color accuracy, and capturing the texture of your artwork.",
-    image: "Step2",
+    image: "/images/prepare-artwork.jpg",
+    imageWebp: "/images/prepare-artwork.webp",
   },
   {
     id: 3,
     title: "Step 3: List Your Artwork",
     description:
       "Once your portfolio is set up, it's time to list your artwork for sale. Provide clear and detailed information about each piece, including its title, medium, dimensions, and a compelling description that conveys the story, emotions, or concept behind the artwork. Set a competitive price that reflects the value of your work while considering market trends and your experience as an artist.",
-    image: "Step3",
+    image: "/images/list-artwork.jpg",
+    imageWebp: "/images/list-artwork.webp",
   },
   {
     id: 4,
     title: "Step 4: Promote Your Artwork",
     description:
       "Utilize the promotional tools and features provided by our platform to reach a wider audience. Share your artwork on social media, participate in online art communities, and engage with potential buyers and fellow artists. Consider creating a personal website or blog to showcase your portfolio and share insights into your creative process. Collaborate with other artists or participate in local art events to gain exposure.",
-    image: "Step4",
+    image: "/images/promote-artwork.jpg",
+    imageWebp: "/images/promote-artwork.webp",
   },
   {
     id: 5,
     title: "Step 5: Manage Sales and Orders",
     description:
       "When a buyer expresses interest in purchasing your artwork, communicate with them to finalize the sale. Provide prompt and professional responses to inquiries, negotiate the terms if necessary, and agree on payment and delivery methods. Keep track of your sales and orders, including shipping details, to ensure a smooth and efficient process.",
-    image: "Step5",
+    image: "/images/manage-orders.jpg",
+    imageWebp: "/images/manage-orders.webp",
   },
   {
     id: 6,
     title: "Step 6: Fulfilling Orders",
     description:
       "Prepare your artwork for delivery or pickup with great care. Pack your pieces securely to protect them during transit, and include any necessary certificates of authenticity or additional documentation. If offering shipping, choose a reliable and trackable shipping service to ensure the artwork arrives safely. If offering local pickup, coordinate a convenient time and location with the buyer.",
-    image: "Step6",
+    image: "/images/fulfill-orders.jpg",
+    imageWebp: "/images/fulfill-orders.webp",
   },
   {
     id: 7,
     title: "Step 7: Provide Exceptional Customer Service",
     description:
       "Ensure that you provide excellent customer service throughout the entire process. Communicate with buyers promptly and professionally, address any concerns or issues that may arise, and provide updates on order status and shipping. Strive to exceed buyer expectations and leave a positive impression that can lead to repeat purchases and recommendations.",
-    image: "Step7",
+    image: "/images/customer-service.jpg",
+    imageWebp: "/images/customer-service.webp",
   },
 ];
 
@@ -156,11 +161,11 @@ function HowToSell() {
           {steps.map((step) => (
             <div
               key={step.id}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center mt-6"
+              className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center mt-20"
             >
               <img
-                src={isWebpSupported() ? ImageWebp : Image}
-                alt={step.image}
+                src={`${isWebpSupported() ? step.imageWebp : step.image}`}
+                alt={step.title}
                 className=""
               />
               <div
