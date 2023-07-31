@@ -146,7 +146,7 @@ function HowToSell() {
         </h3>
         <div className="flex flex-col items-center">
           <iframe
-            className="w-[50vw] h-[28.2vw]"
+            className="w-[85vw] h-[49vw] sm:w-[70vw] sm:h-[40vw]"
             src="https://www.youtube.com/embed/OcLPtlzj7cU"
             title="OG HORROR IS BACK - NO PROMOTION"
             frameBorder="0"
