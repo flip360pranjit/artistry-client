@@ -56,6 +56,29 @@ function AddArtwork() {
     }
   };
 
+  const handleClear = () => {
+    setArt({
+      title: "",
+      artistId: "",
+      artistName: "",
+      medium: "",
+      category: "",
+      size: "",
+      price: 0,
+      description: "",
+    });
+
+    setCustomMedium("");
+    setCustomCategory("");
+    setCustomSizeWidth("");
+    setCustomSizeHeight("");
+    setCustomSizeWidthUnit("");
+    setCustomSizeHeightUnit("");
+    setImage(null);
+    setLoading(false);
+    setQuantity(1);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -517,6 +540,7 @@ function AddArtwork() {
             <button
               type="button"
               className="text-sm font-semibold leading-6 text-gray-900"
+              onClick={handleClear}
             >
               Cancel
             </button>
