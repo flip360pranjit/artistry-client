@@ -57,6 +57,7 @@ function ReviewModal({ onClose, user, artwork }) {
         photoURL: user.photoURL,
       },
       product: artwork._id,
+      artist: artwork.artist.artistId,
       rating: selectedRating,
       comment,
       createdAt: formattedDate,

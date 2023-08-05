@@ -49,8 +49,13 @@ function Artwork() {
 
   useEffect(() => {
     async function fetchReviews() {
+      // console.log("Artsist:", artwork.artist);
       await axios
-        .get(`${import.meta.env.VITE_REACT_APP_API_URL}/reviews/${artwork._id}`)
+        .get(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/reviews/${
+            artwork.artist.artistId._id
+          }`
+        )
         .then((response) => {
           setReviews([...response.data].reverse());
         })

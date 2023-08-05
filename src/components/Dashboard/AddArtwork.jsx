@@ -158,10 +158,12 @@ function AddArtwork() {
         navigate("/dashboard/listings");
       } catch (error) {
         setLoading(false);
+        // console.log(error);
         toast.error(error.response.data.error);
       }
     } catch (err) {
       toast.error("Something went wrong!");
+      // console.log(err);
     }
   };
 
@@ -495,7 +497,7 @@ function AddArtwork() {
                           id="file-upload"
                           name="file-upload"
                           type="file"
-                          accept="image/*"
+                          accept="image/*,.jpg,.jpeg,.png,.gif,.bmp,.tiff"
                           className="sr-only"
                           onChange={handleFileChange}
                         />
