@@ -119,7 +119,8 @@ function AddArtwork() {
         formDataWebp
       );
       const dataWebp = await responseWebp.data;
-      console.log("Webp error:",responseWebp)
+      console.log("Webp error:", responseWebp);
+      console.log(formData);
 
       // console.log({ original: data.secure_url, webp: dataWebp.secure_url });
 
@@ -187,7 +188,7 @@ function AddArtwork() {
       }
     } catch (err) {
       toast.error("Something went wrong!");
-      console.log("Try Catch block error:",err);
+      console.log("Try Catch block error:", err);
     }
   };
 
